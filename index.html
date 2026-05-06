@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Asistencia 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── Variables ─────────────────────────────────────────── */
+:root {
+  --navy-950:#07213e;
+  --navy-900:#0d2f5f;
+  --navy-800:#164f96;
+  --navy-700:#1d65b8;
+  --navy-600:#2578d5;
+  --blue-100:#dbeafe;
+  --blue-50:#eff6ff;
+  --surface:#ffffff;
+  --surface-2:#f5f8fd;
+  --surface-3:#eef3fa;
+  --text:#0f2540;
+  --text-2:#2a4a6e;
+  --muted:#607897;
+  --muted-2:#9eb3cc;
+  --border:#d5e3f0;
+  --border-2:#c0d4e8;
+  --shadow-sm:0 1px 4px rgba(10,35,74,.08);
+  --shadow:0 4px 20px rgba(10,35,74,.10);
+  --shadow-lg:0 12px 40px rgba(10,35,74,.15);
+  --success:#15803d;
+  --success-bg:#f0fdf4;
+  --success-b:#bbf7d0;
+  --danger:#dc2626;
+  --danger-bg:#fef2f2;
+  --danger-b:#fecaca;
+  --warning:#c2410c;
+  --warning-bg:#fff7ed;
+  --warning-b:#fed7aa;
+  --info:#1d4ed8;
+  --info-bg:#eff6ff;
+  --info-b:#bfdbfe;
+  --purple:#7c3aed;
+  --purple-bg:#faf5ff;
+  --purple-b:#ddd6fe;
+  --r:16px;
+  --r-sm:10px;
+  --r-lg:22px;
+  --sidebar-w:290px;
+  --topnav-h:56px;
+  --schoolbar-h:64px;
+}
+
+/* ─── Reset & base ──────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;font-size:15px}
+body{
+  height:100%;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  color:var(--text);
+  background:#e8f0fa;
+  overflow:hidden;
+}
+
+/* ─── Layout shell ──────────────────────────────────────── */
+.shell{display:flex;height:100vh;overflow:hidden;position:relative}
+
+/* ─── Sidebar ───────────────────────────────────────────── */
+.sidebar{
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  background:linear-gradient(175deg,var(--navy-900) 0%,var(--navy-950) 100%);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border-right:1px solid rgba(255,255,255,.07);
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  z-index:30;
+}
+.sidebar-top{padding:20px 16px 14px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.brand-icon{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--navy-700),var(--navy-600));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(21,100,200,.4);
+}
+.brand-icon svg{width:22px;height:22px;fill:#fff}
+.brand-text h1{font-size:17px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.3px}
+.brand-text p{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.search-wrap{position:relative}
+.search-wrap input{
+  width:100%;padding:11px 12px 11px 40px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;
+  background:rgba(255,255,255,.08);
+  color:#fff;font-size:13.5px;
+  font-family:inherit;outline:none;
+  transition:background .2s,border-color .2s;
+}
+.search-wrap input:focus{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22)}
+.search-wrap input::placeholder{color:rgba(255,255,255,.45)}
+.search-wrap .ico{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;fill:rgba(255,255,255,.5);pointer-events:none;
+}
+.sidebar-nav{flex:1;overflow-y:auto;padding:6px 10px 16px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+.grade-label{
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;
+  color:rgba(255,255,255,.38);padding:14px 6px 5px;font-weight:700;
+}
+.course-btn{
+  width:100%;border:none;border-radius:11px;
+  background:transparent;color:rgba(255,255,255,.78);
+  display:flex;align-items:center;gap:9px;
+  padding:10px 10px 10px 12px;
+  cursor:pointer;text-align:left;font-size:13.5px;font-weight:500;
+  font-family:inherit;transition:all .15s ease;margin-bottom:3px;
+}
+.course-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.course-btn.active{background:#fff;color:var(--navy-900);font-weight:700;box-shadow:var(--shadow)}
+.c-pill{
+  margin-left:auto;font-size:11.5px;font-family:'JetBrains Mono',monospace;
+  padding:2px 8px;border-radius:999px;
+  background:rgba(255,255,255,.10);color:rgba(255,255,255,.6);
+}
+.course-btn.active .c-pill{background:var(--blue-50);color:var(--navy-800)}
+
+/* ─── Main area ─────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* Top bar */
+.topbar{
+  height:var(--topnav-h);flex-shrink:0;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+  padding:0 20px;
+  box-shadow:var(--shadow-sm);
+  z-index:10;
+}
+.menu-btn{
+  display:none;width:38px;height:38px;border:none;background:var(--surface-2);
+  border-radius:10px;cursor:pointer;align-items:center;justify-content:center;
+  flex-shrink:0;color:var(--text-2);transition:background .15s;
+}
+.menu-btn:hover{background:var(--surface-3)}
+.menu-btn svg{width:20px;height:20px;fill:currentColor}
+.topbar-title{flex:1;min-width:0}
+.topbar-title h2{font-size:17px;font-weight:800;color:var(--navy-900);letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-title p{font-size:12px;color:var(--muted);display:none}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.chip{
+  font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:500;
+  padding:5px 11px;border-radius:999px;
+  background:var(--blue-50);color:var(--navy-800);
+  border:1px solid var(--blue-100);white-space:nowrap;
+}
+
+/* Tabs */
+.tabs-bar{
+  display:flex;align-items:center;gap:2px;
+  padding:0 20px;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.tab-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:12px 16px;
+  border:none;border-bottom:2px solid transparent;
+  background:transparent;cursor:pointer;
+  font-family:inherit;font-size:13.5px;font-weight:600;color:var(--muted);
+  transition:all .18s;margin-bottom:-1px;
+  border-radius:0;
+  white-space:nowrap;
+}
+.tab-btn svg{width:15px;height:15px;fill:currentColor;opacity:.7}
+.tab-btn:hover{color:var(--navy-800)}
+.tab-btn.active{color:var(--navy-800);border-bottom-color:var(--navy-700)}
+.tab-btn.active svg{opacity:1}
+
+/* Action bar */
+.action-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px 20px;
+  background:var(--surface-2);
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;flex-wrap:wrap;
+}
+.action-bar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.action-bar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.legend{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.leg-item{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11.5px;color:var(--muted);
+  padding:4px 10px;border-radius:999px;
+  background:#fff;border:1px solid var(--border);
+}
+.dot{width:8px;height:8px;border-radius:50%}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  border:none;cursor:pointer;font-family:inherit;font-weight:600;
+  border-radius:10px;padding:9px 15px;font-size:13.5px;
+  transition:all .18s;white-space:nowrap;
+}
+.btn svg{width:15px;height:15px;fill:currentColor}
+.btn-primary{background:var(--navy-800);color:#fff;box-shadow:0 2px 8px rgba(22,79,150,.3)}
+.btn-primary:hover{background:var(--navy-700)}
+.btn-success{background:var(--success);color:#fff;box-shadow:0 2px 8px rgba(21,128,61,.25)}
+.btn-success:hover{background:#166534}
+.btn-ghost{background:#fff;color:var(--text-2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface-2);border-color:var(--border-2)}
+.btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid var(--danger-b)}
+.btn-danger:hover{background:#fee2e2}
+.btn-sm{padding:6px 11px;font-size:12.5px;border-radius:8px}
+
+/* ─── Content scroll area ──────────────────────────────── */
+.content-area{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-height:0}
+
+/* ─── Empty / no-selection state ───────────────────────── */
+.empty-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);
+  min-height:300px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px;text-align:center;padding:40px;
+  box-shadow:var(--shadow-sm);
+}
+.empty-icon{
+  width:64px;height:64px;border-radius:18px;
+  background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.empty-icon svg{width:30px;height:30px;fill:var(--muted-2)}
+.empty-card h3{font-size:19px;font-weight:800;color:var(--navy-900)}
+.empty-card p{font-size:14px;color:var(--muted);max-width:340px;line-height:1.6}
+
+/* ─── Table card ─────────────────────────────────────────  */
+.table-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--shadow);flex-shrink:0;
+}
+.table-zone{overflow:auto;max-height:calc(100vh - 290px)}
+table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:13px}
+
+/* Sticky header */
+thead th{
+  position:sticky;top:0;z-index:6;
+  background:#e8f0fa;color:var(--text-2);
+  font-weight:700;border-bottom:1px solid var(--border-2);
+}
+thead tr:first-child th{
+  padding:10px 8px;font-size:11px;text-transform:uppercase;
+  letter-spacing:.09em;background:#deeaf8;
+}
+thead tr:nth-child(2) th{
+  padding:8px 4px;font-size:10.5px;background:#e8f0fa;
+}
+
+/* Sticky columns */
+.col-num,.col-name{
+  position:sticky;z-index:5;background:#f5f8fd;
+}
+.col-num{left:0;z-index:7;width:44px;min-width:44px;text-align:center;font-weight:700;color:var(--muted)}
+.col-name{left:44px;z-index:7;min-width:170px;max-width:220px;text-align:left;padding:0 10px;font-weight:600;color:var(--text-2);background:#fff}
+thead .col-num,thead .col-name{background:#deeaf8;z-index:9}
+thead .col-name{background:#deeaf8}
+
+/* Day columns */
+.day-head{min-width:160px}
+.day-wrap{display:grid;grid-template-columns:1fr 1fr}
+.subhead{
+  padding:5px 3px;font-size:10px;font-weight:700;color:var(--muted);
+  border-top:1px solid var(--border);
+}
+.subhead+.subhead{border-left:1px solid var(--border)}
+.month-sep{box-shadow:inset 3px 0 0 var(--border-2)}
+tbody td{
+  height:44px;border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:0;text-align:center;background:#fff;
+}
+tbody tr:hover td{background:#f9fbff}
+tbody tr:hover .col-num{background:#eef5fb}
+tbody tr:hover .col-name{background:#f4f8fd}
+tbody td.col-num{padding:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px}
+tbody td.col-name{height:auto;padding:8px 10px;font-size:12.5px}
+
+/* Selects inside cells */
+.cell-sel{
+  width:calc(100% - 4px);
+  border:1px solid var(--border);background:#fff;
+  border-radius:6px;padding:5px 4px;font-size:11px;
+  font-weight:600;outline:none;color:var(--text-2);
+  cursor:pointer;font-family:inherit;
+  transition:border-color .15s,box-shadow .15s;margin:2px;
+}
+.cell-sel:focus{border-color:#93b8e8;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.cell-sel.a-asiste{background:var(--success-bg);color:var(--success);border-color:var(--success-b)}
+.cell-sel.a-no-asiste{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-b)}
+.cell-sel.a-tarde{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-b)}
+.cell-sel.a-excusa{background:var(--info-bg);color:var(--info);border-color:var(--info-b)}
+.cell-sel.u-inadecuado{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-b)}
+.cell-sel.u-permiso-coordinacion{background:#eef2ff;color:#4338ca;border-color:#c7d2fe}
+@media(max-width:640px){.day-head{min-width:120px}.cell-sel{font-size:10px;padding:4px 3px}}
+
+/* Table footer */
+.table-foot{
+  padding:10px 16px;background:var(--surface-2);
+  color:var(--muted);font-size:12px;border-top:1px solid var(--border);
+}
+
+/* Stats pct badge */
+.att-pct{
+  font-size:11px;font-weight:700;padding:2px 7px;
+  border-radius:999px;font-family:'JetBrains Mono',monospace;
+}
+.pct-hi{background:#dcfce7;color:#15803d}
+.pct-mid{background:#fef9c3;color:#a16207}
+.pct-lo{background:#fee2e2;color:#b91c1c}
+
+/* ─── School header bar ──────────────────────────────────── */
+.school-bar{
+  flex-shrink:0;
+  background:linear-gradient(90deg,var(--navy-950) 0%,var(--navy-800) 100%);
+  display:flex;align-items:center;gap:11px;
+  padding:8px 16px;
+  box-shadow:0 2px 8px rgba(7,33,62,.35);
+  position:relative;z-index:25;
+}
+.school-shield{
+  width:44px;height:44px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  border:2px solid rgba(255,255,255,.3);
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.school-titles{flex:1;min-width:0}
+.school-titles .s-name{
+  font-size:12.5px;font-weight:800;color:#fff;
+  letter-spacing:.01em;line-height:1.25;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.school-titles .s-sub{
+  font-size:10.5px;color:rgba(255,255,255,.62);
+  font-family:'JetBrains Mono',monospace;margin-top:2px;
+  white-space:nowrap;
+}
+@media(max-width:640px){
+  .school-bar{padding:6px 10px;gap:8px}
+  .school-shield{width:34px;height:34px}
+  .school-titles .s-name{font-size:11px}
+  .school-titles .s-sub{font-size:9.5px}
+}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r);
+  padding:18px 20px;box-shadow:var(--shadow-sm);
+}
+.stat-card .label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.stat-card .value{font-size:28px;font-weight:800;letter-spacing:-.5px;font-family:'JetBrains Mono',monospace}
+.stat-card .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.val-green{color:var(--success)}
+.val-red{color:var(--danger)}
+.val-blue{color:var(--navy-800)}
+.val-amber{color:var(--warning)}
+.val-purple{color:var(--purple)}
+
+.section-title{
+  font-size:16px;font-weight:800;color:var(--navy-900);
+  letter-spacing:-.3px;margin-bottom:10px;margin-top:4px;
+}
+.course-stat-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.csc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;background:var(--surface-2);border-bottom:1px solid var(--border);
+}
+.csc-header .name{font-size:14px;font-weight:700;color:var(--navy-900)}
+.csc-header .meta{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.csc-bars{padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-row .blabel{font-size:12px;color:var(--muted);width:90px;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--surface-3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.bar-row .bval{font-size:12px;font-weight:700;width:44px;text-align:right;font-family:'JetBrains Mono',monospace}
+
+/* ─── Modal ──────────────────────────────────────────────── */
+.modal-bg{
+  display:none;position:fixed;inset:0;background:rgba(7,33,62,.55);
+  backdrop-filter:blur(6px);z-index:100;
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-bg.open{display:flex}
+.modal{
+  background:#fff;border-radius:20px;width:100%;max-width:460px;
+  box-shadow:var(--shadow-lg);overflow:hidden;
+  animation:modalIn .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(12px)}to{opacity:1;transform:none}}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px 16px;border-bottom:1px solid var(--border);
+}
+.modal-head h3{font-size:18px;font-weight:800;color:var(--navy-900);letter-spacing:-.3px}
+.modal-close{
+  width:34px;height:34px;border:none;background:var(--surface-3);
+  border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:background .15s;
+}
+.modal-close:hover{background:var(--border);color:var(--text)}
+.modal-close svg{width:16px;height:16px;fill:currentColor}
+.modal-body{padding:22px 24px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+.form-input{
+  width:100%;padding:11px 14px;border:1.5px solid var(--border);
+  border-radius:10px;font-family:inherit;font-size:14px;color:var(--text);
+  outline:none;transition:border-color .18s,box-shadow .18s;
+  background:#fff;
+}
+.form-input:focus{border-color:#8ab4e3;box-shadow:0 0 0 3.5px rgba(37,99,235,.12)}
+.form-input::placeholder{color:var(--muted-2)}
+.form-hint{font-size:12px;color:var(--muted);margin-top:5px}
+.modal-foot{
+  display:flex;justify-content:flex-end;gap:10px;
+  padding:14px 24px 20px;border-top:1px solid var(--border);background:var(--surface-2);
+}
+
+/* ─── Row actions (delete / transfer) ───────────────────── */
+.row-actions{
+  display:flex;gap:4px;align-items:center;
+  opacity:0;transition:opacity .15s;
+  margin-left:6px;flex-shrink:0;
+}
+tbody tr:hover .row-actions{opacity:1}
+.row-btn{
+  width:26px;height:26px;border:none;border-radius:7px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;transition:background .15s,transform .1s;flex-shrink:0;
+}
+.row-btn:active{transform:scale(.9)}
+.row-btn-del{background:#fee2e2;color:#dc2626}
+.row-btn-del:hover{background:#fecaca}
+.row-btn-move{background:#eff6ff;color:#1d4ed8}
+.row-btn-move:hover{background:#bfdbfe}
+.row-btn svg{width:14px;height:14px;fill:currentColor;pointer-events:none}
+td.col-name-wrap{
+  position:sticky;left:44px;z-index:5;background:#fff;
+  min-width:280px;max-width:420px;
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+td.col-name-wrap .name-inner{
+  display:flex;align-items:flex-start;padding:8px 10px;gap:6px;
+  font-size:12.5px;font-weight:600;color:var(--text-2);
+  line-height:1.35;
+}
+tbody tr:hover td.col-name-wrap{background:#f4f8fd}
+thead th.col-name-wrap{
+  position:sticky;left:44px;z-index:9;background:#deeaf8;
+  text-align:left;padding:0 10px;
+}
+
+/* Confirm delete pill */
+.del-confirm{
+  display:none;position:absolute;
+  background:#1a1a2e;color:#fff;
+  border-radius:10px;padding:10px 14px;
+  font-size:13px;font-weight:600;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+  z-index:200;white-space:nowrap;
+  gap:8px;align-items:center;
+  border:1px solid rgba(255,255,255,.1);
+}
+.del-confirm.show{display:flex}
+.del-confirm span{color:rgba(255,255,255,.75);font-weight:400;font-size:12px}
+.del-confirm button{
+  border:none;border-radius:6px;padding:5px 10px;
+  font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;
+}
+.del-yes{background:#dc2626;color:#fff}
+.del-yes:hover{background:#b91c1c}
+.del-no{background:rgba(255,255,255,.12);color:#fff}
+.del-no:hover{background:rgba(255,255,255,.2)}
+
+/* Transfer modal select */
+.form-select{
+  width:100%;padding:11px 14px;border:1.5px solid var(--border);
+  border-radius:10px;font-family:inherit;font-size:14px;color:var(--text);
+  outline:none;transition:border-color .18s,box-shadow .18s;
+  background:#fff;cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='%23607897' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  padding-right:36px;
+}
+.form-select:focus{border-color:#8ab4e3;box-shadow:0 0 0 3.5px rgba(37,99,235,.12)}
+.transfer-info{
+  background:var(--info-bg);border:1px solid var(--info-b);border-radius:10px;
+  padding:10px 14px;font-size:13px;color:var(--info);
+  display:flex;gap:8px;align-items:flex-start;margin-bottom:4px;
+}
+.transfer-info svg{width:16px;height:16px;fill:currentColor;flex-shrink:0;margin-top:1px}
+
+
+/* ─── Sync status ───────────────────────────────────────── */
+.sync-toast{
+  position:fixed;right:16px;bottom:16px;z-index:300;
+  max-width:min(420px,calc(100vw - 32px));
+  padding:12px 14px;border-radius:12px;
+  font-size:13px;font-weight:600;line-height:1.4;
+  box-shadow:0 10px 30px rgba(7,33,62,.22);
+  border:1px solid var(--border);background:#fff;color:var(--text-2);
+  display:none;
+}
+.sync-toast.show{display:block}
+.sync-toast.ok{background:var(--success-bg);border-color:var(--success-b);color:var(--success)}
+.sync-toast.warn{background:var(--warning-bg);border-color:var(--warning-b);color:var(--warning)}
+.sync-toast.err{background:var(--danger-bg);border-color:var(--danger-b);color:var(--danger)}
+
+/* ─── Sidebar overlay (mobile) ───────────────────────────── */
+.sidebar-overlay{
+  display:none;position:fixed;inset:0;background:rgba(7,33,62,.5);
+  z-index:29;backdrop-filter:blur(2px);
+}
+
+
+/* ─── Mobile attendance view: app cards ───────────────────── */
+.mobile-day-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.mobile-day-card label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  margin-bottom:8px;
+}
+.mobile-date-select{
+  width:100%;
+  min-height:58px;
+  border-radius:14px;
+  border:1.5px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  font-family:inherit;
+  font-size:17px;
+  padding:13px 14px;
+  outline:none;
+}
+.mobile-date-select:focus{
+  border-color:#8ab4e3;
+  box-shadow:0 0 0 3.5px rgba(37,99,235,.12);
+}
+.mobile-help{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.55;
+}
+.mobile-day-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.mobile-all-ok{
+  width:100%;
+  min-height:54px;
+  border-radius:16px;
+  border:1.5px solid var(--success-b);
+  background:var(--success-bg);
+  color:var(--success);
+  font-weight:800;
+  font-size:15px;
+  font-family:inherit;
+  cursor:pointer;
+}
+.mobile-save-day{
+  width:100%;
+  min-height:58px;
+  border-radius:16px;
+  border:none;
+  background:var(--navy-800);
+  color:#fff;
+  font-weight:800;
+  font-size:15px;
+  font-family:inherit;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(22,79,150,.3);
+}
+.mobile-student-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.mobile-student-head{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:16px;
+}
+.mobile-student-num{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:var(--blue-50);
+  color:var(--navy-800);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:17px;
+  font-weight:800;
+  flex-shrink:0;
+}
+.mobile-student-name{
+  flex:1;
+  min-width:0;
+  font-size:17px;
+  line-height:1.25;
+  font-weight:800;
+  color:var(--navy-950);
+}
+.mobile-fields{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+.mobile-field label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:7px;
+}
+.mobile-field .cell-sel{
+  width:100%;
+  min-height:58px;
+  margin:0;
+  border-radius:15px;
+  font-size:17px;
+  padding:12px 14px;
+  -webkit-appearance:auto;
+  appearance:auto;
+}
+.mobile-row-actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+.mobile-row-actions .row-btn{
+  width:44px;
+  height:40px;
+  opacity:1;
+}
+.mobile-row-actions .row-actions{
+  opacity:1;
+}
+@media(max-width:640px){
+  .legend{display:none}
+  .action-bar{
+    position:sticky;
+    top:calc(52px + 50px + 43px);
+    z-index:19;
+  }
+  .action-bar-right{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    width:100%;
+  }
+  .action-bar-right .btn{
+    justify-content:center;
+    min-height:44px;
+  }
+  .content-area{
+    padding:10px;
+    gap:12px;
+  }
+  .mobile-day-card{
+    margin-top:4px;
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media(max-width:1024px){
+  .shell{flex-direction:column;overflow:auto;height:auto;min-height:100vh}
+  body{overflow:auto}
+  .sidebar{
+    position:fixed;left:0;top:0;bottom:0;
+    transform:translateX(-110%);transition:transform .28s cubic-bezier(.4,0,.2,1);
+    box-shadow:var(--shadow-lg);
+    height:100vh;
+  }
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{flex:1;min-height:100vh;overflow:visible}
+  .school-bar{position:sticky;top:0;z-index:22}
+  .topbar{position:sticky;top:62px;z-index:21}
+  .tabs-bar{position:sticky;top:calc(62px + var(--topnav-h));z-index:20;overflow-x:auto}
+  .action-bar{position:sticky;top:calc(62px + var(--topnav-h) + 45px);z-index:19}
+  .menu-btn{display:inline-flex}
+  .content-area{max-height:none;overflow:visible;padding:12px}
+  .table-zone{max-height:none;overflow:auto;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:640px){
+  :root{--sidebar-w:88vw;--topnav-h:50px}
+  .school-bar{top:0}
+  .topbar{top:52px}
+  .tabs-bar{top:calc(52px + 50px)}
+  .action-bar{top:calc(52px + 50px + 43px)}
+  .content-area{padding:8px}
+  .action-bar{flex-direction:column;align-items:stretch;gap:8px;padding:8px 10px}
+  .action-bar-left,.action-bar-right{justify-content:center}
+  .legend{justify-content:center}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .tab-btn{padding:9px 10px;font-size:12px;gap:4px}
+  .tab-btn span{display:none}
+  .topbar-title h2{font-size:14px}
+  .chip{font-size:11px;padding:3px 8px}
+  .col-name{min-width:130px;max-width:160px}
+  td.col-name-wrap{min-width:220px;max-width:300px}
+}
+@media(max-width:360px){
+  .stats-grid{grid-template-columns:1fr}
+  .col-name{min-width:110px;max-width:140px}
+  td.col-name-wrap{min-width:200px;max-width:280px}
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="shell">
+
+  <!-- ─── Sidebar ─── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1>Asistencia</h1>
+          <p>2026 · Colombia</p>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="courseSearch" placeholder="Buscar curso…">
+      </div>
+    </div>
+    <nav class="sidebar-nav" id="coursesList"></nav>
+  </aside>
+
+  <!-- ─── Main ─── -->
+  <div class="main">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Menú">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      </button>
+      <div class="topbar-title">
+        <h2 id="courseHeader">Selecciona un curso</h2>
+      </div>
+      <div class="topbar-right">
+        <span class="chip" id="studentChip" style="display:none"></span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tabAtt" onclick="switchTab('attendance')">
+        <svg viewBox="0 0 24 24"><path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H18V0h-2v2H8V0H6v2H4.5C3.12 2 2 3.12 2 4.5v15C2 20.88 3.12 22 4.5 22h15c1.38 0 2.5-1.12 2.5-2.5v-15C22 3.12 20.88 2 19.5 2zM20 19.5c0 .28-.22.5-.5.5h-15c-.28 0-.5-.22-.5-.5V7h16v12.5z"/></svg>
+        <span>Asistencia</span>
+      </button>
+      <button class="tab-btn" id="tabStats" onclick="switchTab('stats')">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+        <span>Estadísticas</span>
+      </button>
+    </div>
+
+    <!-- Action bar -->
+    <div class="action-bar" id="actionBar" style="display:none">
+      <div class="action-bar-left">
+        <div class="legend" id="legendWrap">
+          <div class="leg-item"><span class="dot" style="background:#15803d"></span>Asiste</div>
+          <div class="leg-item"><span class="dot" style="background:#dc2626"></span>No asiste</div>
+          <div class="leg-item"><span class="dot" style="background:#c2410c"></span>Tarde</div>
+          <div class="leg-item"><span class="dot" style="background:#1d4ed8"></span>Excusa</div>
+          <div class="leg-item"><span class="dot" style="background:#7c3aed"></span>Uniforme</div>
+        </div>
+      </div>
+      <div class="action-bar-right" id="attActions">
+        <button class="btn btn-success btn-sm" onclick="openAddStudentModal()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          Agregar estudiante
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="addMonth()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Mes
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 8h14v2H5z"/></svg>
+          CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area" id="contentArea">
+      <div class="empty-card">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <h3>Selecciona un curso</h3>
+        <p>Elige un curso del panel izquierdo para registrar asistencia y ver estadísticas.</p>
+      </div>
+    </div>
+
+  </div><!-- .main -->
+</div><!-- .shell -->
+
+<!-- ─── Modal: Agregar Estudiante ─── -->
+<div class="modal-bg" id="modalAdd">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Agregar estudiante</h3>
+      <button class="modal-close" onclick="closeModal('modalAdd')">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Nombre completo</label>
+        <input class="form-input" id="newStudentName" type="text" placeholder="Ej: GARCÍA LÓPEZ MARÍA JOSE" autocomplete="off"
+          onkeydown="if(event.key==='Enter')confirmAddStudent()">
+        <div class="form-hint">Escribe en mayúsculas — Apellidos seguido de nombres. Se ordenará alfabéticamente.</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modalAdd')">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmAddStudent()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Agregar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Modal: Cambiar de curso ─── -->
+<div class="modal-bg" id="modalTransfer">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Cambiar de curso</h3>
+      <button class="modal-close" onclick="closeModal('modalTransfer')">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="transfer-info">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <span>El estudiante se moverá al curso destino. Sus registros de asistencia actuales se conservan en el curso origen.</span>
+      </div>
+      <div class="form-group" style="margin-top:14px">
+        <label class="form-label">Estudiante</label>
+        <div id="transferStudentName" style="padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:600;color:var(--text-2)"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Curso destino</label>
+        <select class="form-select" id="transferDestCourse">
+          <option value="">— Selecciona un curso —</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modalTransfer')">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmTransfer()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+        Mover estudiante
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Floating delete confirm pill -->
+<div class="del-confirm" id="delConfirm">
+  <span id="delConfirmName"></span>
+  <button class="del-yes" id="delYesBtn">Eliminar</button>
+  <button class="del-no" onclick="cancelDelete()">Cancelar</button>
+</div>
+
+<div class="sync-toast" id="syncToast"></div>
+
+<!-- ─── Script ─── -->
+<script>
+/* ══════════════════════════════════════════════════════════
+   STUDENTS DATA  (all 25 courses)
+══════════════════════════════════════════════════════════ */
+const STUDENTS={"301":[{"num":1,"name":"ALBARRACÍN URREGO ISABELLA"},{"num":2,"name":"BERNAL FRANCISCO KANTELL NOELIA"},{"num":3,"name":"CASTRO RINCON MATIAS GABRIEL"},{"num":4,"name":"CRUZ GALINDO AARON SANTIAGO"},{"num":5,"name":"CUARTAS TRIANA JUAN SEBASTIAN"},{"num":6,"name":"GUERRERO JEAN CARLOS"},{"num":7,"name":"HERNANDEZ HURTADO ISABELLA"},{"num":8,"name":"LOPEZ POLANIA SALOME"},{"num":9,"name":"LOZANO GUEVARA DYLAN FERNANDO"},{"num":10,"name":"MADRID CONTRERAS ANJHEL DAVID"},{"num":11,"name":"MARTINEZ GUZMAN DAVID SANTIAGO"},{"num":12,"name":"MATAMOROS QUIÑONEZ JOSEPH MATIAS"},{"num":13,"name":"MENDOZA MOLINA ANABELLA ESTEFANIA"},{"num":14,"name":"MONROY VELANDIA MARIA LUCIA"},{"num":15,"name":"NADAL RÍOS FABIO MATHIAS"},{"num":16,"name":"ORTIZ CIPAGAUTA JERONIMO ALEJANDRO"},{"num":17,"name":"PAEZ MELO MIA CAROLAIN"},{"num":18,"name":"PARRA LEDEZMA CARLOS MATIAZ"},{"num":19,"name":"PEREZ GARCIA JOEL SEBASTIAN"},{"num":20,"name":"RODRIGUEZ LEON ALONDRA NATALIA"},{"num":21,"name":"RODRIGUEZ MARTINEZ LUCIANO JOSE"},{"num":22,"name":"RUBIO ACEVEDO MATÍAS"},{"num":23,"name":"SILVA PARRA ANGELA"},{"num":24,"name":"TAPIAS ARBOLEDA IVANNA LUCIA"},{"num":25,"name":"TIMAURE MELENDEZ AVRIL ALEXANDRA DEL CARMEN"}],"302":[{"num":1,"name":"ACOSTA DIAZ SALOME"},{"num":2,"name":"AMEZQUITA BELTRAN ARIADNA"},{"num":3,"name":"BARRETO HERNÁNDEZ ISABELLA"},{"num":4,"name":"BRICEÑO SILVA SARAY JASNEYH"},{"num":5,"name":"CARDONA CASTEBLANCO SALOME"},{"num":6,"name":"CORREDOR SERRANO SCARLETT DAMARA"},{"num":7,"name":"DUQUE HERNANDEZ SARA VALENTINA"},{"num":8,"name":"FERNANDEZ BUENDIA BELEN DE LOS ANGELES"},{"num":9,"name":"FRANCO GARZÓN SARA EILIN"},{"num":10,"name":"GARCÍA TIQUE SARA VALENTINA"},{"num":11,"name":"GUERRERO MAYORGA LUCIANA"},{"num":12,"name":"GÓMEZ ROCHA THIAGO MATHIAS"},{"num":13,"name":"HERNÁNDEZ RAMIREZ SAMUEL FELIPE"},{"num":14,"name":"HIDALGO AMAYA MATHIAS"},{"num":15,"name":"LÓPEZ GOZÁLEZ ERICK ESTEBAN"},{"num":16,"name":"MEZA SIMANCA TIAGO JAIR"},{"num":17,"name":"MIRANDA MEJIA ANDREA VALENTINA"},{"num":18,"name":"MONTAÑEZ VARGAS ALEXIS DAMIAN"},{"num":19,"name":"ORTEGON AGUIRRE MATHIAS"},{"num":20,"name":"ORTEGON AGUIRRE THIAGO"},{"num":21,"name":"PEDRAZA PALOMA LUCIANA"},{"num":22,"name":"PEREZ HOYOS LUCIANA"},{"num":23,"name":"RAMOS GONZALEZ BRAYAN ALEJANDRO"},{"num":24,"name":"RINCON CUY MATHIAS FELIPE"},{"num":25,"name":"RODRIGUEZ GUERRERO SAMUEL LEONARDO"},{"num":26,"name":"SARMIIENT ACOSTA ILIANA"},{"num":27,"name":"VARGAS ARDILA SALOME"},{"num":28,"name":"ZIPASUCA OCHOA MATIAS"}],"401":[{"num":1,"name":"ARIAS CASTRILLON SHAROL MISHELL"},{"num":2,"name":"BELLO OCAMPO DAVVID ALEJANDRO"},{"num":3,"name":"BOJACA DIAZ ALISSON DANIELA"},{"num":4,"name":"BOLAÑOS CIFUENTES ANDRES KALEB"},{"num":5,"name":"CARDENAS BENITEZ SAMANTHA"},{"num":6,"name":"CASTRO CARRION LAURA DANIELA"},{"num":7,"name":"CORDOBA CUELLAR EMANUEL"},{"num":8,"name":"DE LEON SOTO CAMILO ANDRES"},{"num":9,"name":"DIAZ BARRERO NICOLAS MATHIAS"},{"num":10,"name":"DUARTE SALINAS VALERYD NOHEMY"},{"num":11,"name":"FORERO HUERTAS MARIANA"},{"num":12,"name":"GOMEZ PADILLA ALAN DAVID"},{"num":13,"name":"GUERRERO MARTINEZ MILAGRO DEL CARMEN"},{"num":14,"name":"GUEVARA RICO ANGEL GABRIEL"},{"num":15,"name":"GUZMAN BARRETO NICOLE MARIANA"},{"num":16,"name":"LERDESMA RODRIGUEZ DANNA ISABELLA"},{"num":17,"name":"LOPEZ BALLERN DANA SALOME"},{"num":18,"name":"MARIN MENZA YEILEN XIMENA"},{"num":19,"name":"MERIDA HERNANDEZ XIMENA ELIZABETH"},{"num":20,"name":"MONTES MARTINEZ MATIAS SEBASTIAN"},{"num":21,"name":"MORALES MORA LUISA MARIA"},{"num":22,"name":"NAVARRO RAMIREZ MATIAS"},{"num":23,"name":"ORJUELA ANDRADE RAFAEL MATIAS"},{"num":24,"name":"PACHECO CUCAITA JUAN DAVID"},{"num":25,"name":"PIZARRO YEPES JERONIMO"},{"num":26,"name":"ROJAS MENDEZ VALERIE CAMILA"},{"num":27,"name":"RUIZ RESTREPO SAMUEL"},{"num":28,"name":"TORRES VILLABON OSCAR FELIPE"},{"num":29,"name":"VALECILLOS MARTINEZ CARLOS DORIAN"},{"num":30,"name":"VALLEJO MELO JUANA GABRIELA"},{"num":31,"name":"VARGAS BERNAL VALERYD NOHEMY"}],"402":[{"num":1,"name":"BAHAMON DANNY ALEJANDRO"},{"num":2,"name":"BELTRAN PRIETO MARIANA ISABELLA"},{"num":3,"name":"BERRIO MEZA EMILY GABRIELA"},{"num":4,"name":"BONILLA GALINDO MARIA ISABELLA"},{"num":5,"name":"BORJA PACHECO ANDERSON PAUL"},{"num":6,"name":"CALCETA CALCETA BRITNEY SOFIA"},{"num":7,"name":"CAMACHO AREVALO AVRIL VALERIA"},{"num":8,"name":"CAMACHO AREVALO CHRISTOPHER JEHIEL"},{"num":9,"name":"CASTAÑEDA HERNANDEZ MIGUEL LEONARDO"},{"num":10,"name":"CASTRO SALCEDO KHALID SAMUEL"},{"num":11,"name":"CHAVES PAEZ JUAN ESTEBAN"},{"num":12,"name":"CONTRERAS LEON ELIANA VALENTINA"},{"num":13,"name":"CUESTAS MORALES GABRIELA SHARYTH"},{"num":14,"name":"DE HOYOS FERNANDEZ ARIANNA"},{"num":15,"name":"DIAZ HERNANDEZ LUIS ANGEL"},{"num":16,"name":"FAJARDO RODRIGUEZ LUIS HUMBERTO"},{"num":17,"name":"FONSECA ESPAÑOL SARAY NICHOLLE"},{"num":18,"name":"FONSECA QUINTERO DYLAN ANDRES"},{"num":19,"name":"GERENA GUZMAN TIFFANY CHARLOTTE"},{"num":20,"name":"GOMEZ PINTO DANIA SAMARA"},{"num":21,"name":"GONZALEZ SANCHEZ DANNA VALERIA"},{"num":22,"name":"GUERRERO MAYORGA DANIELA SOFIA"},{"num":23,"name":"LARGO ZAPATA JUANA VALENTINA"},{"num":24,"name":"MACIAS QUINTERO DYLAN ANDRES"},{"num":25,"name":"MORALES MARTINEZ ANDRES JERONIMO"},{"num":26,"name":"MORFIL ROMERO NEIBIS ESTHER"},{"num":27,"name":"OCAMPO AGUDELO SOFIA"},{"num":28,"name":"PARRA CUY AYELEN CAMILA"},{"num":29,"name":"PARRA LEAL JOSE GREGORIO"},{"num":30,"name":"PEREZ DIAZ CRISTIAN DANIEL"},{"num":31,"name":"PINZON LANCHEROS BELKIN SALOME"},{"num":32,"name":"RODRIGUEZ GUEVARA JHONATAN STIVEN"},{"num":33,"name":"RUIZ FLOREZ DANIEL SANTIAGO"},{"num":34,"name":"VALENZUELA GUILLEN EVANGELIN JULIETH"}],"501":[{"num":1,"name":"ALVAREZ SARABIA NICOLAS"},{"num":2,"name":"AREVALO MURCIA SARA LUCIA"},{"num":3,"name":"BENCOMO MIJARES CAMILA SARAHI"},{"num":4,"name":"BOLIVAR PRADA LEIMAR VALENTINA"},{"num":5,"name":"CARDONA DUARTE JULIANA MARGARITA"},{"num":6,"name":"COLMENARES ROMERO ANGELA MARÍA"},{"num":7,"name":"CORTÉS CAMPUSANO DANY XAVIER"},{"num":8,"name":"ESCOBAR LÓPEZ ALAN DAMIAN"},{"num":9,"name":"FONSECA CAÑON JEIDI MARIANA"},{"num":10,"name":"GARCÍA QUINTERO SEBASTIAN"},{"num":11,"name":"GONZÁLEZ TORRES VALERY SAMANTHA"},{"num":12,"name":"GUTIERREZ PARRA DERECK SANTIAGO"},{"num":13,"name":"JÍMENEZ MARÍA VICTORIA"},{"num":14,"name":"JÍMENEZ SANABRIA JOHAN SEBASTIAN"},{"num":15,"name":"LEMUS MACHADO STEILER"},{"num":16,"name":"LÓPEZ PINZÓN MATYLDA"},{"num":17,"name":"MEDINA BLANCO ALVARO ELIAS"},{"num":18,"name":"MIRALBA MUÑOZ FABIAN JOSÉ"},{"num":19,"name":"MORA SALAZAR OSCAR ANDRES"},{"num":20,"name":"MÉNDEZ LEÓN DAVID SANTIAGO"},{"num":21,"name":"OLIVERA ZAMBRANO LUIS JOSÉ"},{"num":22,"name":"ORTEGA MARTÍNEZ ANA SOFIA"},{"num":23,"name":"PÉREZ MUNELO ESTEBAN NORBERTO"},{"num":24,"name":"QUIÑONES VALVERDE DYLAN ANDRÉS"},{"num":25,"name":"RAMÍREZ BETANCOURT MARÍA JOSÉ"},{"num":26,"name":"RAMÍREZ ROA JUAN PABLO"},{"num":27,"name":"RODRÍGUEZ GONZALEZ THIAGO"},{"num":28,"name":"ROJAS ROJAS DANNA SOFIA"},{"num":29,"name":"RUÍZ RESTREPO JUAN JOSÉ"},{"num":30,"name":"SABOGAL ROMERO EMILY SOFIA"},{"num":31,"name":"VALENCIA PELAEZ PAULA SOPHIA"}],"502":[{"num":1,"name":"ACOSTA MORANTE LUIS MARIO"},{"num":2,"name":"AGUDELO RODRIGUEZ EIMY JULIANA"},{"num":3,"name":"AGUIRRE VANEGAS DANNA SOFIA"},{"num":4,"name":"APONTE BARRETO SAMANTHA VALERIA"},{"num":5,"name":"BECERRA GAMEZ TANYA ISABELLA"},{"num":6,"name":"BEJARANO MONTAÑEZ JUAN MATIAS"},{"num":7,"name":"BENAVIDES LESMES JOHAN SANTIAGO"},{"num":8,"name":"BLANDON GONZALEZ BEKAN ALEXANDER"},{"num":9,"name":"CAMARGO SUAREZ VALERY SOFIA"},{"num":10,"name":"CASALLAS SUAREZ LAURA STTEFANY"},{"num":11,"name":"CASTILLO MAYORA SAMUEL JOSUA"},{"num":12,"name":"GARNICA PELAEZ SAMUEL MAURICIO"},{"num":13,"name":"GUERRERO MENA ELYANA ANDREA"},{"num":14,"name":"GUTIERREZ MONTENEGRO YOHILETH MICHELL"},{"num":15,"name":"GUZMAN DEANGEL DYLAN"},{"num":16,"name":"LOPEZ ATAHUALPA SAMUEL DAVID"},{"num":17,"name":"LUNA BARRETO ABBY GABRIELA"},{"num":18,"name":"MARTINEZ GARCIA EMMANUEL"},{"num":19,"name":"MONTES MORENO ANGEL GABRIEL"},{"num":20,"name":"MORALES CASTRO DANNA NIKOL"},{"num":21,"name":"MORENO REYES YEISON DUVAN"},{"num":22,"name":"MOTIVAR LUCAS KEVIN"},{"num":23,"name":"ORTIZ CIPAGAUTA MARTIN MATIAS"},{"num":24,"name":"PARRA MEJIA DIEGO ALEJANDRO"},{"num":25,"name":"PIMIENTO PRIETO SEBASTIAN"},{"num":26,"name":"RAMIREZ OCHOA TOMAS ASDRUBAL"},{"num":27,"name":"ROA GOMEZ VALERY STEPHANIA"},{"num":28,"name":"RODRIGUEZ GUEVARA JOSE MANUEL"},{"num":29,"name":"SANTAMARIA GONZALEZ EVELYN"},{"num":30,"name":"TORRES GARZON DAMIAN ALEXANDER"},{"num":31,"name":"TRIANA AVILA DANNA SOPHIA"}],"503":[{"num":1,"name":"ACOSTA DIAZ ASHLEY LUCIANA"},{"num":2,"name":"AMBUILA SUAREZ JUAN ANDRES"},{"num":3,"name":"ANGULO CONTRERAS ANGEL MATIAS"},{"num":4,"name":"ARENAS ESCOBAR NATHAN AARON"},{"num":5,"name":"AREVALO MURCIA CRISTIAN RONALDO"},{"num":6,"name":"ARIAS CASTRILLON JESUS SHTEVEN"},{"num":7,"name":"CALCETA CALCETA THIAGO"},{"num":8,"name":"CANDELAZO TORRES NICOL SOFIA"},{"num":9,"name":"CASTIBLANCO DIAZ SAMUEL ALEJANDRO"},{"num":10,"name":"ELEJALDE DIAZ MARIA CAMILA"},{"num":11,"name":"ESCOBAR GAVIRIA ANGEL DAVID"},{"num":12,"name":"HERRERA SICARD VALERY NICOLK"},{"num":13,"name":"HERRIERA ALABDUM ELIAS ALEJANDRO"},{"num":14,"name":"LOZADA OSORIO JUAN PABLO"},{"num":15,"name":"MADERO MARTINEZ GENISIS CHARLOT"},{"num":16,"name":"MEJIA MIRANDA MARIA ELY"},{"num":17,"name":"MENDOZA ARGEL JUAN DAVID"},{"num":18,"name":"MORENO PULIDO ISABELLA"},{"num":19,"name":"MUÑOZ MONTES XIMENA"},{"num":20,"name":"OVIEDO SINGER ALESSANDRO SEBASTIAN"},{"num":21,"name":"PEÑA HERNANDEZ HEISSEN HAWUARE"},{"num":22,"name":"PEÑA LOPEZ SARA SOFIA"},{"num":23,"name":"QUINTERO JIMENEZ ARMANDO JOSE"},{"num":24,"name":"RAMIREZ OCHOA JUAN SEBASTIAN"},{"num":25,"name":"RAMOS MEDINA SAMANTHA"},{"num":26,"name":"REINA HURTADO ANDERSON SAMUEL"},{"num":27,"name":"ROMERO MORALES JOSE DAVID"},{"num":28,"name":"SALGUERO CHICA SANTIAGO ANDRES"},{"num":29,"name":"SANCHEZ CURREA SARA VALENTINA"}],"601":[{"num":1,"name":"ACEVEDO CHIQUIZA JUAN CAMILO"},{"num":2,"name":"ACEVEDO CHIQUIZA LAURA SOFIA"},{"num":3,"name":"ARANGO GONZALEZ ASHLEY SHARAY"},{"num":4,"name":"ARROYO CONTRERAS ANDRES JOSUE"},{"num":5,"name":"BARRIOS BELTRAN HELEM DAHIARA"},{"num":6,"name":"BAUTISTA BAYONA NOVAK ESTIVEN"},{"num":7,"name":"BELTRAN VILLALBA EMMANUEL"},{"num":8,"name":"BURGOS PARRA JOSELYN VALERIA"},{"num":9,"name":"CABEZAS MARTINEZ SEBASTIAN MAURICIO"},{"num":10,"name":"COMBITA RODRIGUEZ ISA GABRIELA"},{"num":11,"name":"CONTRERAS CARDONA VICTORIA"},{"num":12,"name":"ESCOBAR RANGEL MATHIAS ALEJANDRO"},{"num":13,"name":"FIESCO FAJARDO ASLAN DAVID"},{"num":14,"name":"FIGUEROA CAMPO MARIANA"},{"num":15,"name":"GARCIA ORTIZ AARON MARTIN"},{"num":16,"name":"GARZON TORRES MARTIN"},{"num":17,"name":"GIRALDO PARRA SARA CAMILA"},{"num":18,"name":"GOMEZ PINTO DAVID JOSUE"},{"num":19,"name":"GOMEZ SALCEDO JUAN MARTIN"},{"num":20,"name":"GONZALEZ RUDA ANGELL ZHARICK"},{"num":21,"name":"HUESA AVILA STEPHANIE LUCIANA"},{"num":22,"name":"JIMENEZ DUEÑAS EFREN DAVID"},{"num":23,"name":"JUNCA MURCIA DANNA SOFIA"},{"num":24,"name":"LUCUMI BONILLA DILAN ALEJANDRO"},{"num":25,"name":"MEDINA MORENO ESTEBAN"},{"num":26,"name":"MONSALVE GERENA JUAN ERNESTO"},{"num":27,"name":"MORENO GALVIS MARLON ESTEBAN"},{"num":28,"name":"NARANJO FERNANDEZ NICOLAS"},{"num":29,"name":"NAVARRO RAMIREZ DUSLEY VANESSA"},{"num":30,"name":"PRADA PINILLA NELSON ALEJANDRO"},{"num":31,"name":"PÉREZ HERNÁNDEZ JACOB"},{"num":32,"name":"QUIROGA ROJAS JUAN PABLO"},{"num":33,"name":"RIVERO MARTINEZ GEILIN SELENA"},{"num":34,"name":"ROMERO ORTIZ SARA SOFIA"},{"num":35,"name":"RUEDA DONADO SEBASTIAN GAEL"},{"num":36,"name":"SANABRIA BERNAL KAREN YURLEY"},{"num":37,"name":"SANCHEZ MORENO YILMAR FELIPE"},{"num":38,"name":"TORRES VILLANUEVA SARA SOFIA"}],"602":[{"num":1,"name":"AGUIRRE JUAN SEBASTIAN"},{"num":2,"name":"CABALLERO DURAN JHOAN SEBASTIAN"},{"num":3,"name":"CAIVED SANTIAGO ALEXANDER"},{"num":4,"name":"CASTRO LADINO LINA FERNANDA"},{"num":5,"name":"CORDERO LOPEZ MELANY DAYANA"},{"num":6,"name":"FLORIAN RINCON SAMUEL MATIAS"},{"num":7,"name":"GALVAN PEREZ DAFNE VALENTINA"},{"num":8,"name":"GARCIA PEÑA SARA VALERIA"},{"num":9,"name":"GARZON NICOLAS CAMILO"},{"num":10,"name":"GELPUD DELGADO MIGUEL ANGEL"},{"num":11,"name":"HERNANDEZ RAMOS LAUREN SOFIA"},{"num":12,"name":"HERRERA CORTES MIGUEL ANGEL"},{"num":13,"name":"LOPEZ PINZON JUAN SEBASTIAN"},{"num":14,"name":"LOPEZ VEGA ALISSON KARIME"},{"num":15,"name":"LOZANO TIQUE SAMUEL DAVID"},{"num":16,"name":"MENZA CALDERON SARA VALENTINA"},{"num":17,"name":"MONROY ROBLES MARIA FERNANDA"},{"num":18,"name":"MONROY VELANDIA GABRIEL FELIPE"},{"num":19,"name":"MONTAÑEZ ROJAS NICOLLE DAIANA"},{"num":20,"name":"MONTES MARTINEZ DIEGO ALEJANDRO"},{"num":21,"name":"MORA MAYORQUIN LUCIANA"},{"num":22,"name":"MORFIL ROMERO NEILYS SOFIA"},{"num":23,"name":"MOYA MIRANDA SAMUEL"},{"num":24,"name":"MUNEVAR RAMIREZ MARIA FERNANDA"},{"num":25,"name":"MUÑOZ DIAZ MELANY CRISTAL"},{"num":26,"name":"NIETO CARO MATIAS"},{"num":27,"name":"OJEDA RODRIGUEZ DYLAN JAVIER"},{"num":28,"name":"OLAYA PEREZ DILAN SAMUEL"},{"num":29,"name":"ORTIZ TIQUE JUAN SEBASTIAN"},{"num":30,"name":"PINILLA ALZATE ANGEL SANTIAGO"},{"num":31,"name":"RIVERA ORJUELA MARIANA"},{"num":32,"name":"RIVEROS GUARNIZO LAURA MARIA"},{"num":33,"name":"RODRIGUEZ RAMIREZ MARIA ALEJANDRA"},{"num":34,"name":"RODRIGUEZ SAMBONI NICOL SARAY"},{"num":35,"name":"ROMERO MORALES ANA LUCIA"},{"num":36,"name":"SANCHEZ LAGOS SARA NICOLL"},{"num":37,"name":"TEHERAN DANNY ARIADNA"},{"num":38,"name":"URBANEJA OCANDO ALANNYS MARIE"},{"num":39,"name":"VELANDIA MUÑOZ JUAN PABLO"}],"603":[{"num":1,"name":"BAUTISTA PORRAS MARIA FERNANDA"},{"num":2,"name":"BENITEZ ROZO JACOBO"},{"num":3,"name":"BONILLA GALINDO DILAN SANTIAGO"},{"num":4,"name":"BRAVO CESPEDES SALOME"},{"num":5,"name":"CARDENAS PEREZ JUAN ESTEBAN"},{"num":6,"name":"CARVAJAL CORREDOR JULIAN ANDRES"},{"num":7,"name":"CORBA PULIDO ANDRES FELIPE"},{"num":8,"name":"CORTES MARQUEZ SISSY JOHANIS"},{"num":9,"name":"FONSECA CAÑON JADER ESTEBAN"},{"num":10,"name":"GALICIA FALCO FIORELLA"},{"num":11,"name":"GARAY VILLALBA SEBASTIAN"},{"num":12,"name":"GARCIA PEREZ DILIANA TERESA"},{"num":13,"name":"GARZON OSPINA IKER SANTIAGO"},{"num":14,"name":"GONZALEZ OROBIO LUCIANA"},{"num":15,"name":"LOPEZ RAMIREZ JUAN SANTIAGO"},{"num":16,"name":"MORENO CARDENAS SANTIAGO"},{"num":17,"name":"MORENO RODRIGUEZ MATTHIAS GABRIEL"},{"num":18,"name":"OJEDA RODRIGUEZ HANNA MICHELL"},{"num":19,"name":"ONBANDO CANTILLO LAURA ISABELLA"},{"num":20,"name":"PACHECO CUCAITA JULIANA"},{"num":21,"name":"PALENCIA CORDERO FRANNY DEL VALLE"},{"num":22,"name":"QUINTERO CAJAMARCA STEFANY"},{"num":23,"name":"QUITIAN FAJARDO SERGIO DUVAN"},{"num":24,"name":"RAMIREZ MANRIQUE JUAN JOSE"},{"num":25,"name":"RAMOS AGUILERA JORGE IVAN"},{"num":26,"name":"REINA HURTADO NICOLE JULIANA"},{"num":27,"name":"RINCON CARDOZO LIHA"},{"num":28,"name":"ROJAS ORTIZ SARAH MICHELLE"},{"num":29,"name":"RUIZ FORERO ISABELLA"},{"num":30,"name":"SANCHEZ FIGUEREDO DANNA SOFIA"},{"num":31,"name":"SANTANA VALENCIA MARIANA"},{"num":32,"name":"SORACA PEREZ JESUS DAVID"},{"num":33,"name":"SORACA PEREZ KENNER DANIEL"},{"num":34,"name":"TORRES ARISTIZABAL JUAN ESTEBAN"},{"num":35,"name":"TORRES PEREZ MICHELL LUCIA"},{"num":36,"name":"URANGO HERNANDEZ MELISSA"},{"num":37,"name":"VARGAS CONTRERAS ADELIN SAMARA"},{"num":38,"name":"VEGA ROMERO MIGUEL ANGEL"},{"num":39,"name":"YULE BELLO MILE SOFIA"}],"701":[{"num":1,"name":"ALIPIO GUTIERREZ SARA"},{"num":2,"name":"APONTE BARRETO ANDRES DAVID"},{"num":3,"name":"AVILA ALVAREZ YESLEY MARIANA"},{"num":4,"name":"BAHAMON CALDERON LINDA ISABELLA"},{"num":5,"name":"BENAVIDEZ SANCHEZ FERNEY DAVID"},{"num":6,"name":"CAMACHO ACEVEDO CRISTIAN JULIAN"},{"num":7,"name":"CARDENAS PUENTES DAVID ANYELO"},{"num":8,"name":"CELY CEPEDA ANA CAROLINA"},{"num":9,"name":"DIAZ CUBILLOS JERONIMO"},{"num":10,"name":"GARCIA GARCIA ANTONELLA"},{"num":11,"name":"GARCIA HERNANDEZ MARLON"},{"num":12,"name":"GARCIA QUINTERO MILAN"},{"num":13,"name":"GAÑAN FONSECA NICOL VANESSA"},{"num":14,"name":"GONZALEZ VILLAREAL ISABELLA MIA"},{"num":15,"name":"GRAJALES FONSECA JHON ANDERSON"},{"num":16,"name":"HERNANDEZ ALVAREZ WILLIAM DAVID"},{"num":17,"name":"LUCUMI BONILLA CAROL ISABELLA"},{"num":18,"name":"MACIAS QUINTERO SAMUEL DAVID"},{"num":19,"name":"MENDIETA MEJIA JUAN ANGEL"},{"num":20,"name":"MORALES HURTADO MARIANA"},{"num":21,"name":"MUELAS ROSERO LINA MARCELA"},{"num":22,"name":"NEIRA MARTINEZ SERGIO ALEJANDRO"},{"num":23,"name":"NIETO CARO ALEX"},{"num":24,"name":"OVIEDO CARDENAS LAURA SOFIA"},{"num":25,"name":"PINILLA MOLINA SARAY STEFANY"},{"num":26,"name":"ROMERO SANCHEZ NATALI SARAY"},{"num":27,"name":"RUIZ GONZALEZ HELEN LUCIANA"},{"num":28,"name":"SALCEDO MARTINEZ NICOLAS"},{"num":29,"name":"URREGO MONROY THOMAS"}],"702":[{"num":1,"name":"ANRANGO MALDONADO YAID JOSUE"},{"num":2,"name":"BELEÑO RIVEROS LEDYS VALENTINA"},{"num":3,"name":"CASTILLO DUQUE DIEGO ALEJANDRO"},{"num":4,"name":"DIAZ TOVAR NATHALY SOFIA"},{"num":5,"name":"GARCIA BELEÑO JUAN SEBASTIAN"},{"num":6,"name":"GARCIA PEREZ JONATHAN DELIMIRO"},{"num":7,"name":"GONZALEZ COHEN YORKIS EDUARDO"},{"num":8,"name":"GUEVARA AVILES NICOLAS ALEJANDRO"},{"num":9,"name":"GUTIERREZ MONTENEGRO NEIMAR JOSE"},{"num":10,"name":"HENAO CUERVO ANA SOFIA"},{"num":11,"name":"HERRERA CABALLERO EMANUEL"},{"num":12,"name":"LOZANO PERALTA SIMON DAVID"},{"num":13,"name":"MENA CUESTA EMELY VALENTINA"},{"num":14,"name":"MENDOZA BERNAL SAMUEL"},{"num":15,"name":"MORALES CASALLAS EMMANUEL ANGEL"},{"num":16,"name":"MORENO REYES KIMBERLY NICOL"},{"num":17,"name":"MUÑOZ PULGARIN ANA MARIA"},{"num":18,"name":"NEUTA OSORIO MARIA ISABELLA"},{"num":19,"name":"OJEDA MEDINA SARA VALENTINA"},{"num":20,"name":"ORTEGON SEGURA SEBASTIAN DAVID"},{"num":21,"name":"PARRA BUITRAGO DANNA SOFIA"},{"num":22,"name":"PEREZ PEREZ MARTIN"},{"num":23,"name":"RODRIGUEZ TERAN LIZETH CAROLINA"},{"num":24,"name":"ROMERO ESCALANTE XAMDER DAVID"},{"num":25,"name":"RUIZ RESTREPO JULIETA"},{"num":26,"name":"TIMAURE MELENDEZ SEBASTIAN ALEXANDER"},{"num":27,"name":"TORREBLANCA TOBIAS GREYDIS LORENA"},{"num":28,"name":"TORRES GARZON VALERY SOFIA"},{"num":29,"name":"VILLALBA MARTINEZ DIEGO"},{"num":30,"name":"VILLAMIL LEAL JAVID MATIAS"}],"703":[{"num":1,"name":"ALVARADO NOVOA KRISTEN VALERIA"},{"num":2,"name":"BERMUDEZ LARA LUIS ALBERTO"},{"num":3,"name":"BONILLA REYES NATALIA"},{"num":4,"name":"CARDOZO OLARTE ANDRES FELIPE"},{"num":5,"name":"CERQUERA PRIETO EDWARD SAMUEL"},{"num":6,"name":"DE FRENZA PEINADO FRANCO ALESSANDRO"},{"num":7,"name":"DE LA HOZ HERNANDEZ NICOLLE DAYANA"},{"num":8,"name":"DUEÑAS GIL MARTIN"},{"num":9,"name":"DURAN VALENCIA LAUREN VALENTINA"},{"num":10,"name":"ESPEJO DIAZ ANDERSON ESNEIDER"},{"num":11,"name":"ESTRADA RINCON ISABELLA CRISTINA"},{"num":12,"name":"GOMEZ SUAREZ JOHAN SAMUEL"},{"num":13,"name":"GUZMAN ALFONSO ANGEL ALBERTO"},{"num":14,"name":"HERNANDEZ ALVAREZ MIGUEL ANGEL"},{"num":15,"name":"MARTINEZ CASTRO AINHOA MIRANDA"},{"num":16,"name":"MEDINA TURMEQUE ANGEL SOFIA"},{"num":17,"name":"MENDEZ FARFAN JUAN FELIPE"},{"num":18,"name":"NAVAS DIAZ SALOME"},{"num":19,"name":"PARRA LEAL GISSELLE GABRIELA"},{"num":20,"name":"PEREZ PINEDA NICOLAS"},{"num":21,"name":"PINILLA ALZATE ANGEL SANTIAGO"},{"num":22,"name":"PULIDO FLOREZ MARIANA"},{"num":23,"name":"RAMIREZ RODRIGUEZ CAMILA SARAHI"},{"num":24,"name":"RESTREPO CARDENAS FABIAN ESTEBAN"},{"num":25,"name":"RODRIGUEZ YARA MARIA JOSE"},{"num":26,"name":"SANCHEZ HERNANDEZ HELEN ISABELLA"},{"num":27,"name":"SUAREZ TIQUE MICHAEL STEVEN"},{"num":28,"name":"TIMAURE MELENDEZ SEBASTIAN ALEXANDER"},{"num":29,"name":"TORO GALLO SAMUEL FELIPE"},{"num":30,"name":"VINASCO ANACONA SARAY YULIANA"}],"801":[{"num":1,"name":"ACERO FALLA ISABELA"},{"num":2,"name":"ACUÑA VERDUGO NICOLLE DANIELA"},{"num":3,"name":"BAUTISTA LOPEZ JUAN ESTEBAN"},{"num":4,"name":"BECERRA MERCHAN MATTIAS"},{"num":5,"name":"BELTRAN VARGAS PAULA VALENTINA"},{"num":6,"name":"BELTRAN VILLALBA SAMUEL ENRIQUE"},{"num":7,"name":"CARO GARCÍA LUCÍA"},{"num":8,"name":"CASTAÑO LOPEZ JUAN CAMILO"},{"num":9,"name":"CASTRO SANGUINO ASHLY DAYANA"},{"num":10,"name":"CORREA FONSECA DIEGO ANDRES"},{"num":11,"name":"DAVILA MARTINEZ JOAN EMMANUEL"},{"num":12,"name":"DE FRENZA PEINADO NATHALIA ANTONELLA"},{"num":13,"name":"DUGARTE UZCATEGUI FABIAN ANDRES"},{"num":14,"name":"FRESNEDA HERRERA LAURA XIMENA"},{"num":15,"name":"GALINDO BARON CARLA MARIANA"},{"num":16,"name":"GALVIS GUTIERREZ DAVID SANTIAGO"},{"num":17,"name":"GARCIA SANCHEZ DANA SOFIA"},{"num":18,"name":"GIRALDO MURCIA CARLA GISEL"},{"num":19,"name":"GONZALEZ GUERRERO ISABELA"},{"num":20,"name":"GONZALEZ LOPEZ YULI XIMENA"},{"num":21,"name":"JIMENES LAGUADO MARÍA JOSÉ"},{"num":22,"name":"LLANOS HUERTAS SARA ISABELLA"},{"num":23,"name":"MARINEZ MAYORGA VALERY DAYAN"},{"num":24,"name":"MENDIETA MEJIA JUAN ANGEL"},{"num":25,"name":"MORENO LARA NICOLAS"},{"num":26,"name":"OJEDA HERRERA MAURA ALEJANDRA"},{"num":27,"name":"PARRA VILLADA SARITHA"},{"num":28,"name":"PINEDA OCHOA NICOLAS ADAN"},{"num":29,"name":"REVERON RIVEROS CAMILA VALERIA"},{"num":30,"name":"RIASCOS CAICEDO CESAR ADRIAN"},{"num":31,"name":"RODRIGUEZ MANRIQUE DAVID ESTEBAN"},{"num":32,"name":"SANCHEZ FERNANDEZ MIGUEL ANGEL"},{"num":33,"name":"TRIVIÑO GUALTEROS JULIAN DAVID"}],"802":[{"num":1,"name":"ACOSTA AGUIAR MIGUEL EDUARDO"},{"num":2,"name":"ARIAS LEON JONATHAN GABRIEL"},{"num":3,"name":"ARRIETA VERGARA ANNY SOFIA"},{"num":4,"name":"BELEÑO BETANCOURTH ARIADNA ALEJANDRA"},{"num":5,"name":"BUITRAGO ANGEL MARIA JOSE"},{"num":6,"name":"CABEZAS MARTINEZ SOLL MARIX"},{"num":7,"name":"CARRASCAL DE LA TORRE JADER STIVEN"},{"num":8,"name":"CASTRO LASTRA AURA SOFIA"},{"num":9,"name":"COLORADO OLMOS NICOLE VALERIA"},{"num":10,"name":"CORTES RINCON OSWEILYN ESTHER"},{"num":11,"name":"CORTES ROCHA JUAN FELIPE"},{"num":12,"name":"FERNANDEZ BUENDIA SEBASTIAN JOSE"},{"num":13,"name":"FORERO CARRERO DANNA VALENTINA"},{"num":14,"name":"GARCIA AVELLANEDA SAMUEL JOSE"},{"num":15,"name":"GARCIA MORANTES LUIS SEBASTIAN"},{"num":16,"name":"HEREDIA RUIZ MARIA CAMILA"},{"num":17,"name":"HERNANDEZ PEREZ CAMILA YIREH"},{"num":18,"name":"LAVERDE ALONSO JOEL"},{"num":19,"name":"MENDEZ CALDERON SAMUEL"},{"num":20,"name":"MORENO BECERRA IVAN DARIO"},{"num":21,"name":"MURIEL GAMEZ JORDAN DAVID"},{"num":22,"name":"MUÑOZ MONTES ISABELLA"},{"num":23,"name":"NAVARRETE NIÑO NICOL TATIANA"},{"num":24,"name":"OLAYA PEREZ MELANY GABRIELA"},{"num":25,"name":"ORDONEZ CIFUENTES JUAN ANGEL"},{"num":26,"name":"ORTEGA CHAVARRA SOFIA"},{"num":27,"name":"PEDRAZA GONZALEZ JUAN JOSE"},{"num":28,"name":"PRIETO POVEDA DAVID FELIPE"},{"num":29,"name":"PUERTO ORTIZ GABRIELA"},{"num":30,"name":"PULIDO FLOREZ MARIA ISABELLA"},{"num":31,"name":"REBOLLEDO BUSTAMANTE ISABELLA SOFIA"},{"num":32,"name":"ROA ORMAZA SAMUEL HUMBERTO"},{"num":33,"name":"ROJAS RICAURTE DIEGO ISAAC"},{"num":34,"name":"ZAMBRANO PORTELA ANAMARIA"}],"803":[{"num":1,"name":"AMADO FRESNEDA SERGIO NICOLAS"},{"num":2,"name":"APARICIO CHICACAUSA EIMY"},{"num":3,"name":"BANGURA DUNDUMI NICOL DAHIANA"},{"num":4,"name":"BETANCOURT RODRIGUEZ ZARETH SOFIA"},{"num":5,"name":"BUITRAGO LOPEZ ESTEBAN"},{"num":6,"name":"CEBALLOS RENGIFO TAYRONA"},{"num":7,"name":"CORTES TARAZONA JOSE DAVID"},{"num":8,"name":"ESQUIVEL PUENTES LIANNE ANTONIA"},{"num":9,"name":"FERNANDEZ RAMIREZ ANDRES MAURICIO"},{"num":10,"name":"GONZALEZ GUERRERO ISABELLA"},{"num":11,"name":"GONZALEZ LOPEZ SARA"},{"num":12,"name":"GUERRERO MUÑOZ MARIA ESTEFANIA"},{"num":13,"name":"GUTIERREZ BLANCO LUCIANA CAMILA"},{"num":14,"name":"HERNANDEZ MURCIA VALERIE SOFIA"},{"num":15,"name":"HERRERA PEÑUELA EVELING SOFIA"},{"num":16,"name":"LESMES ROMERO JUAN CAMILO"},{"num":17,"name":"LOPEZ GOMEZ ANDRUW JHOSUA"},{"num":18,"name":"LOZANO MEDINA JUAN ESTEBAN"},{"num":19,"name":"MARQUEZ OVIEDO SAMUEL ANDRES"},{"num":20,"name":"MENDEZ ARIZA ARTURO ENRIQUE"},{"num":21,"name":"MONTEALEGRE CALVO SAMUEL ALBERTO"},{"num":22,"name":"MORENO ARIZA DANIEL ESTEBAN"},{"num":23,"name":"MORENO BENAVIDES CRISTIAN FELIPE"},{"num":24,"name":"MUÑOZ TORRES DANIEL FELIPE"},{"num":25,"name":"NUMPAQUE SOTELO ISABELLA"},{"num":26,"name":"PINEDO SERPA LINA MARCELA"},{"num":27,"name":"PINILLA MOLINA JUDY ALEXANDRA"},{"num":28,"name":"PLAZA IBAÑEZ MARTIN ALEJANDRO"},{"num":29,"name":"PULIDO GOMEZ DANIELA"},{"num":30,"name":"REALES CERDA DAYIMAR DANIELA"},{"num":31,"name":"RIOS GALINDO ANIBAL EMMANUEL"},{"num":32,"name":"RODRIGUEZ CASTRO ANYELY FERNANDA"},{"num":33,"name":"RODRIGUEZ HERRERA JULIANA"},{"num":34,"name":"RODRIGUEZ TORRES DAVID ESTIVEN"},{"num":35,"name":"ROMERO ALVAREZ ANDERSSON"},{"num":36,"name":"ROMERO IBARRA SAMUEL SALAH"},{"num":37,"name":"RONDANO TOVAR SALOME"},{"num":38,"name":"SANTAMARIA TORRES ANDRES SANTIAGO"},{"num":39,"name":"TRUJILLO CALDERON JUAN SEBASTIAN"}],"901":[{"num":1,"name":"AVILA NOGUERA SANTIAGO ANDRES"},{"num":2,"name":"BAYONA BUITRAGO MARIANA"},{"num":3,"name":"BENAVIDES SANCHEZ ANDRES STIVEN"},{"num":4,"name":"BERRIO DIAZ DANNA SOFIA"},{"num":5,"name":"BLANCO ANDRADE DANIEL ANDRES"},{"num":6,"name":"CASTILLO OLAYA EMILY ZULAY"},{"num":7,"name":"CASTRO LADINO PAULA ANDREA"},{"num":8,"name":"CELY SANCHEZ SAMUEL SANTIAGO"},{"num":9,"name":"CIFUENTES TARAZONA LUIS GABRIEL"},{"num":10,"name":"CISNEROS CISNEROS DALIA ALEJANDRA"},{"num":11,"name":"DIAZ GOMEZ ALLYSON SOFIA"},{"num":12,"name":"DOMINGUEZ CONTRERAS ADRIANA LUCIA"},{"num":13,"name":"FONSECA RODRIGUEZ SARAH"},{"num":14,"name":"GARCIA CAMPOS SHARIT NYCOLLE"},{"num":15,"name":"GARCIA GARCIA JHON ANDERSON"},{"num":16,"name":"GARCIA GARCIA MIGUEL ANGEL"},{"num":17,"name":"GARCIA VERA JORGE ELIAZAR"},{"num":18,"name":"HENAO PARADA ISABELLA"},{"num":19,"name":"HERNANDEZ CORREA DANNA GABRIELA"},{"num":20,"name":"HERRERA OJEDA LUISA ARIADNA"},{"num":21,"name":"IBAÑEZ CASTILLO HELLEN SOPHIA"},{"num":22,"name":"LEON TIGUAQUE ERIC SANTIAGO"},{"num":23,"name":"MEJIA SUAREZ SAMUEL"},{"num":24,"name":"MOLINA GARAVITO ANA SOFIA"},{"num":25,"name":"MONROY VELANDIA LUIS CARLOS"},{"num":26,"name":"MORALES PARODI DERWIN JHOEL"},{"num":27,"name":"PARRA GONZALEZ LEIDY VALENTINA"},{"num":28,"name":"PATIÑO QUESADA JUAN DAVID"},{"num":29,"name":"PINEDA VALERO JULIAN ANDRES"},{"num":30,"name":"RAMIREZ BELTRAN MELANI DAYAN"},{"num":31,"name":"RODRIGUEZ SAMBONI PAULA LIZETH"},{"num":32,"name":"RUIZ SANABRIA SANTIAGO"},{"num":33,"name":"SABOGAL PERILLA HEILED VALENTINA"},{"num":34,"name":"SALCEDO SARMIENTO DEYVI ALEXANDER"},{"num":35,"name":"SARMIENTO ORJUELA JEREMY FARLEY"},{"num":36,"name":"SASTRE GUZMAN HELEN JULIANA"},{"num":37,"name":"URBINA MONCADA JUAN DIEGO"},{"num":38,"name":"VALENZUELA CAVIEDES NICOLAS"}],"902":[{"num":1,"name":"ALIPIO GUTIERREZ SANTIAGO"},{"num":2,"name":"CARRILLO FLOREZ YIREH DAYANA"},{"num":3,"name":"CASTRO GARCIA LINA SOFIA"},{"num":4,"name":"CORTES MUNEVAR EDWARD SANTIAGO"},{"num":5,"name":"DELATORRE CANDO DANNA ZARETH"},{"num":6,"name":"GALLEGO AMAYA DOMINIQUE SHARID"},{"num":7,"name":"IGLESIA MORALES ZARA DANIELA"},{"num":8,"name":"LARA BARBON NICOLE CAMILA"},{"num":9,"name":"LONDOÑO CADENA DANA VALERIA"},{"num":10,"name":"MACIAS VELASCO SERGIO DAVID"},{"num":11,"name":"MANCILLA CARO SAMUEL DAVID"},{"num":12,"name":"MARIN RODRIGUEZ HEIDY LORENA"},{"num":13,"name":"MARTINEZ ROMERO ISABELLA"},{"num":14,"name":"MENDEZ PATARROYO JUAN SEBASTIAN"},{"num":15,"name":"MEZA ORTIZ JAFETH SANTIAGO"},{"num":16,"name":"MONCADA DIAZ GOHANN EMMANUEL"},{"num":17,"name":"MONCADA LOPEZ SAHYAN NIKOLL"},{"num":18,"name":"MORENO CITA SARA GABRIELA"},{"num":19,"name":"MORENO RUDA ERIK SANTIAGO"},{"num":20,"name":"MORENO VARGAS JUAN SEBASTIAN"},{"num":21,"name":"MORFIL ROMERO NEIDY LUZ"},{"num":22,"name":"ORJUELA ANDRADE ANGIE VALENTINA"},{"num":23,"name":"OROZCO MARTINEZ SAHARA"},{"num":24,"name":"POLOCHE RODRIGUEZ ERICK DUVAN"},{"num":25,"name":"QUINTERO GARCIA NICOLL SOFIA"},{"num":26,"name":"RAMIREZ RODRIGUEZ CARLOS JOSE"},{"num":27,"name":"RETAVISCA VELASCO JUAN SEBASTIAN"},{"num":28,"name":"RINCÓN CUY ANDRES SEBASTIAN"},{"num":29,"name":"RODRIGUEZ RAMIREZ VALENTINA"},{"num":30,"name":"ROMERO SANCHEZ DANIEL ESTEBAN"},{"num":31,"name":"SALCEDO LOBO MIGUEL ANGEL"},{"num":32,"name":"SANCHEZ BERMUDEZ MARIA ISABELLA"},{"num":33,"name":"SOACHA RINCON DOMINICK ADRIAN"},{"num":34,"name":"VALENCIA MELECIO STEFANNY PAOLA"},{"num":35,"name":"VARGAS SANDOVAL ALEJANDRA"},{"num":36,"name":"VEGA MUÑOZ MARIA ALEJANDRA"}],"903":[{"num":1,"name":"ALVAREZ ARANGO KAROLAY ANDREA"},{"num":2,"name":"AMEZQUITA BELTRAN YAIDI GIULIANA"},{"num":3,"name":"ARCINIEGAS NIÑO HERNAN DARIO"},{"num":4,"name":"BALAGUERA CASTRO JOHANA"},{"num":5,"name":"BECERRA MERCHAN VALERIA"},{"num":6,"name":"BETANCOURT GONZALEZ EZEQUIEL ALEXANDRO"},{"num":7,"name":"BUITRAGO MORA VALENTINA"},{"num":8,"name":"CARDONA DUARTE JUNIOR CRISTIANO"},{"num":9,"name":"CASTILLA HERNANDEZ VALERY"},{"num":10,"name":"CASTRO IMITOLA LAUREN ANDREA"},{"num":11,"name":"CONTRERAS CAMARGO LINA SOFIA"},{"num":12,"name":"ESCOBAR RANGEL JUAN SEBASTIAN"},{"num":13,"name":"GIL ORTIZ SARAH CAMILA"},{"num":14,"name":"GOMEZ MARTINEZ KAROL VALENTINA"},{"num":15,"name":"GUATAQUIRA CRUZ JORGE MIGUEL"},{"num":16,"name":"GUEVARA MOLINA MARIA PAULA"},{"num":17,"name":"GUZMAN CARVAJAL LIZ YOHANDYS"},{"num":18,"name":"HERNANDEZ HERNANDEZ KEVIN SANTIAGO"},{"num":19,"name":"JARAMILO ANNYS"},{"num":20,"name":"JUNCO RODRIGUEZ MANUELA ALEXANDRA"},{"num":21,"name":"LINCE ORDOÑEZ DYLAN MATIAS"},{"num":22,"name":"LOPEZ POLANIA SAMUEL"},{"num":23,"name":"LUNA BARRETO IAN SAMUEL"},{"num":24,"name":"MOJICA MOJICA JUAN MANUEL"},{"num":25,"name":"REINA HURTADO JHOJAN ALEXANDER"},{"num":26,"name":"RETAVISCA VELASCO ZAMARA"},{"num":27,"name":"ROA BALLESTEROS NICOL DAYANA"},{"num":28,"name":"RODRIGUEZ BALLESTEROS MAXIMILIANO"},{"num":29,"name":"SANCHEZ GOMEZ MAYKOL ALEJANDRO"},{"num":30,"name":"SANCHEZ MORENO GABRIELA"},{"num":31,"name":"SANCHEZ RAMIREZ IVONNE VALERIA"},{"num":32,"name":"SANCHEZ SANTANA DANA YULIED"},{"num":33,"name":"SARMIENTO NONSOQUE DIDIER ALEXANDER"},{"num":34,"name":"SEPULVEDA CASTAÑO SAMUEL STEVEN"},{"num":35,"name":"SIERRA BARRERO JOHEL SANTIAGO"},{"num":36,"name":"SILVA ARIZA JUAN CAMILO"},{"num":37,"name":"TORRES RAMIREZ OSCAR SANTIAGO"},{"num":38,"name":"TRIVIÑO ROMERO LEYLA DANIELA"},{"num":39,"name":"TRONCOSO LOPEZ SHARON MARIANA"},{"num":40,"name":"URDANETA CANTILLO MARIA JOSE"},{"num":41,"name":"VARGAS PARRA CARLOS DAVID"}],"1001":[{"num":1,"name":"ANAMA ROQUE ALEJANDRO"},{"num":2,"name":"AYALA GARZON STEFANNY ALEJANDRA"},{"num":3,"name":"BARBOSA CELIS JERONIMO"},{"num":4,"name":"BECERRA GAMEZ MARA VALERIA"},{"num":5,"name":"BERTEL BARBON RAFAEL DAVID"},{"num":6,"name":"CARABALI MARTINEZ SARA NICOLLE"},{"num":7,"name":"CASTELLANOS SÁNCHEZ DYLAN SANTIAGO"},{"num":8,"name":"CASTRO LADINO PAULA ANDREA"},{"num":9,"name":"CELIS ORTIZ ROMAN ARDEY"},{"num":10,"name":"CHAPARRO ARIZA DULCE MELANNIE"},{"num":11,"name":"CONTRERAS CARO DAYANE SOFIA"},{"num":12,"name":"CONTRERAS MOSQUERA MARIANA"},{"num":13,"name":"CONTRERAS SAVALA JUAN DAVID"},{"num":14,"name":"DIAZ CARDENAS JAZMIN ALEJANDRA"},{"num":15,"name":"FIGUEREDO RONCANCIO PAULA"},{"num":16,"name":"GARCIA POLOCHE JORGE IVAN"},{"num":17,"name":"GARCIA POLOCHE JUAN ESTEBAN"},{"num":18,"name":"GUEVARA MEDINA SEBASTIAN"},{"num":19,"name":"HERRERA CABALLERO SHAROL MISHEL"},{"num":20,"name":"JIMENEZ LAGUADO JUAN"},{"num":21,"name":"JIMENEZ LAURA SOFIA"},{"num":22,"name":"LOPEZ GONZALEZ ELIANA"},{"num":23,"name":"MEDINA MORENO YESSY PAOLA"},{"num":24,"name":"MENDEZ JAIME MARIA PAULA"},{"num":25,"name":"MOLINA ANAVE ELIANA CATERIN"},{"num":26,"name":"MURILLO MUÑOZ ANDRES FELIPE"},{"num":27,"name":"PARGA CASTILLO JUAN PABLO"},{"num":28,"name":"PORRAS FLOREZ ANDRES STIVEN"},{"num":29,"name":"QUINTAS HERNANDEZ ANDRES FELIPE"},{"num":30,"name":"RODRIGUEZ AZUAJE JEISON JOSE"},{"num":31,"name":"TOBAR GARCIA DANA SAMANTHA"},{"num":32,"name":"TORRES VANEGAS GAEL DAVID"},{"num":33,"name":"VALDERRAMA CUBILLOS LAURA SOFIA"},{"num":34,"name":"VIVAS PENAGOS JUAN FELIPE"}],"1002":[{"num":1,"name":"ABRIL MORENO NICOL"},{"num":2,"name":"AREVALO MURILLO JUAN MARTIN"},{"num":3,"name":"ARIAS BUENDÍA HEIDY CAROLINA"},{"num":4,"name":"BAUTISTA BAYONA JUAN DIEGO"},{"num":5,"name":"BECERRA RAMIREZ SARA VALENTINA"},{"num":6,"name":"CEPEDA GARCIA EDWAR ALEXANDER"},{"num":7,"name":"COCA RIVERA JUAN SEBASTIAN"},{"num":8,"name":"CRUZ GALINDO SALMA"},{"num":9,"name":"ESCOBAR RANGEL ANGEL ADRIAN"},{"num":10,"name":"GOMEZ PINTO THOMAS ESTEBAN"},{"num":11,"name":"GUTIERREZ LEON ROSMARLY ESTRELLA"},{"num":12,"name":"HERNANDEZ ALVAREZ BRIAN ALEJANDRO"},{"num":13,"name":"JIMENEZ CHAVEZ WILDELYS MARIA"},{"num":14,"name":"LEON AVELLA ANGEL DAVID"},{"num":15,"name":"LINARES GOMEZ JUAN CAMILO"},{"num":16,"name":"LOPEZ SOSA JOHAN STIVEN"},{"num":17,"name":"LOPEZ SUAREZ JEIDY VANESSA"},{"num":18,"name":"LOPEZ VEGA JOHN BRAYAN"},{"num":19,"name":"LUENGAS BONILLA MICHELL PAULINA"},{"num":20,"name":"MARTINEZ GOMEZ DIEGO ARMANDO"},{"num":21,"name":"MATA LASSO MATIAS ALEJANDRO"},{"num":22,"name":"MENDEZ FERNANDEZ CRISTIAN JAVIER"},{"num":23,"name":"PORRAS MORENO JUAN SEBASTIAN"},{"num":24,"name":"RAMIREZ RAMIREZ JOHAN JAIR"},{"num":25,"name":"REYES MELO ANDRES FELIPE"},{"num":26,"name":"RIVERO MARTINEZ GELLENS NATASCHA"},{"num":27,"name":"RODRIGUEZ VARGAS JUAN ESTEBAN"},{"num":28,"name":"SALINAS MORENO VALENTINA"},{"num":29,"name":"SANCHEZ LAGOS SHANON CAMILA"},{"num":30,"name":"SIERRA CASTIBLANCO CRISTIAN STEVEN"},{"num":31,"name":"TORRES MARQUEZ MIGUEL ANGEL"},{"num":32,"name":"URECHE PEÑA ANDREA DE LOS ANGELES"},{"num":33,"name":"VARGAS VERA DANA VALENTINA"},{"num":34,"name":"VILLALOBOS SALINAS JUAN ESTEBAN"}],"1003":[{"num":1,"name":"ACOSTA PATERNINA ISABELLA"},{"num":2,"name":"BECERRA MAYO JERONIMO"},{"num":3,"name":"BONILLA GALINDA BRIAN ALEJANDRO"},{"num":4,"name":"CAMACHO OSPINA MICHAEL ALEXANDER"},{"num":5,"name":"CASTRO LADINO DAVID ROBERTO"},{"num":6,"name":"CHAUTA GUARIN JOEL SEBASTIAN"},{"num":7,"name":"COBOS GUEVARA MANUELA"},{"num":8,"name":"CORBA PULIDO MIGUEL ANGEL"},{"num":9,"name":"DUN VERGARA ORLEIBIS GEORGINA"},{"num":10,"name":"GARAY VILLALBA ANDRES FELIPE"},{"num":11,"name":"GARZON ORTIZ LEIDY DANIELA"},{"num":12,"name":"HERNANDEZ CADENA WILSON DANIEL"},{"num":13,"name":"LEON CASTRO JUAN CAMILO"},{"num":14,"name":"LONGA ROJAS MARIA JOSE"},{"num":15,"name":"LOPEZ RODRIGUEZ KAROL YINETH"},{"num":16,"name":"MAHECHA BELLO VALERY"},{"num":17,"name":"MALAGON RICO SOPHIA"},{"num":18,"name":"MARQUEZ VILLEGAS SNEYKER VLADIMIR"},{"num":19,"name":"MENDEZ MORENA HANNAH VALERIA"},{"num":20,"name":"MIRANDA VELOSA JUAN ESTEBAN"},{"num":21,"name":"MONTAÑO CASTRO ALEJANDRO"},{"num":22,"name":"MORENO BECERRA MARIA ALEJANDRA"},{"num":23,"name":"PICHAMBA CANDO JOSEP JOEL"},{"num":24,"name":"PINZON PALOMA LAURA JULIANA"},{"num":25,"name":"RIVERA RAMIREZ ANGEL DAVID"},{"num":26,"name":"SALAZAR OLAYA ISABELA"},{"num":27,"name":"SOACHA RINCON GABRIEL ALEJANDRO"},{"num":28,"name":"SOTO GUZMAN SHARON GABRIELA"},{"num":29,"name":"TIMAURE MELENDEZ AARON ALEXANDER"},{"num":30,"name":"TORRES CABRALES NICOLE SOFIA"},{"num":31,"name":"VARGAS AYURE JULIAN SANTIAGO"},{"num":32,"name":"VELASQUEZ PESTANA LUIS MANUEL"}],"1101":[{"num":1,"name":"ACEVEDO OROZCO SARA CAMILA"},{"num":2,"name":"ALDANA TRIANA VALERY JULIANA"},{"num":3,"name":"ALVARADO OLIVERA SOFIHA VALENTINA"},{"num":4,"name":"ALZAMORA CAMARGO JORGE SANTIAGO"},{"num":5,"name":"ARAQUE SOTELO NICOLAS"},{"num":6,"name":"ARIAS CARDOZO GABRIELA"},{"num":7,"name":"ARIZA GONZALEZ SANTIAGO"},{"num":8,"name":"CANO TOBAR MIGUEL SANTIAGO"},{"num":9,"name":"CORZO SILVA DIANA GABRIELA"},{"num":10,"name":"DIAZ GOMEZ JUAN DAVID"},{"num":11,"name":"FAJARDO PINEDA ISISS ALEJANDRA"},{"num":12,"name":"GUZMÁN ROJAS MARIANA"},{"num":13,"name":"HEREDIA RUIZ JEREMYK SANTIAGO"},{"num":14,"name":"HERNANDEZ VILLANUEVA SHAIRA"},{"num":15,"name":"JIMENEZ POLOCHE MIGUEL ANGEL"},{"num":16,"name":"LOPEZ GOMEZ ANGIE VANESA"},{"num":17,"name":"MARIN MENZA ELKIN YOANDRY"},{"num":18,"name":"MARTIN RODRIGUEZ CAROL STEFANY"},{"num":19,"name":"MEDINA ARDILA NICOLAS"},{"num":20,"name":"MEZA MEZA JESIKA PAOLA"},{"num":21,"name":"NIETO ALIPIO ISABELA"},{"num":22,"name":"PAEZ BELTRAN JUAN JOSE"},{"num":23,"name":"PELAEZ GONZALEZ JESIREN"},{"num":24,"name":"PRIETO LOZANO PAULA"},{"num":25,"name":"QUINTERO CASTILLO JEFRY JHONAIKER"},{"num":26,"name":"SANCHEZ REYES ANDRES FELIPE"},{"num":27,"name":"SARMIENTO VASQUEZ ASHLEY MICHELLE"},{"num":28,"name":"SUAREZ ACUÑA JUAN CAMILO"},{"num":29,"name":"VASQUEZ SANCHEZ LAURA SOFIA"}],"1102":[{"num":1,"name":"ACOSTA AGUASACO RAFAEL"},{"num":2,"name":"ALONSO RAMOS GABRIELA"},{"num":3,"name":"ARAQUE SOTELO MAICOL"},{"num":4,"name":"BOLIVAR PRADA JORGE LEONARDO"},{"num":5,"name":"CAMACHO REYES IRWING SANTIAGO"},{"num":6,"name":"CAMPO GUTIERREZ KAREN LIZETH"},{"num":7,"name":"CEBALLOS CAMACHO SOFIA"},{"num":8,"name":"CONTADOR DUARTE SAHRA SOFIA"},{"num":9,"name":"CORREAL LUNA JULIAN SANTIAGO"},{"num":10,"name":"DIAZ RODRIGUEZ ANA SOFIA"},{"num":11,"name":"FORERO GOMEZ JUAN PABLO"},{"num":12,"name":"GALLEGO AMAYA JHOAN EMMANUEL"},{"num":13,"name":"GARZON BARRERO TOMAS"},{"num":14,"name":"GONZALEZ MURCIA LAURA MARIANA"},{"num":15,"name":"GUERRERO MARTINEZ TAMARA"},{"num":16,"name":"JIMENEZ COBOS JHON ALEXANDER"},{"num":17,"name":"JIMENEZ HORTUA MARIA VALENTINA"},{"num":18,"name":"LOPEZ BARON SARA VALERIA"},{"num":19,"name":"MOETE GONZALEZ DELBER ANDRES"},{"num":20,"name":"MORALES OSPINA DYLAN SAMUEL"},{"num":21,"name":"ORTIZ GALVIS SAMUEL STIVEN"},{"num":22,"name":"PARRA VEGA JENNY LORENA"},{"num":23,"name":"RAMOS PARRA DIEGO ALEXANDER"},{"num":24,"name":"RUEDA DONADO CAMILA"},{"num":25,"name":"RUIZ CHAPARRO TATIANA JARITH"},{"num":26,"name":"SUAREZ PINZON SARA"},{"num":27,"name":"VELA BERNAL JUAN PABLO"},{"num":28,"name":"VELANDIA BLANCO ARIANNY ALEJANDRA"},{"num":29,"name":"YULE BELLO CARLOS GUSTAVO"}],"1103":[{"num":1,"name":"AREVALO MUNAR HELEN GISETH"},{"num":2,"name":"AZOCAR MADRID RAMON ALBERTO"},{"num":3,"name":"CARDONA ROJAS ELKIN SANTIAGO"},{"num":4,"name":"CARDOSO GALEANO JUNIOR ORLANDO"},{"num":5,"name":"CARVAJAL REYES STEPHANY PAOLA"},{"num":6,"name":"CASTRO GARCIA JULIAN STEVEN"},{"num":7,"name":"CATUMBA MENDEZ MARIA CAMILA"},{"num":8,"name":"DUARTE HIGUERA NICOLLE"},{"num":9,"name":"GOMEZ SARCOS ALEJANDRA VALENTINA"},{"num":10,"name":"GUARIN SANCHEZ MATEO"},{"num":11,"name":"GUEVARA GONZALES MATIAS"},{"num":12,"name":"HERNANDEZ SOTELO MARIANA"},{"num":13,"name":"MARROQUÍN PULICHE MICHELLE NICOL"},{"num":14,"name":"MARTINEZ PINZON JHONATAN MATIAS"},{"num":15,"name":"MELO SANABRIA ANYELINA LIZETH"},{"num":16,"name":"MONROY MACEA MARIA ALEXANDRA"},{"num":17,"name":"MORALES CONTRERAS KAROL ANDREA"},{"num":18,"name":"MUETE LEYTON DANIEL JACOB"},{"num":19,"name":"OLARTE RODRIGUEZ MATIAS SANTIAGO"},{"num":20,"name":"ORTIZ JHONNATAN DAVID"},{"num":21,"name":"PAEZ CORPAS SAMUEL FELIPE"},{"num":22,"name":"PEÑA VARGAS WESLLY ZARAY"},{"num":23,"name":"QUINTERO RODRIGUEZ NIKOL SOFIA"},{"num":24,"name":"RUEDA BLANCO NELSON ESTYBEN"},{"num":25,"name":"SILVA QUIROGA LUISA FERNANDA"},{"num":26,"name":"VELASCO ARISTIZABAL MARIANNA"},{"num":27,"name":"VELEZ ESPITIA MARIANA"},{"num":28,"name":"VIVAS POVEDA JACKZEL DAVID"}]};
+
+/* ══════════════════════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════════════════════ */
+const API_URL = "https://script.google.com/macros/s/AKfycbxepm6bwpqYsYdIE1sUVFvsWUcldtS5NeK-mvX7A8WbtnmbsHjMHVdnOQG0ErW93thajA/exec";
+const HOLIDAYS = new Set(["2026-04-02","2026-04-03","2026-05-01","2026-05-18","2026-06-08","2026-06-15","2026-06-29","2026-07-20","2026-08-07","2026-08-17","2026-10-12","2026-11-02","2026-11-16","2026-12-08","2026-12-25"]);
+const MONTHS_ES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const START_DATE = "2026-04";
+const START_DAY = 13;
+
+/* ══════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════ */
+let cur = null;
+let activeTab = "attendance";
+let sts = {};           // students per course
+let store = {};         // attendance data per course
+let mState = {};        // month/date state per course
+let remLoaded = {};
+
+
+/* ══════════════════════════════════════════════════════════
+   LOCAL ROSTER PERSISTENCE
+   Keeps add/delete/transfer changes stable after refresh, even if
+   the remote spreadsheet returns an older roster.
+══════════════════════════════════════════════════════════ */
+const ROSTER_KEY = "asistencia2026_roster_v2";
+
+function loadRosterMap() {
+  try { return JSON.parse(localStorage.getItem(ROSTER_KEY) || "{}"); }
+  catch(e) { console.warn("No se pudo leer el roster local", e); return {}; }
+}
+
+function saveRosterMap(map) {
+  localStorage.setItem(ROSTER_KEY, JSON.stringify(map));
+}
+
+function normalizeRoster(list) {
+  const seen = new Set();
+  return (list || [])
+    .map(s => ({ num: Number(s.num || 0), name: String(s.name || "").trim().toUpperCase() }))
+    .filter(s => s.name)
+    .filter(s => {
+      const key = s.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((a,b) => a.name.localeCompare(b.name, "es"))
+    .map((s,i) => ({ num: i + 1, name: s.name }));
+}
+
+function getLocalRoster(id) {
+  const map = loadRosterMap();
+  return Array.isArray(map[id]) ? normalizeRoster(map[id]) : null;
+}
+
+function persistRoster(id) {
+  if (!id || !sts[id]) return;
+  sts[id] = normalizeRoster(sts[id]);
+  const map = loadRosterMap();
+  map[id] = sts[id].map(s => ({ num: s.num, name: s.name }));
+  saveRosterMap(map);
+}
+
+function applyLocalRoster(id) {
+  const local = getLocalRoster(id);
+  if (local) sts[id] = local;
+}
+
+/* ══════════════════════════════════════════════════════════
+   UTILITIES
+══════════════════════════════════════════════════════════ */
+const p = n => String(n).padStart(2,"0");
+const iso = d => { const dt = new Date(d); return `${dt.getFullYear()}-${p(dt.getMonth()+1)}-${p(dt.getDate())}`; };
+
+function nextMonthStr(ms) {
+  const [y,m] = ms.split("-").map(Number);
+  const d = new Date(y,m,1);
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}`;
+}
+
+function weekdaysOfMonth(ms, startDay=1) {
+  const [year,month] = ms.split("-").map(Number);
+  const days = new Date(year,month,0).getDate();
+  const res = [];
+  for (let day=startDay; day<=days; day++) {
+    const d = new Date(year,month-1,day);
+    const dow = d.getDay();
+    const code = iso(d);
+    if (dow!==0 && dow!==6 && !HOLIDAYS.has(code)) res.push(code);
+  }
+  return res;
+}
+
+function groupByMonth(dates) {
+  const groups = [];
+  dates.forEach((ds,i) => {
+    const d = new Date(ds+"T00:00:00");
+    const label = `${MONTHS_ES[d.getMonth()]} ${d.getFullYear()}`;
+    const last = groups[groups.length-1];
+    if (!last || last.label!==label) groups.push({label,count:1,startIndex:i});
+    else last.count++;
+  });
+  return groups;
+}
+
+function fmtDay(ds) {
+  const d = new Date(ds+"T00:00:00");
+  return `${p(d.getDate())}/${p(d.getMonth()+1)}`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   COURSE INIT
+══════════════════════════════════════════════════════════ */
+function initCourse(id) {
+  if (!sts[id]) sts[id] = JSON.parse(JSON.stringify(STUDENTS[id] || []));
+  if (!store[id]) store[id] = {};
+  if (!mState[id]) {
+    mState[id] = {
+      months: [START_DATE],
+      dates: weekdaysOfMonth(START_DATE, START_DAY)
+    };
+  }
+}
+
+function getDates(id) { initCourse(id); return mState[id].dates; }
+
+// store keyed by student NAME (not num) so renumbering never loses data
+function getRec(id, nameKey, ds) {
+  if (!store[id]) store[id] = {};
+  const k = nameKey;
+  if (!store[id][k]) store[id][k] = {};
+  if (!store[id][k][ds]) store[id][k][ds] = {a:"",u:""};
+  return store[id][k][ds];
+}
+
+/* ══════════════════════════════════════════════════════════
+   STUDENT STATS
+══════════════════════════════════════════════════════════ */
+function calcStudentStats(cid, snum) {
+  const dates = getDates(cid);
+  // find student name for this num
+  const s = (sts[cid]||[]).find(x => x.num === snum);
+  const nameKey = s ? s.name : String(snum);
+  let a=0, n=0, t=0, e=0, u=0;
+  dates.forEach(ds => {
+    const r = store[cid]?.[nameKey]?.[ds] || {};
+    const av = r.a || "asiste";
+    if (av==="asiste") a++;
+    else if (av==="no-asiste") n++;
+    else if (av==="tarde") t++;
+    else if (av==="excusa") e++;
+    if (r.u) u++;
+  });
+  const total = dates.length;
+  const pct = total > 0 ? Math.round(a / total * 100) : 0;
+  return {a,n,t,e,u,total,pct};
+}
+
+function calcCourseStats(cid) {
+  initCourse(cid);
+  const students = sts[cid] || [];
+  const total = {a:0,n:0,t:0,e:0,u:0,days:0};
+  students.forEach(s => {
+    const st = calcStudentStats(cid, s.num);
+    total.a += st.a; total.n += st.n;
+    total.t += st.t; total.e += st.e; total.u += st.u;
+    total.days = st.total;
+  });
+  const allMarked = total.a + total.n + total.t + total.e;
+  const pct = allMarked > 0 ? Math.round(total.a / allMarked * 100) : 0;
+  return {...total, students:students.length, pct};
+}
+
+/* ══════════════════════════════════════════════════════════
+   API
+══════════════════════════════════════════════════════════ */
+function apiPost(obj) {
+  return fetch(API_URL, {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body:"payload="+encodeURIComponent(JSON.stringify(obj)),
+    cache:"no-store"
+  }).then(r=>r.json());
+}
+function apiGet(params) {
+  return fetch(`${API_URL}?${new URLSearchParams({...params,_:Date.now()})}&cache=no-store`)
+    .then(r=>r.json());
+}
+
+function showSyncToast(msg, type="ok", ms=3600) {
+  const toast = document.getElementById("syncToast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.className = `sync-toast show ${type}`;
+  clearTimeout(showSyncToast._t);
+  showSyncToast._t = setTimeout(() => toast.classList.remove("show"), ms);
+}
+
+async function syncStudents(id) {
+  if (!id || !sts[id]) return {ok:false, error:"Curso no inicializado"};
+  const clean = normalizeRoster(sts[id]);
+  sts[id] = clean;
+  const res = await apiPost({action:"syncStudents",curso:id,students:clean.map(s=>({num:s.num,name:s.name}))});
+  if (res && res.ok === false) throw new Error(res.error || "No se pudo sincronizar la lista de estudiantes.");
+  return res || {ok:true};
+}
+
+async function syncStudentsAndVerify(id, expectedName="") {
+  await syncStudents(id);
+  const data = await apiGet({action:"getCourse",curso:id,force:Date.now()});
+  if (data?.ok) {
+    const before = JSON.stringify(sts[id] || []);
+    applyRemote(id, data);
+    const after = JSON.stringify(sts[id] || []);
+    if (before !== after && cur === id) {
+      document.getElementById("studentChip").textContent = `${sts[id].length} estudiantes`;
+      renderSidebar();
+      renderTab();
+    }
+  }
+  if (expectedName && !(sts[id] || []).some(s => s.name.toUpperCase() === expectedName.toUpperCase())) {
+    throw new Error("El servidor no confirmó el estudiante. Revisa el Apps Script: la acción syncStudents debe borrar/reescribir la lista del curso.");
+  }
+}
+
+function applyRemote(id, data) {
+  if (!data?.headers || !data?.rows) return;
+  const numIdx = data.headers.indexOf("N°");
+  const nameIdx = data.headers.indexOf("ESTUDIANTE");
+  if (numIdx<0 || nameIdx<0) return;
+
+  // ── Reconstruct student list from server data ──────────────
+  // This ensures deletions and transfers persist after reload.
+  if (data.rows.length > 0) {
+    const remoteStudents = data.rows
+      .map(row => ({
+        num: Number(row[numIdx]||0),
+        name: String(row[nameIdx]||"").trim().toUpperCase()
+      }))
+      .filter(s => s.name);
+    if (remoteStudents.length > 0) {
+      sts[id] = normalizeRoster(remoteStudents);
+    }
+  }
+
+
+  // ── Restore attendance data ────────────────────────────────
+  data.rows.forEach(row => {
+    const name = String(row[nameIdx]||"").trim().toUpperCase();
+    const s = sts[id].find(x => x.name.trim().toUpperCase()===name);
+    if (!s) return;
+    const nameKey = s.name;
+    if (!store[id][nameKey]) store[id][nameKey] = {};
+    data.headers.forEach((h,i) => {
+      if (i<2) return;
+      const v = String(row[i]||"").trim();
+      if (!v) return;
+      if (h.endsWith("_ASIST")) {
+        const ds = h.replace("_ASIST","");
+        if (!store[id][nameKey][ds]) store[id][nameKey][ds]={a:"",u:""};
+        store[id][nameKey][ds].a = v;
+      }
+      if (h.endsWith("_UNIF")) {
+        const ds = h.replace("_UNIF","");
+        if (!store[id][nameKey][ds]) store[id][nameKey][ds]={a:"",u:""};
+        store[id][nameKey][ds].u = v;
+      }
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════════════ */
+function renderSidebar() {
+  const q = (document.getElementById("courseSearch").value||"").toLowerCase();
+  const list = document.getElementById("coursesList");
+  list.innerHTML = "";
+  const byGrade = {};
+  Object.keys(STUDENTS).filter(c => c.includes(q) || `curso ${c}`.includes(q)).sort()
+    .forEach(c => {
+      const g = c.replace(/\d+$/,"");
+      if (!byGrade[g]) byGrade[g] = [];
+      byGrade[g].push(c);
+    });
+  Object.keys(byGrade).sort().forEach(g => {
+    const lbl = document.createElement("div");
+    lbl.className = "grade-label";
+    lbl.textContent = `Grado ${g}`;
+    list.appendChild(lbl);
+    byGrade[g].forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "course-btn" + (cur===c?" active":"");
+      btn.innerHTML = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;flex-shrink:0"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg><span>Curso ${c}</span><span class="c-pill">${(sts[c]||getLocalRoster(c)||STUDENTS[c]||[]).length}</span>`;
+      btn.onclick = () => selectCourse(c);
+      list.appendChild(btn);
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   SELECT COURSE
+══════════════════════════════════════════════════════════ */
+async function selectCourse(id) {
+  cur = id; initCourse(id);
+  document.getElementById("courseHeader").textContent = `Curso ${id}`;
+  document.getElementById("studentChip").textContent = `${sts[id].length} estudiantes`;
+  document.getElementById("studentChip").style.display = "";
+  document.getElementById("actionBar").style.display = "";
+  renderSidebar();
+  renderTab();
+  if (window.innerWidth<=1024) closeSidebar();
+  try {
+    const data = await apiGet({action:"getCourse",curso:id,force:Date.now()});
+    if (data?.ok) {
+      applyRemote(id, data);
+      document.getElementById("studentChip").textContent = `${sts[id].length} estudiantes`;
+      renderSidebar();
+      renderTab();
+    }
+  } catch(err) {
+    console.error(err);
+    showSyncToast("No se pudo cargar la lista desde Google Sheets. Revisa conexión o Apps Script.", "warn", 5000);
+  }
+  remLoaded[id] = true;
+}
+
+/* ══════════════════════════════════════════════════════════
+   TABS
+══════════════════════════════════════════════════════════ */
+function switchTab(tab) {
+  activeTab = tab;
+  document.getElementById("tabAtt").classList.toggle("active", tab==="attendance");
+  document.getElementById("tabStats").classList.toggle("active", tab==="stats");
+  // legend only on attendance
+  document.getElementById("legendWrap").style.display = tab==="attendance" ? "" : "none";
+  document.getElementById("attActions").style.display = tab==="attendance" ? "" : "none";
+  renderTab();
+}
+
+function renderTab() {
+  if (activeTab==="attendance") renderAttendance();
+  else renderStats();
+}
+
+/* ══════════════════════════════════════════════════════════
+   ATTENDANCE TAB
+══════════════════════════════════════════════════════════ */
+function isMobileView() {
+  return window.innerWidth <= 640;
+}
+
+function renderAttendance() {
+  const area = document.getElementById("contentArea");
+  if (!cur) {
+    area.innerHTML = `<div class="empty-card"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div><h3>Selecciona un curso</h3><p>Elige un curso del panel izquierdo para registrar asistencia.</p></div>`;
+    return;
+  }
+  area.innerHTML = "";
+  area.appendChild(isMobileView() ? buildMobileAttendance(cur) : buildAttTable(cur));
+}
+
+
+function buildMobileAttendance(cid) {
+  const dates = getDates(cid);
+  if (!dates.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-card";
+    empty.innerHTML = `<h3>Sin fechas</h3><p>Agrega un mes para iniciar el registro.</p>`;
+    return empty;
+  }
+
+  if (!window._mobileDateByCourse) window._mobileDateByCourse = {};
+  if (!window._mobileDateByCourse[cid] || !dates.includes(window._mobileDateByCourse[cid])) {
+    window._mobileDateByCourse[cid] = dates[0];
+  }
+
+  const selectedDate = window._mobileDateByCourse[cid];
+  const wrap = document.createElement("div");
+  wrap.style.display = "flex";
+  wrap.style.flexDirection = "column";
+  wrap.style.gap = "12px";
+
+  const selector = document.createElement("div");
+  selector.className = "mobile-day-card";
+  selector.innerHTML = `
+    <label for="mobileDateSelect">Selecciona el día</label>
+    <select class="mobile-date-select" id="mobileDateSelect">
+      ${dates.map(d => `<option value="${d}" ${d === selectedDate ? "selected" : ""}>${d}</option>`).join("")}
+    </select>
+    <p class="mobile-help">Por defecto todos aparecen como <strong>Asiste</strong>. Cambia solo las novedades y luego guarda el día.</p>
+    <div class="mobile-day-actions">
+      <button class="mobile-all-ok" type="button" id="mobileAllOkBtn">Todos asisten</button>
+      <button class="mobile-save-day" type="button" id="mobileSaveDayBtn">Guardar día</button>
+    </div>
+  `;
+
+  selector.querySelector("#mobileDateSelect").onchange = e => {
+    window._mobileDateByCourse[cid] = e.target.value;
+    renderAttendance();
+  };
+
+  selector.querySelector("#mobileAllOkBtn").onclick = () => {
+    sts[cid].forEach(s => {
+      const rec = getRec(cid, s.name, selectedDate);
+      rec.a = "asiste";
+    });
+    renderAttendance();
+  };
+
+  selector.querySelector("#mobileSaveDayBtn").onclick = async () => {
+    try {
+      for (const s of sts[cid]) {
+        const rec = getRec(cid, s.name, selectedDate);
+        const payload = {
+          action:"saveRecord",
+          curso:cid,
+          studentNum:s.num,
+          studentName:s.name,
+          fecha:selectedDate,
+          asistencia: rec.a || "asiste"
+        };
+        if (rec.u) payload.uniforme = rec.u;
+        await apiPost(payload);
+      }
+      showSyncToast("Día guardado correctamente.", "ok");
+    } catch(err) {
+      console.error(err);
+      showSyncToast("No se pudo guardar el día. Revisa conexión o Apps Script.", "err", 6000);
+    }
+  };
+
+  wrap.appendChild(selector);
+
+  sts[cid].forEach(s => {
+    const rec = getRec(cid, s.name, selectedDate);
+    const card = document.createElement("div");
+    card.className = "mobile-student-card";
+    card.innerHTML = `
+      <div class="mobile-student-head">
+        <div class="mobile-student-num">${s.num}</div>
+        <div class="mobile-student-name">${s.name}</div>
+      </div>
+
+      <div class="mobile-fields">
+        <div class="mobile-field">
+          <label>Asistencia</label>
+          <select class="cell-sel mobile-att">
+            <option value="asiste">Asiste</option>
+            <option value="no-asiste">No asiste</option>
+            <option value="tarde">Tarde</option>
+            <option value="excusa">Excusa</option>
+            <option value="">—</option>
+          </select>
+        </div>
+
+        <div class="mobile-field">
+          <label>Uniforme</label>
+          <select class="cell-sel mobile-uni">
+            <option value="">Sin novedad</option>
+            <option value="inadecuado">Inadecuado</option>
+            <option value="permiso-coordinacion">Permiso coord.</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mobile-row-actions">
+        <button class="row-btn row-btn-move" title="Cambiar de curso">
+          <svg viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+        </button>
+        <button class="row-btn row-btn-del" title="Eliminar estudiante">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        </button>
+      </div>
+    `;
+
+    const asel = card.querySelector(".mobile-att");
+    const usel = card.querySelector(".mobile-uni");
+
+    asel.value = rec.a || "asiste";
+    usel.value = rec.u || "";
+
+    applySelClass(asel, "a");
+    applySelClass(usel, "u");
+
+    asel.onchange = () => saveField(cid, s, selectedDate, "a", asel);
+    usel.onchange = () => saveField(cid, s, selectedDate, "u", usel);
+
+    card.querySelector(".row-btn-del").onclick = e => {
+      e.stopPropagation();
+      openDeleteConfirm(s.num, s.name, e.currentTarget);
+    };
+
+    card.querySelector(".row-btn-move").onclick = e => {
+      e.stopPropagation();
+      openTransferModal(s.num, s.name);
+    };
+
+    wrap.appendChild(card);
+  });
+
+  return wrap;
+}
+
+
+function buildAttTable(cid) {
+  const dates = getDates(cid);
+  const monthGroups = groupByMonth(dates);
+  const wrap = document.createElement("div"); wrap.className="table-card";
+  const zone = document.createElement("div"); zone.className="table-zone";
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+
+  // Row 1: month headers
+  const r1 = document.createElement("tr");
+  r1.innerHTML = `<th class="col-num" rowspan="2">#</th><th class="col-name-wrap" rowspan="2">Estudiante</th>`;
+  monthGroups.forEach((g,gi) => {
+    const th = document.createElement("th");
+    th.colSpan = g.count * 2;
+    th.textContent = g.label;
+    if (gi>0) th.classList.add("month-sep");
+    r1.appendChild(th);
+  });
+  // Totals column header
+  const totTh = document.createElement("th");
+  totTh.rowSpan = 2; totTh.className = "col-tot";
+  totTh.style.cssText = "text-align:center;font-size:11px;letter-spacing:.08em";
+  totTh.textContent = "TOTALES";
+  r1.appendChild(totTh);
+  thead.appendChild(r1);
+
+  // Row 2: day headers
+  const r2 = document.createElement("tr");
+  dates.forEach((ds,idx) => {
+    const th = document.createElement("th");
+    th.className = "day-head" + (idx>0 && new Date(ds+"T00:00:00").getDate()===1 ? " month-sep" : "");
+    th.colSpan = 2;
+    th.innerHTML = `<div style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 0">${fmtDay(ds)}</div><div class="day-wrap"><div class="subhead">Asistencia</div><div class="subhead">Uniforme</div></div>`;
+    r2.appendChild(th);
+  });
+  thead.appendChild(r2);
+  table.appendChild(thead);
+
+  // Body
+  const tbody = document.createElement("tbody");
+  tbody.id = `tbody-${cid}`;
+  sts[cid].forEach(s => tbody.appendChild(buildStudentRow(cid, s, dates)));
+  table.appendChild(tbody);
+  zone.appendChild(table); wrap.appendChild(zone);
+  const foot = document.createElement("div"); foot.className="table-foot";
+  foot.textContent = `Mostrando ${dates.length} día(s) hábil(es) en ${mState[cid].months.length} mes(es). Use "+ Mes" para ampliar el período.`;
+  wrap.appendChild(foot);
+  return wrap;
+}
+
+/* ── Construye una sola fila <tr> — reutilizada al agregar/eliminar ── */
+function buildStudentRow(cid, s, dates) {
+  const tr = document.createElement("tr");
+  tr.dataset.sname = s.name;   // clave por NOMBRE, no por número
+
+  const numTd = document.createElement("td");
+  numTd.className = "col-num";
+  numTd.textContent = s.num;
+
+  const nameTd = document.createElement("td");
+  nameTd.className = "col-name-wrap";
+  nameTd.innerHTML = `<div class="name-inner">
+    <span style="flex:1;min-width:0;white-space:normal;overflow:visible;text-overflow:clip;word-break:normal;overflow-wrap:anywhere">${s.name}</span>
+    <div class="row-actions">
+      <button class="row-btn row-btn-move" title="Cambiar de curso">
+        <svg viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+      </button>
+      <button class="row-btn row-btn-del" title="Eliminar estudiante">
+        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      </button>
+    </div>
+  </div>`;
+
+  nameTd.querySelector(".row-btn-del").addEventListener("click", e => {
+    e.stopPropagation();
+    openDeleteConfirm(s.num, s.name, e.currentTarget);
+  });
+  nameTd.querySelector(".row-btn-move").addEventListener("click", e => {
+    e.stopPropagation();
+    openTransferModal(s.num, s.name);
+  });
+
+  tr.appendChild(numTd);
+  tr.appendChild(nameTd);
+
+  dates.forEach(ds => {
+    const rec = getRec(cid, s.name, ds);   // ← clave por NOMBRE
+    const att = document.createElement("td");
+    const uni = document.createElement("td");
+
+    const asel = document.createElement("select"); asel.className="cell-sel";
+    asel.innerHTML=`<option value="asiste">Asiste</option><option value="no-asiste">No asiste</option><option value="tarde">Tarde</option><option value="excusa">Excusa</option><option value="">—</option>`;
+    asel.value = rec.a || "asiste"; applySelClass(asel,"a");
+    asel.onchange = () => saveField(cid, s, ds, "a", asel);
+
+    const usel = document.createElement("select"); usel.className="cell-sel";
+    usel.innerHTML=`<option value="">—</option><option value="inadecuado">Inadecuado</option><option value="permiso-coordinacion">Permiso coord.</option>`;
+    usel.value = rec.u||""; applySelClass(usel,"u");
+    usel.onchange = () => saveField(cid, s, ds, "u", usel);
+
+    att.appendChild(asel); uni.appendChild(usel);
+    tr.appendChild(att); tr.appendChild(uni);
+  });
+
+  const totTd = document.createElement("td");
+  totTd.className = "col-tot";
+  totTd.dataset.totname = s.name;   // también por nombre
+  renderTotCell(totTd, cid, s.num);
+  tr.appendChild(totTd);
+
+  return tr;
+}
+
+function renderTotCell(td, cid, snum) {
+  const st = calcStudentStats(cid, snum);
+  const pctClass = st.pct>=90?"pct-hi":st.pct>=75?"pct-mid":"pct-lo";
+  td.innerHTML = `<div class="tot-grid">
+    ${st.a?`<span class="tot-badge tot-a"><span class="dot" style="background:#15803d"></span>${st.a}A</span>`:""}
+    ${st.n?`<span class="tot-badge tot-n"><span class="dot" style="background:#dc2626"></span>${st.n}F</span>`:""}
+    ${st.t?`<span class="tot-badge tot-t"><span class="dot" style="background:#c2410c"></span>${st.t}T</span>`:""}
+    ${st.e?`<span class="tot-badge tot-e"><span class="dot" style="background:#1d4ed8"></span>${st.e}E</span>`:""}
+    ${st.u?`<span class="tot-badge tot-u"><span class="dot" style="background:#7c3aed"></span>${st.u}U</span>`:""}
+    ${st.total>0?`<span class="att-pct ${pctClass}">${st.pct}%</span>`:""}
+  </div>`;
+}
+
+function applySelClass(sel, type) {
+  sel.className = "cell-sel";
+  if (!sel.value) return;
+  if (type==="a") sel.classList.add(`a-${sel.value}`);
+  else sel.classList.add(`u-${sel.value}`);
+}
+
+async function saveField(cid, student, ds, field, sel) {
+  const rec = getRec(cid, student.name, ds);   // ← key by name
+  rec[field] = sel.value;
+  applySelClass(sel, field);
+  // Update totals cell — find by data-totname attribute
+  const tbody = document.getElementById(`tbody-${cid}`);
+  if (tbody) {
+    const row = tbody.querySelector(`tr[data-sname="${CSS.escape(student.name)}"]`);
+    if (row) {
+      const totTd = row.querySelector("td[data-totname]");
+      if (totTd) renderTotCell(totTd, cid, student.num);
+    }
+  }
+  try {
+    const payload = {action:"saveRecord",curso:cid,studentNum:student.num,studentName:student.name,fecha:ds};
+    if (field==="a") payload.asistencia=sel.value;
+    else payload.uniforme=sel.value;
+    await apiPost(payload);
+  } catch(err) { console.error(err); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATS TAB
+══════════════════════════════════════════════════════════ */
+function renderStats() {
+  const area = document.getElementById("contentArea");
+  area.innerHTML = "";
+
+  // ── Global summary cards ──
+  let totalStudents=0, totalA=0, totalN=0, totalT=0, totalE=0, totalU=0, totalCourses=0;
+  Object.keys(STUDENTS).forEach(cid => {
+    initCourse(cid);
+    totalCourses++;
+    totalStudents += (sts[cid]||[]).length;
+    const st = calcCourseStats(cid);
+    totalA+=st.a; totalN+=st.n; totalT+=st.t; totalE+=st.e; totalU+=st.u;
+  });
+  const allMarked = totalA+totalN+totalT+totalE;
+  const globalPct = allMarked>0 ? Math.round(totalA/allMarked*100) : 0;
+
+  const globalSection = document.createElement("div");
+  globalSection.innerHTML = `<div class="section-title">Resumen general · Todos los cursos</div>`;
+  const gGrid = document.createElement("div"); gGrid.className="stats-grid";
+  gGrid.innerHTML = `
+    <div class="stat-card"><div class="label">Cursos</div><div class="value val-blue">${totalCourses}</div><div class="sub">25 cursos registrados</div></div>
+    <div class="stat-card"><div class="label">Estudiantes</div><div class="value val-blue">${totalStudents}</div><div class="sub">en todos los cursos</div></div>
+    <div class="stat-card"><div class="label">% Asistencia global</div><div class="value val-green">${globalPct}%</div><div class="sub">${totalA} asistencias registradas</div></div>
+    <div class="stat-card"><div class="label">Inasistencias</div><div class="value val-red">${totalN}</div><div class="sub">No asistió sin excusa</div></div>
+    <div class="stat-card"><div class="label">Llegadas tarde</div><div class="value val-amber">${totalT}</div><div class="sub">total registrado</div></div>
+    <div class="stat-card"><div class="label">Con excusa</div><div class="value val-blue">${totalE}</div><div class="sub">días con justificación</div></div>
+    <div class="stat-card"><div class="label">Uniforme inadecuado</div><div class="value val-purple">${totalU}</div><div class="sub">registros de uniforme</div></div>
+  `;
+  globalSection.appendChild(gGrid);
+  area.appendChild(globalSection);
+
+  // ── Per-course section ──
+  const courseSection = document.createElement("div");
+  const ctitle = document.createElement("div"); ctitle.className="section-title"; ctitle.style.marginTop="8px";
+  ctitle.textContent = cur ? `Detalle · Curso ${cur}` : "Estadísticas por curso";
+  courseSection.appendChild(ctitle);
+
+  const coursesToShow = cur ? [cur] : Object.keys(STUDENTS).sort();
+  coursesToShow.forEach(cid => {
+    initCourse(cid);
+    const st = calcCourseStats(cid);
+    const all = st.a+st.n+st.t+st.e;
+    const pctClass = st.pct>=90?"#15803d":st.pct>=75?"#a16207":"#b91c1c";
+
+    const card = document.createElement("div"); card.className="course-stat-card";
+    card.innerHTML = `
+      <div class="csc-header">
+        <div class="name">Curso ${cid}</div>
+        <div class="meta">${st.students} estudiantes · ${st.days} días</div>
+      </div>
+      <div class="csc-bars">
+        <div class="bar-row">
+          <div class="blabel">% Asistencia</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${st.pct}%;background:${pctClass}"></div></div>
+          <div class="bval" style="color:${pctClass}">${st.pct}%</div>
+        </div>
+        <div class="bar-row">
+          <div class="blabel">Asiste</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${all?st.a/all*100:0}%;background:#15803d"></div></div>
+          <div class="bval" style="color:#15803d">${st.a}</div>
+        </div>
+        <div class="bar-row">
+          <div class="blabel">No asiste</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${all?st.n/all*100:0}%;background:#dc2626"></div></div>
+          <div class="bval" style="color:#dc2626">${st.n}</div>
+        </div>
+        <div class="bar-row">
+          <div class="blabel">Tarde</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${all?st.t/all*100:0}%;background:#c2410c"></div></div>
+          <div class="bval" style="color:#c2410c">${st.t}</div>
+        </div>
+        <div class="bar-row">
+          <div class="blabel">Excusa</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${all?st.e/all*100:0}%;background:#1d4ed8"></div></div>
+          <div class="bval" style="color:#1d4ed8">${st.e}</div>
+        </div>
+        <div class="bar-row">
+          <div class="blabel">Uniforme</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${all?st.u/all*100:0}%;background:#7c3aed"></div></div>
+          <div class="bval" style="color:#7c3aed">${st.u}</div>
+        </div>
+      </div>
+    `;
+
+    // If this is the current course, also show per-student breakdown
+    if (cid===cur && sts[cid]) {
+      const stTable = document.createElement("div");
+      stTable.style.cssText="padding:0 18px 14px;overflow-x:auto";
+      let html = `<table style="width:100%;border-collapse:collapse;font-size:12.5px">
+        <thead><tr style="background:#f0f6ff">
+          <th style="padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">#</th>
+          <th style="padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Estudiante</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Asiste</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">No</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Tarde</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Excusa</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Unif.</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">%</th>
+        </tr></thead><tbody>`;
+      sts[cid].forEach((s,idx) => {
+        const ss = calcStudentStats(cid, s.num);
+        const pClass = ss.pct>=90?"pct-hi":ss.pct>=75?"pct-mid":"pct-lo";
+        const bg = idx%2===0?"#fff":"#f8fbff";
+        html += `<tr style="background:${bg};border-bottom:1px solid var(--border)">
+          <td style="padding:8px 10px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px">${s.num}</td>
+          <td style="padding:8px 10px;font-weight:600;color:var(--text-2)">${s.name}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--success);font-family:'JetBrains Mono',monospace">${ss.a}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--danger);font-family:'JetBrains Mono',monospace">${ss.n}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--warning);font-family:'JetBrains Mono',monospace">${ss.t}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--info);font-family:'JetBrains Mono',monospace">${ss.e}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--purple);font-family:'JetBrains Mono',monospace">${ss.u}</td>
+          <td style="padding:8px;text-align:center"><span class="att-pct ${pClass}">${ss.pct}%</span></td>
+        </tr>`;
+      });
+      html += "</tbody></table>";
+      stTable.innerHTML = html;
+      card.appendChild(stTable);
+    }
+
+    courseSection.appendChild(card);
+  });
+  area.appendChild(courseSection);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ADD STUDENT
+══════════════════════════════════════════════════════════ */
+function openAddStudentModal() {
+  document.getElementById("newStudentName").value = "";
+  document.getElementById("modalAdd").classList.add("open");
+  setTimeout(()=>document.getElementById("newStudentName").focus(),80);
+}
+
+async function confirmAddStudent() {
+  const name = document.getElementById("newStudentName").value.trim().toUpperCase();
+  if (!name || !cur) return;
+  const ss = sts[cur];
+  if (ss.find(s => s.name.toUpperCase() === name)) {
+    alert("Este estudiante ya está registrado."); return;
+  }
+
+  // Add, sort, renumber
+  ss.push({ num: ss.length + 1, name });
+  ss.sort((a, b) => a.name.localeCompare(b.name, "es"));
+  ss.forEach((s, i) => s.num = i + 1);
+  closeModal("modalAdd");
+
+  const tbody = document.getElementById(`tbody-${cur}`);
+  if (!tbody) { renderTab(); } else {
+    const newStudent = ss.find(s => s.name === name);
+    const newIdx    = ss.indexOf(newStudent);
+    const dates     = getDates(cur);
+
+    // Insert row at correct alphabetical position
+    const newRow = buildStudentRow(cur, newStudent, dates);
+    if (newIdx >= tbody.rows.length) tbody.appendChild(newRow);
+    else tbody.insertBefore(newRow, tbody.rows[newIdx]);
+
+    // Renumber all visible rows
+    ss.forEach((s, i) => { if (tbody.rows[i]) tbody.rows[i].cells[0].textContent = s.num; });
+  }
+
+  persistRoster(cur);
+  document.getElementById("studentChip").textContent = `${ss.length} estudiantes`;
+  renderSidebar();
+  try {
+    await syncStudentsAndVerify(cur, name);
+    showSyncToast("Estudiante guardado y sincronizado. Ya debe verse también en Edge/otros navegadores.", "ok");
+  } catch(err) {
+    console.error(err);
+    showSyncToast("El estudiante quedó en este navegador, pero no se confirmó en Google Sheets. En otro navegador puede no aparecer hasta corregir Apps Script/syncStudents.", "err", 7000);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ACTIONS
+══════════════════════════════════════════════════════════ */
+function addMonth() {
+  if (!cur) return;
+  const ms = mState[cur];
+  const last = ms.months[ms.months.length-1];
+  const next = nextMonthStr(last);
+  ms.months.push(next);
+  ms.dates = ms.dates.concat(weekdaysOfMonth(next));
+  renderTab();
+}
+
+function exportCSV() {
+  if (!cur) return;
+  const dates = getDates(cur);
+  let csv = "\uFEFF";
+  csv += `Curso ${cur}\n`;
+  csv += `N°,Estudiante`;
+  dates.forEach(d => { csv += `,${d} Asistencia,${d} Uniforme`; });
+  csv += `,Total Asiste,Total NoAsiste,Total Tarde,Total Excusa,Total Uniforme,% Asistencia\n`;
+  sts[cur].forEach(s => {
+    const st = calcStudentStats(cur, s.num);
+    csv += `${s.num},"${s.name}"`;
+    dates.forEach(d => {
+      const r = getRec(cur,s.name,d);
+      csv += `,${r.a || "asiste"},${r.u || ""}`;
+    });
+    csv += `,${st.a},${st.n},${st.t},${st.e},${st.u},${st.pct}%\n`;
+  });
+  const blob = new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `asistencia_${cur}.csv`;
+  a.click();
+}
+
+/* ══════════════════════════════════════════════════════════
+   DELETE STUDENT
+══════════════════════════════════════════════════════════ */
+let _delPending = null; // {cid, num, name}
+
+function openDeleteConfirm(snum, sname, btnEl) {
+  // Close any existing confirm
+  cancelDelete();
+  _delPending = { cid: cur, num: snum, name: sname };
+
+  const pill = document.getElementById("delConfirm");
+  document.getElementById("delConfirmName").textContent = `¿Eliminar "${sname}"?`;
+  document.getElementById("delYesBtn").onclick = executeDelete;
+
+  // Position near the button; on mobile keep it fixed at the bottom.
+  const rect = btnEl.getBoundingClientRect();
+  if (window.innerWidth <= 640) {
+    pill.style.position = "fixed";
+    pill.style.left = "12px";
+    pill.style.right = "12px";
+    pill.style.top = "auto";
+    pill.style.bottom = "18px";
+    pill.style.whiteSpace = "normal";
+    pill.style.justifyContent = "center";
+  } else {
+    pill.style.position = "absolute";
+    pill.style.right = "auto";
+    pill.style.bottom = "auto";
+    pill.style.whiteSpace = "nowrap";
+    pill.style.justifyContent = "flex-start";
+    pill.style.top = (rect.bottom + window.scrollY + 6) + "px";
+    pill.style.left = Math.max(8, rect.left - 100) + "px";
+  }
+  pill.classList.add("show");
+
+  // Auto-close after 6s
+  _delTimeout = setTimeout(cancelDelete, 6000);
+}
+
+let _delTimeout = null;
+
+function cancelDelete() {
+  _delPending = null;
+  clearTimeout(_delTimeout);
+  document.getElementById("delConfirm").classList.remove("show");
+}
+
+function executeDelete() {
+  if (!_delPending) return;
+  const { cid, num, name } = _delPending;
+  cancelDelete();
+
+  const ss  = sts[cid];
+  const idx = ss.findIndex(s => s.num === num);
+  if (idx === -1) return;
+
+  // Remove from list — keep store[cid][name] intact (data safe!)
+  ss.splice(idx, 1);
+  ss.forEach((s, i) => s.num = i + 1);
+
+  const tbody = document.getElementById(`tbody-${cid}`);
+  if (!tbody) { renderTab(); } else {
+    // Find row by name attribute and remove it with a brief animation
+    const row = tbody.querySelector(`tr[data-sname="${CSS.escape(name)}"]`);
+    if (row) {
+      row.style.transition = "opacity .18s, background .18s";
+      row.style.background = "#fee2e2";
+      row.style.opacity    = "0.3";
+      setTimeout(() => {
+        row.remove();
+        // Renumber remaining rows
+        ss.forEach((s, i) => { if (tbody.rows[i]) tbody.rows[i].cells[0].textContent = s.num; });
+      }, 200);
+    }
+  }
+
+  persistRoster(cid);
+  document.getElementById("studentChip").textContent = `${ss.length} estudiantes`;
+  renderSidebar();
+  syncStudentsAndVerify(cid).then(() => {
+    showSyncToast("Eliminación sincronizada. El estudiante no debe reaparecer en otros navegadores.", "ok");
+  }).catch(err => {
+    console.error(err);
+    showSyncToast("Se eliminó en este navegador, pero Google Sheets no confirmó el cambio. En Edge puede reaparecer si Apps Script no guarda la lista.", "err", 7000);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   TRANSFER STUDENT (change course)
+══════════════════════════════════════════════════════════ */
+let _transferPending = null; // {cid, num, name}
+
+function openTransferModal(snum, sname) {
+  _transferPending = { cid: cur, num: snum, name: sname };
+
+  // Populate student name display
+  document.getElementById("transferStudentName").textContent = sname;
+
+  // Populate destination courses (all except current)
+  const sel = document.getElementById("transferDestCourse");
+  sel.innerHTML = `<option value="">— Selecciona un curso —</option>`;
+  Object.keys(STUDENTS).sort().forEach(c => {
+    if (c === cur) return;
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = `Curso ${c}`;
+    sel.appendChild(opt);
+  });
+
+  document.getElementById("modalTransfer").classList.add("open");
+}
+
+function confirmTransfer() {
+  if (!_transferPending) return;
+  const destCid = document.getElementById("transferDestCourse").value;
+  if (!destCid) { alert("Selecciona un curso destino."); return; }
+
+  const { cid: srcCid, num, name } = _transferPending;
+
+  // 1. Remove from source list (store data stays intact under name key)
+  const srcList = sts[srcCid];
+  const srcIdx  = srcList.findIndex(s => s.num === num);
+  if (srcIdx === -1) { closeModal("modalTransfer"); return; }
+  srcList.splice(srcIdx, 1);
+  srcList.forEach((s, i) => s.num = i + 1);
+
+  // 2. Add to destination
+  initCourse(destCid);
+  const destList = sts[destCid];
+  if (!destList.find(s => s.name.toUpperCase() === name.toUpperCase())) {
+    destList.push({ num: destList.length + 1, name });
+    destList.sort((a, b) => a.name.localeCompare(b.name, "es"));
+    destList.forEach((s, i) => s.num = i + 1);
+  }
+
+  // 2b. Keep/carry attendance records under the same student name.
+  // The origin data is not erased; the destination receives a copy.
+  if (store[srcCid]?.[name]) {
+    if (!store[destCid]) store[destCid] = {};
+    store[destCid][name] = JSON.parse(JSON.stringify(store[srcCid][name]));
+  }
+
+  closeModal("modalTransfer");
+  _transferPending = null;
+
+  // 3. Surgical DOM — remove row from source table only
+  const tbody = document.getElementById(`tbody-${srcCid}`);
+  if (!tbody) { renderTab(); } else {
+    const row = tbody.querySelector(`tr[data-sname="${CSS.escape(name)}"]`);
+    if (row) {
+      row.style.transition = "opacity .18s, background .18s";
+      row.style.background = "#eff6ff";
+      row.style.opacity    = "0.3";
+      setTimeout(() => {
+        row.remove();
+        srcList.forEach((s, i) => { if (tbody.rows[i]) tbody.rows[i].cells[0].textContent = s.num; });
+      }, 200);
+    }
+  }
+
+  persistRoster(srcCid);
+  persistRoster(destCid);
+  document.getElementById("studentChip").textContent = `${srcList.length} estudiantes`;
+  renderSidebar();
+  Promise.all([
+    syncStudentsAndVerify(srcCid),
+    syncStudentsAndVerify(destCid, name),
+    saveTransferredRecords(destCid, name)
+  ]).then(() => {
+    showSyncToast("Cambio de curso sincronizado. Ya debe verse igual en Chrome y Edge.", "ok");
+  }).catch(err => {
+    console.error(err);
+    showSyncToast("El cambio quedó en este navegador, pero no fue confirmado por Google Sheets. En Edge puede verse diferente hasta corregir Apps Script/syncStudents.", "err", 8000);
+  });
+}
+
+async function saveTransferredRecords(destCid, name) {
+  const destStudent = (sts[destCid] || []).find(s => s.name.toUpperCase() === name.toUpperCase());
+  const records = store[destCid]?.[name];
+  if (!destStudent || !records) return;
+  for (const [fecha, rec] of Object.entries(records)) {
+    if (!rec?.a && !rec?.u) continue;
+    const payload = {
+      action: "saveRecord",
+      curso: destCid,
+      studentNum: destStudent.num,
+      studentName: destStudent.name,
+      fecha
+    };
+    if (rec.a) payload.asistencia = rec.a;
+    if (rec.u) payload.uniforme = rec.u;
+    await apiPost(payload);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   MODAL & SIDEBAR HELPERS
+══════════════════════════════════════════════════════════ */
+function openModal(id) { document.getElementById(id).classList.add("open"); }
+function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+function closeSidebar() {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebarOverlay").classList.remove("open");
+}
+
+/* ══════════════════════════════════════════════════════════
+   EVENT WIRING
+══════════════════════════════════════════════════════════ */
+document.getElementById("courseSearch").addEventListener("input", renderSidebar);
+document.getElementById("menuBtn").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sidebarOverlay").classList.toggle("open");
+});
+document.getElementById("modalAdd").addEventListener("click", function(e){
+  if (e.target===this) closeModal("modalAdd");
+});
+document.getElementById("modalTransfer").addEventListener("click", function(e){
+  if (e.target===this) { closeModal("modalTransfer"); _transferPending=null; }
+});
+// Close delete confirm when clicking elsewhere
+document.addEventListener("click", e => {
+  const pill = document.getElementById("delConfirm");
+  if (pill.classList.contains("show") && !pill.contains(e.target) && !e.target.closest(".row-btn-del")) {
+    cancelDelete();
+  }
+});
+
+window.addEventListener("resize", () => {
+  clearTimeout(window._attendanceResizeTimer);
+  window._attendanceResizeTimer = setTimeout(() => {
+    if (cur && activeTab === "attendance") renderAttendance();
+  }, 150);
+});
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+renderSidebar();
+</script>
+</body>
+</html>
