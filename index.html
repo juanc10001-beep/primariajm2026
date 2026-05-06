@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Asistencia Primaria 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─── Variables ─────────────────────────────────────────── */
+:root {
+  --teal-950:#023232;
+  --teal-900:#064e4e;
+  --teal-800:#0d7474;
+  --teal-700:#129292;
+  --teal-600:#16b0b0;
+  --teal-100:#ccf2f2;
+  --teal-50:#e6f9f9;
+  --surface:#ffffff;
+  --surface-2:#f2fbfb;
+  --surface-3:#e6f9f9;
+  --text:#062424;
+  --text-2:#1a4e4e;
+  --muted:#4a7b7b;
+  --muted-2:#8ab5b5;
+  --border:#c4e8e8;
+  --border-2:#a8d8d8;
+  --shadow-sm:0 1px 4px rgba(6,74,74,.08);
+  --shadow:0 4px 20px rgba(6,74,74,.10);
+  --shadow-lg:0 12px 40px rgba(6,74,74,.15);
+  --success:#15803d;
+  --success-bg:#f0fdf4;
+  --success-b:#bbf7d0;
+  --danger:#dc2626;
+  --danger-bg:#fef2f2;
+  --danger-b:#fecaca;
+  --warning:#c2410c;
+  --warning-bg:#fff7ed;
+  --warning-b:#fed7aa;
+  --info:#1d4ed8;
+  --info-bg:#eff6ff;
+  --info-b:#bfdbfe;
+  --purple:#7c3aed;
+  --purple-bg:#faf5ff;
+  --purple-b:#ddd6fe;
+  --r:16px;
+  --r-sm:10px;
+  --r-lg:22px;
+  --sidebar-w:290px;
+  --topnav-h:56px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;font-size:15px;-webkit-text-size-adjust:100%}
+body{height:100%;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--text);background:#d6f5f5;overflow:hidden;-webkit-overflow-scrolling:touch;touch-action:manipulation;}
+
+.shell{display:flex;height:100vh;overflow:hidden;position:relative}
+
+/* ─── Sidebar ── */
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:linear-gradient(175deg,var(--teal-900) 0%,var(--teal-950) 100%);
+  display:flex;flex-direction:column;overflow:hidden;
+  border-right:1px solid rgba(255,255,255,.07);
+  transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:30;
+}
+.sidebar-top{padding:20px 16px 14px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.brand-icon{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--teal-700),var(--teal-600));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(18,146,146,.4);
+}
+.brand-icon svg{width:22px;height:22px;fill:#fff}
+.brand-text h1{font-size:17px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.3px}
+.brand-text p{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px;font-family:'JetBrains Mono',monospace}
+.search-wrap{position:relative}
+.search-wrap input{
+  width:100%;padding:11px 12px 11px 40px;
+  border:1px solid rgba(255,255,255,.10);border-radius:12px;
+  background:rgba(255,255,255,.08);color:#fff;font-size:13.5px;
+  font-family:inherit;outline:none;transition:background .2s,border-color .2s;
+}
+.search-wrap input:focus{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22)}
+.search-wrap input::placeholder{color:rgba(255,255,255,.45)}
+.search-wrap .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:rgba(255,255,255,.5);pointer-events:none;}
+.sidebar-nav{flex:1;overflow-y:auto;padding:6px 10px 16px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+.grade-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.38);padding:14px 6px 5px;font-weight:700;}
+.course-btn{
+  width:100%;border:none;border-radius:11px;background:transparent;
+  color:rgba(255,255,255,.78);display:flex;align-items:center;gap:9px;
+  padding:10px 10px 10px 12px;cursor:pointer;text-align:left;
+  font-size:13.5px;font-weight:500;font-family:inherit;
+  transition:all .15s ease;margin-bottom:3px;
+}
+.course-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.course-btn.active{background:#fff;color:var(--teal-900);font-weight:700;box-shadow:var(--shadow)}
+.c-pill{
+  margin-left:auto;font-size:11.5px;font-family:'JetBrains Mono',monospace;
+  padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.10);color:rgba(255,255,255,.6);
+}
+.course-btn.active .c-pill{background:var(--teal-50);color:var(--teal-800)}
+
+/* ─── Sidebar overlay (mobile) ─── */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:25;opacity:0;transition:opacity .28s;pointer-events:none}
+.sidebar-overlay.open{opacity:1;pointer-events:auto}
+
+/* ─── Main ─── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{
+  height:var(--topnav-h);flex-shrink:0;background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:0 20px;
+  box-shadow:var(--shadow-sm);z-index:10;
+}
+.menu-btn{
+  display:none;width:38px;height:38px;border:none;background:var(--surface-2);
+  border-radius:10px;cursor:pointer;align-items:center;justify-content:center;
+  flex-shrink:0;color:var(--text-2);transition:background .15s;
+}
+.menu-btn:hover{background:var(--surface-3)}
+.menu-btn svg{width:20px;height:20px;fill:currentColor}
+.topbar-title{flex:1;min-width:0}
+.topbar-title h2{font-size:17px;font-weight:800;color:var(--teal-900);letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.chip{
+  font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:500;
+  padding:5px 11px;border-radius:999px;
+  background:var(--teal-50);color:var(--teal-800);
+  border:1px solid var(--teal-100);white-space:nowrap;
+}
+
+/* ─── Tabs ─── */
+.tabs-bar{display:flex;align-items:center;gap:2px;padding:0 20px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0;}
+.tab-btn{
+  display:flex;align-items:center;gap:6px;padding:12px 16px;
+  border:none;border-bottom:2px solid transparent;background:transparent;cursor:pointer;
+  font-family:inherit;font-size:13.5px;font-weight:600;color:var(--muted);
+  transition:all .18s;margin-bottom:-1px;border-radius:0;white-space:nowrap;
+}
+.tab-btn svg{width:15px;height:15px;fill:currentColor;opacity:.7}
+.tab-btn:hover{color:var(--teal-800)}
+.tab-btn.active{color:var(--teal-800);border-bottom-color:var(--teal-700)}
+.tab-btn.active svg{opacity:1}
+
+/* ─── Action bar ─── */
+.action-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px 20px;background:var(--surface-2);
+  border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;
+}
+.action-bar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.action-bar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.legend{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.leg-item{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);}
+.dot{width:8px;height:8px;border-radius:50%}
+
+/* ─── Buttons ─── */
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;cursor:pointer;font-family:inherit;font-weight:600;border-radius:10px;padding:9px 15px;font-size:13.5px;transition:all .18s;white-space:nowrap;}
+.btn svg{width:15px;height:15px;fill:currentColor}
+.btn-primary{background:var(--teal-800);color:#fff;box-shadow:0 2px 8px rgba(13,116,116,.3)}
+.btn-primary:hover{background:var(--teal-700)}
+.btn-success{background:var(--success);color:#fff;box-shadow:0 2px 8px rgba(21,128,61,.25)}
+.btn-success:hover{background:#166534}
+.btn-ghost{background:#fff;color:var(--text-2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface-2);border-color:var(--border-2)}
+.btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid var(--danger-b)}
+.btn-danger:hover{background:#fee2e2}
+.btn-sm{padding:6px 11px;font-size:12.5px;border-radius:8px}
+
+/* ─── Content ─── */
+.content-area{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-height:0}
+
+/* ─── Empty state ─── */
+.empty-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:40px;box-shadow:var(--shadow-sm);}
+.empty-icon{width:64px;height:64px;border-radius:18px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+.empty-icon svg{width:30px;height:30px;fill:var(--muted-2)}
+.empty-card h3{font-size:19px;font-weight:800;color:var(--teal-900)}
+.empty-card p{font-size:14px;color:var(--muted);max-width:340px;line-height:1.6}
+
+/* ─── Table ─── */
+.table-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow);flex-shrink:0;}
+.table-zone{overflow:auto;max-height:calc(100vh - 290px);-webkit-overflow-scrolling:touch;}
+table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:13px}
+thead th{position:sticky;top:0;z-index:6;background:#d6f5f5;color:var(--text-2);font-weight:700;border-bottom:1px solid var(--border-2);}
+thead tr:first-child th{padding:10px 8px;font-size:11px;text-transform:uppercase;letter-spacing:.09em;background:#baeaea;}
+thead tr:nth-child(2) th{padding:8px 4px;font-size:10.5px;background:#d6f5f5;}
+.col-num,.col-name{position:sticky;z-index:5;background:#f2fbfb;}
+.col-num{left:0;z-index:7;width:44px;min-width:44px;text-align:center;font-weight:700;color:var(--muted)}
+.col-name{left:44px;z-index:7;min-width:170px;max-width:220px;text-align:left;padding:0 10px;font-weight:600;color:var(--text-2);background:#fff}
+thead .col-num,thead .col-name{background:#baeaea;z-index:9}
+thead .col-name{background:#baeaea}
+.day-head{min-width:160px}
+.day-wrap{display:grid;grid-template-columns:1fr 1fr}
+.subhead{padding:5px 3px;font-size:10px;font-weight:700;color:var(--muted);border-top:1px solid var(--border);}
+.subhead+.subhead{border-left:1px solid var(--border)}
+.month-sep{box-shadow:inset 3px 0 0 var(--border-2)}
+tbody td{height:44px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0;text-align:center;background:#fff;}
+tbody tr:hover td{background:#f4fcfc}
+tbody tr:hover .col-num{background:#e2f8f8}
+tbody tr:hover .col-name{background:#edf9f9}
+tbody td.col-num{padding:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px}
+tbody td.col-name{height:auto;padding:8px 10px;font-size:12.5px}
+.cell-sel{
+  width:calc(100% - 4px);border:1px solid var(--border);background:#fff;
+  border-radius:6px;padding:5px 4px;font-size:11px;font-weight:600;outline:none;
+  color:var(--text-2);cursor:pointer;font-family:inherit;
+  transition:border-color .15s,box-shadow .15s;margin:2px;
+  -webkit-appearance:none;appearance:none;min-height:36px;
+}
+.cell-sel:focus{border-color:#6dd5d5;box-shadow:0 0 0 3px rgba(18,146,146,.12)}
+.cell-sel.a-asiste{background:var(--success-bg);color:var(--success);border-color:var(--success-b)}
+.cell-sel.a-no-asiste{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-b)}
+.cell-sel.a-tarde{background:var(--warning-bg);color:var(--warning);border-color:var(--warning-b)}
+.cell-sel.a-excusa{background:var(--info-bg);color:var(--info);border-color:var(--info-b)}
+.cell-sel.u-inadecuado{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-b)}
+.cell-sel.u-permiso-coordinacion{background:#fef9c3;color:#92400e;border-color:#fde68a}
+.table-foot{padding:10px 18px;font-size:12px;color:var(--muted);background:var(--surface-2);border-top:1px solid var(--border);}
+
+/* ─── Name cell ─── */
+.col-name-wrap{position:sticky;left:44px;z-index:5;min-width:175px;background:#fff}
+.name-inner{display:flex;align-items:center;gap:6px;padding:6px 10px;min-height:44px}
+/* Always show row actions — on mobile there's no hover */
+.row-actions{display:flex;gap:4px;flex-shrink:0}
+.row-btn{width:32px;height:32px;border:none;border-radius:7px;cursor:pointer;background:transparent;display:flex;align-items:center;justify-content:center;transition:all .15s;touch-action:manipulation;}
+.row-btn svg{width:16px;height:16px;fill:currentColor}
+.row-btn-del{color:var(--danger);background:var(--danger-bg)}
+.row-btn-del:hover{background:#fee2e2}
+.row-btn-move{color:var(--teal-700);background:var(--teal-50)}
+.row-btn-move:hover{background:var(--teal-100)}
+
+/* ─── Totals col ─── */
+.col-tot{min-width:130px;text-align:center;padding:4px 6px}
+.tot-grid{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;padding:2px}
+.tot-badge{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:2px 5px;border-radius:5px;background:#f0f9f9;color:var(--teal-800)}
+.tot-a{background:var(--success-bg);color:var(--success)}
+.tot-n{background:var(--danger-bg);color:var(--danger)}
+.tot-t{background:var(--warning-bg);color:var(--warning)}
+.tot-e{background:var(--info-bg);color:var(--info)}
+.tot-u{background:var(--purple-bg);color:var(--purple)}
+.att-pct{font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:2px 6px;border-radius:5px;}
+.pct-hi{background:#f0fdf4;color:#15803d}
+.pct-mid{background:#fffbeb;color:#a16207}
+.pct-lo{background:#fef2f2;color:#b91c1c}
+
+/* ─── Delete confirm pill ─── */
+.del-confirm{
+  position:fixed;z-index:100;background:#fff;border:1px solid var(--danger-b);
+  border-radius:12px;box-shadow:var(--shadow-lg);
+  padding:10px 14px;display:flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:600;color:var(--danger);flex-wrap:wrap;
+  opacity:0;pointer-events:none;transition:opacity .15s;
+}
+.del-confirm.show{opacity:1;pointer-events:all}
+.del-confirm-name{color:var(--text);font-weight:700;flex:1;min-width:0;word-break:break-word}
+
+/* ─── Modals ─── */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal.open{opacity:1;pointer-events:all}
+.modal-box{background:#fff;border-radius:var(--r-lg);width:100%;max-width:400px;box-shadow:var(--shadow-lg);transform:translateY(12px);transition:transform .2s;}
+.modal.open .modal-box{transform:translateY(0)}
+.modal-head{padding:20px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-head h3{font-size:17px;font-weight:800;color:var(--teal-900)}
+.modal-close{width:30px;height:30px;border:none;background:var(--surface-2);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
+.modal-close:hover{background:var(--surface-3)}
+.modal-close svg{width:16px;height:16px;fill:currentColor}
+.modal-body{padding:18px 22px}
+.modal-foot{padding:14px 22px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12.5px;font-weight:700;color:var(--text-2);margin-bottom:6px}
+.form-input{
+  width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+  font-family:inherit;font-size:14px;color:var(--text);outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.form-input:focus{border-color:var(--teal-700);box-shadow:0 0 0 3px rgba(18,146,146,.12)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234a7b7b' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:18px;padding-right:34px;}
+
+/* ─── Stats ─── */
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:4px 0 8px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--shadow-sm)}
+.stat-card .label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:8px}
+.stat-card .value{font-size:28px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}
+.stat-card .sub{font-size:11px;color:var(--muted);margin-top:5px}
+.val-teal{color:var(--teal-700)}
+.val-green{color:var(--success)}
+.val-red{color:var(--danger)}
+.val-amber{color:var(--warning)}
+.val-purple{color:var(--purple)}
+.course-stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:10px}
+.csc-header{padding:14px 18px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.csc-header .name{font-size:15px;font-weight:800;color:var(--teal-900)}
+.csc-header .meta{font-size:12px;color:var(--muted)}
+.csc-bars{padding:12px 18px}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.blabel{font-size:11.5px;color:var(--muted);font-weight:600;width:110px;flex-shrink:0}
+.bar-track{flex:1;height:7px;background:var(--surface-3);border-radius:999px;overflow:hidden}
+.bar-fill{height:100%;border-radius:999px;transition:width .5s}
+.bval{font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:700;width:36px;text-align:right}
+
+
+
+/* ─── Mobile attendance cards ─── */
+.mobile-day-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:12px;box-shadow:var(--shadow-sm)}
+.mobile-student-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:12px;box-shadow:var(--shadow-sm)}
+.mobile-student-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.mobile-student-name{font-size:13px;font-weight:800;color:var(--teal-900);line-height:1.35}
+.mobile-student-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;color:var(--muted);background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:3px 8px;flex-shrink:0}
+.mobile-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mobile-field label{display:block;font-size:11.5px;font-weight:800;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.mobile-actions{display:flex;gap:6px;margin-top:10px}
+.mobile-actions .row-btn{width:38px;height:36px}
+@media(max-width:640px){
+  .mobile-fields{grid-template-columns:1fr}
+  body{overflow:hidden}
+  .content-area{overflow-y:auto}
+}
+
+/* ─── Responsive ─── */
+@media(max-width:1024px){
+  .sidebar{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay{display:block}
+  .menu-btn{display:flex}
+}
+@media(max-width:640px){
+  .action-bar{padding:8px 12px;flex-direction:column;align-items:stretch;gap:8px}
+  .action-bar-left{order:2}
+  .action-bar-right{order:1;justify-content:flex-end}
+  .legend{display:none} /* hide legend on mobile to save space */
+  .content-area{padding:10px 10px;gap:10px}
+  .topbar{padding:0 12px}
+  .tabs-bar{padding:0 12px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .col-name-wrap{min-width:140px}
+  .name-inner{padding:4px 6px}
+  .btn-sm{padding:8px 12px;font-size:13px}
+  .table-zone{max-height:calc(100vh - 260px)}
+  .chip{display:none}
+  .topbar-title h2{font-size:15px}
+  .tab-btn{padding:10px 12px;font-size:13px}
+  .tab-btn svg{display:none}
+}
+@media(max-width:400px){
+  .col-name-wrap{min-width:120px}
+  .action-bar-right{gap:6px}
+  .btn-sm{padding:7px 10px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.08L4.04 10.5 12 6.5l7.96 4-7.96 4.58zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        </div>
+        <div class="brand-text">
+          <h1>Primaria JM</h1>
+          <p>Asistencia 2026</p>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="courseSearch" placeholder="Buscar curso…"/>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div id="coursesList"></div>
+    </nav>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      </button>
+      <div class="topbar-title">
+        <h2 id="courseHeader">Selecciona un curso</h2>
+      </div>
+      <div class="topbar-right">
+        <span class="chip" id="studentChip" style="display:none"></span>
+        <span class="chip" id="syncChip" style="display:none;background:#f0fdf4;color:#15803d;border-color:#bbf7d0">✓ Sincronizado</span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tabAtt" onclick="switchTab('attendance')">
+        <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        Asistencia
+      </button>
+      <button class="tab-btn" id="tabStats" onclick="switchTab('stats')">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+        Estadísticas
+      </button>
+    </div>
+
+    <!-- Action bar -->
+    <div class="action-bar" id="actionBar" style="display:none">
+      <div class="action-bar-left" id="legendWrap">
+        <div class="legend">
+          <span class="leg-item"><span class="dot" style="background:var(--success)"></span>Asiste</span>
+          <span class="leg-item"><span class="dot" style="background:var(--danger)"></span>No asiste</span>
+          <span class="leg-item"><span class="dot" style="background:var(--warning)"></span>Tarde</span>
+          <span class="leg-item"><span class="dot" style="background:var(--info)"></span>Excusa</span>
+          <span class="leg-item"><span class="dot" style="background:var(--purple)"></span>Uniforme</span>
+        </div>
+      </div>
+      <div class="action-bar-right" id="attActions">
+        <button class="btn btn-ghost btn-sm" onclick="addMonth()">
+          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-7-7H8v5h4v-5zm6 0h-4v5h4v-5z"/></svg>
+          + Mes
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Exportar CSV
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="openAddStudentModal()">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+          Agregar estudiante
+        </button>
+      </div>
+    </div>
+
+    <div class="content-area" id="contentArea">
+      <div class="empty-card">
+        <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.08L4.04 10.5 12 6.5l7.96 4-7.96 4.58zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg></div>
+        <h3>Bienvenido</h3>
+        <p>Selecciona un curso del panel izquierdo para registrar la asistencia.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete confirm pill -->
+<div class="del-confirm" id="delConfirm">
+  <span id="delConfirmName"></span>
+  <button class="btn btn-danger btn-sm" id="delYesBtn">Eliminar</button>
+  <button class="btn btn-ghost btn-sm" onclick="cancelDelete()">Cancelar</button>
+</div>
+
+<!-- Modal: Add Student -->
+<div class="modal" id="modalAdd">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Agregar estudiante</h3>
+      <button class="modal-close" onclick="closeModal('modalAdd')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Nombre completo del estudiante</label>
+        <input class="form-input" id="newStudentName" type="text" placeholder="APELLIDOS NOMBRES"
+          onkeydown="if(event.key==='Enter')confirmAddStudent()"/>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modalAdd')">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmAddStudent()">Agregar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Transfer Student -->
+<div class="modal" id="modalTransfer">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Cambiar de curso</h3>
+      <button class="modal-close" onclick="closeModal('modalTransfer');_transferPending=null"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13.5px;color:var(--text-2);margin-bottom:14px">Estudiante: <strong id="transferStudentName"></strong></p>
+      <div class="form-group">
+        <label>Curso destino</label>
+        <select class="form-input form-select" id="transferDestCourse">
+          <option value="">— Selecciona un curso —</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modalTransfer');_transferPending=null">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmTransfer()">Transferir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Edit Student -->
+<div class="modal" id="modalEdit">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Editar nombre</h3>
+      <button class="modal-close" onclick="closeModal('modalEdit')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input class="form-input" id="editStudentName" type="text"
+          onkeydown="if(event.key==='Enter')confirmEdit()"/>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modalEdit')">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════════════════════ */
+const API_URL = "https://script.google.com/macros/s/AKfycbwLW9VdRDSm2aUiHk25oGmJOZJPAzCyCd6od5ZIHJmn--wKJwZACSLX3r-KQYeiJZ-1/exec";
+
+// Festivos Colombia 2026
+const HOLIDAYS = new Set([
+  "2026-01-01","2026-01-12","2026-03-23","2026-04-02","2026-04-03",
+  "2026-05-01","2026-05-18","2026-06-08","2026-06-15","2026-06-29",
+  "2026-07-20","2026-08-07","2026-08-17","2026-10-12",
+  "2026-11-02","2026-11-16","2026-12-08","2026-12-25"
+]);
+const MONTHS_ES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const START_DATE = "2026-05"; // Empieza en mayo 2026
+const START_DAY  = 4;         // desde el 4 de mayo
+
+/* ══════════════════════════════════════════════════════════
+   STUDENTS DATA
+══════════════════════════════════════════════════════════ */
+const STUDENTS = {"Jardín":[{"num":1,"name":"ARIAS LEÓN MARÍA JOSE"},{"num":2,"name":"CRUZ POVEDA DERECK SAMUEL"},{"num":3,"name":"GRANADILLO MUÑOZ DARIANNYS VICTORIA"},{"num":4,"name":"PADILLA HERRERA IAN DAVID"},{"num":5,"name":"PLANEZ RODRÍGUEZ MATHIAS GAEL"},{"num":6,"name":"POVEDA RUIZ MARIANA"},{"num":7,"name":"QUINTERO BERMUDEZ MARTÍN"}],"TR 1":[{"num":1,"name":"AGUILAR BELEÑO JEISEL ZOED"},{"num":2,"name":"BECERRA GONZALEZ EMILY LUCIANA"},{"num":3,"name":"BLANCO ZAVALA AMANDA GABRIELA"},{"num":4,"name":"CASAS RODRIGUEZ THOMAS"},{"num":5,"name":"CASTRO RINCON SAMUEL DAVID"},{"num":6,"name":"CEBALLOS CORONADO LHEA ISABELLA"},{"num":7,"name":"FANDIÑO FAJARDO THIAGO"},{"num":8,"name":"FERNANDEZ CASTELLANOS JHANDERY VALENTINA"},{"num":9,"name":"GARCIA GARCIA JUAN ESTEBAN"},{"num":10,"name":"LARA GUZMAN ALAN JOEL"},{"num":11,"name":"MENDIVELSO PULICHE JEAN PAULL"},{"num":12,"name":"MONTAÑEZ ROJAS EVELIN LUCIANA"},{"num":13,"name":"PALENCIA PEREZ JANA SOFIA"},{"num":14,"name":"QUINTERO PEREA KENYA ISABELA"},{"num":15,"name":"TORRES OSORIO EMILIANO"},{"num":16,"name":"TRIANA ARIZA JUAN PABLO"},{"num":17,"name":"WEIBERZAHM SANTAELLA JUANNY SOFIA"},{"num":18,"name":"YANEZ GUZMAN HANDRIW DAVID"}],"TR 2":[{"num":1,"name":"ACOSTA TORRES IVANYELIN JAZLYN"},{"num":2,"name":"ANGULO RUIZ GISELL ANTHONELLA"},{"num":3,"name":"BUITRAGO ANGEL IVAN ISAAC"},{"num":4,"name":"CENTENO ELLES ISMAEL DAVID"},{"num":5,"name":"ESCOBAR GAVIRIA JUAN MARTÍN"},{"num":6,"name":"FERNANDEZ CASTELLANOS MARIA FERNANDA"},{"num":7,"name":"GONZALEZ SANTANILLA SAMUEL"},{"num":8,"name":"HERNANDEZ GARZON LIAM EMMANUEL"},{"num":9,"name":"HERNANDEZ LOPEZ ANTHONELLA"},{"num":10,"name":"LOZANO PAEZ DAVID SANTIAGO"},{"num":11,"name":"MEZA CORDERO MATEO DANIEL"},{"num":12,"name":"MIRANDA MEJIA VALERYN SOFIA"},{"num":13,"name":"MOLINA MENDEZ DARIANNY ANAHÍ"},{"num":14,"name":"MONRROY AMADOR ALEXANDER ISAAC"},{"num":15,"name":"PAEZ PEÑA ANGEL YOEL"},{"num":16,"name":"RAMIREZ ROSERO MADELEINE VALERIA"},{"num":17,"name":"REYES LEGUIZAMO ANTONELLA"},{"num":18,"name":"RIPE POVEDA EMILY SAMANTHA"},{"num":19,"name":"SALGADO PINILLA BREIDY"},{"num":20,"name":"VIZCAINO RAMIREZ JOHAN ANDRES"}],"101":[{"num":1,"name":"ALVAREZ TROCONIS VICTORIA NAZARETH"},{"num":2,"name":"ANRANGO MALDONADO ZAHID SAMIR"},{"num":3,"name":"BORRERO SALGAR NAHOMI CELESTE"},{"num":4,"name":"CARREÑO AMADOR MATHIAS ISAAC"},{"num":5,"name":"CUARTAS TRIANA JEAN PAUL"},{"num":6,"name":"GALLEGO LUJANO EIMY LUCIA"},{"num":7,"name":"GARCIA ORTIZ CHRISTOPHER"},{"num":8,"name":"GARZON GIRALDO SAMUEL"},{"num":9,"name":"GOMEZ TIRADO EIMY LUCIANA"},{"num":10,"name":"LOZANO PAEZ LUIS ALEJANDRO"},{"num":11,"name":"MEDINA NAVA MARIA JOSÉ"},{"num":12,"name":"MENDOZA MOLINA DANA ISABELA"},{"num":13,"name":"MONTOYA RODRIGUEZ JULIAN"},{"num":14,"name":"MORA TORRES ISABELLA"},{"num":15,"name":"MORALES MARTINEZ SARA GISELLE"},{"num":16,"name":"NEIRA MARTINEZ ANA ISABELLA"},{"num":17,"name":"NIÑO ROJAS DYLAN GABRIEL"},{"num":18,"name":"ORTIZ TIQUE VALERY JULIANA"},{"num":19,"name":"PADILLA JIMENEZ SARA GABRIELA"},{"num":20,"name":"PINILLA MOLINA EMILY SOFIA"},{"num":21,"name":"SILVA CHACON PAULINA"},{"num":22,"name":"TORRIVILLA VALLEJO JULIANNYS ALONDRA"},{"num":23,"name":"TRIVIÑO ROMERO DYLAN SAID"},{"num":24,"name":"VALBUENA BERNAL MARIANGEL"},{"num":25,"name":"VALENZUELA CAVIEDES MATHIAS"},{"num":26,"name":"VASQUEZ TORRES IKER SANTIAGO"}],"102":[{"num":1,"name":"AMADO FRESNEDA ADRIANA SALOME"},{"num":2,"name":"BRACHO LOPEZ IAN SANTIAGO"},{"num":3,"name":"CONTRERAS MOLINA LAURA CAMILA"},{"num":4,"name":"DAZA TAPIERO JOHAN SANTIAGO"},{"num":5,"name":"GARCIA PARADA ARIANA LUCIA"},{"num":6,"name":"GARCIA SÁNCHEZ LIA SARAI"},{"num":7,"name":"GOMEZ TERNERA MILAN ANDRES"},{"num":8,"name":"MALDONADO VANEGAS DIEGO ALEJANDRO"},{"num":9,"name":"MEDINA BLANCO DUVIANA VALENTINA"},{"num":10,"name":"MEDINA VILLARRUEL LAKSHMI ELIZABETH"},{"num":11,"name":"MORENO PAEZ JOSEPH JACOB"},{"num":12,"name":"MORENO RODRIGUEZ MARTIN MATIAS"},{"num":13,"name":"NEIRA MARTINEZ JOEL FELIPE"},{"num":14,"name":"ORDOÑEZ MARTINEZ MAITE FERNANDA"},{"num":15,"name":"ORDOÑEZ VALLEJOS CHRISTOPHER"},{"num":16,"name":"PARDO AVILA MARIA CAMILA"},{"num":17,"name":"PEREZ CHARRYS JUAN JOSE"},{"num":18,"name":"POLO CABRALES ESTEBAN"},{"num":19,"name":"RAMIREZ GAMARRA JUAN DIEGO"},{"num":20,"name":"RIOS BERMUDEZ ANGELICA MARIANA"},{"num":21,"name":"RIVAS RUIZ JUAN ESTEBAN"},{"num":22,"name":"RODRIGUEZ RODRIGUEZ JACOBO"},{"num":23,"name":"ROMERO GARCIA HANNA NIKOL"},{"num":24,"name":"SUAREZ MONTENEGRO JUAN JOSE"},{"num":25,"name":"TRESPALACIOS VELOZA LUCIANA"},{"num":26,"name":"UTRERA CEDEÑO LAIRE ANTHONELLA"}],"201":[{"num":1,"name":"ARDILA CIFUENTES ANGEL GABRIEL"},{"num":2,"name":"CAMACHO ACEVEDO MARIA FERNANDA"},{"num":3,"name":"CORREDOR SILVA DANIEL ALEJANDRO"},{"num":4,"name":"CRUZ PINZON SARA MAYERLY"},{"num":5,"name":"GARCIA CAMPOS ALAN SAMUEL"},{"num":6,"name":"GARCIA ICOPO ANTHONELLA"},{"num":7,"name":"GOMEZ AMEZQUITA MANUEL ESTEBAN"},{"num":8,"name":"GONZALEZ CANO SANTIAGO"},{"num":9,"name":"GUERRERO MAYORGA THIAGO"},{"num":10,"name":"LOPEZ GOMEZ IAN SANTIAGO"},{"num":11,"name":"MORA VARGAS JOSEPH JOAN"},{"num":12,"name":"MURCIA MORENO PAULA ALEJANDRA"},{"num":13,"name":"OCAMPO CARDENAS GABRIEL"},{"num":14,"name":"OJEDA HERRERA JUAN JOSE"},{"num":15,"name":"OSORIO ALVARINO JUAN PABLO"},{"num":16,"name":"PIÑERO COCHO KEIVER JOSE"},{"num":17,"name":"PULGARÍN CLAVIJO GABRIELA"},{"num":18,"name":"RESTREPO LOPEZ IAN ANDRES"},{"num":19,"name":"SANTOS CUELLAR FRANYER ENMAUELL"},{"num":20,"name":"SOACHA RIVEROS IAN SANTIAGO"},{"num":21,"name":"TAPIAS BARRERA CELESTE"},{"num":22,"name":"TORRES HERNANDEZ KENNYAN ANDRES"},{"num":23,"name":"VARGAS GARCIA ISABELLA"},{"num":24,"name":"VARGAS VENEGAS LIANN JOSE"},{"num":25,"name":"VARGAS VERGARA JUAN PABLO"},{"num":26,"name":"VERA GUEVARA AYLIN ZOE"},{"num":27,"name":"VILLEGAS ORTIZ REINZON DANIEL"}],"202":[{"num":1,"name":"ALVAREZ GUZMAN JUAN FELIPE"},{"num":2,"name":"ARIAS LEÓN JONNY ALEJANDRO"},{"num":3,"name":"BENITEZ RODRIGUEZ GABRIELA ISABEL"},{"num":4,"name":"CARRASCAL MORENO MARIA VICTORIA"},{"num":5,"name":"CASTAÑO LOPEZ JUAN ESTEBAN"},{"num":6,"name":"CASTELLANOS RONDON JERONIMO"},{"num":7,"name":"CERDA HERRERA DEINER JOSE"},{"num":8,"name":"CHAVEZ PAEZ SARA MICHEL"},{"num":9,"name":"DIAZ ARIAS JOSEPH RADAMEL"},{"num":10,"name":"DIAZ CABRALES LUIS MANUEL"},{"num":11,"name":"GARZON BARON JUAN MATEO"},{"num":12,"name":"GONZALEZ RAMOS ISAAC"},{"num":13,"name":"GUAYACAN RESTREPO EMILY SOFIA"},{"num":14,"name":"GUZMAN CIFUENTES AYLIN SOFIA"},{"num":15,"name":"HERNANDEZ RODRIGUEZ LOGAN DEMIAN"},{"num":16,"name":"HOYOS NOVOA DILAN ANDREY"},{"num":17,"name":"LINARES ORJUELA ANDRES CAMILO"},{"num":18,"name":"LOPEZ HERRERA SAMUEL"},{"num":19,"name":"MASIP NOVOA ASHLEY SOPHIA"},{"num":20,"name":"ORTEGA CARDENAS LUCIANA"},{"num":21,"name":"PALENCIA PEREZ HELAM ANDRES"},{"num":22,"name":"PARRA LEDEZMA JOSE ANGEL"},{"num":23,"name":"POPAYAN CASTRO YESID ANDRES"},{"num":24,"name":"PRIETO CARDENAS ARIADNA"},{"num":25,"name":"SALAZAR MEJIA EMILY SOFIA"},{"num":26,"name":"VARGAS CONTRERAS EITHAN MATEO"},{"num":27,"name":"VELANDIA MUÑOZ ISABELLA"}]};
+
+/* ══════════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════════ */
+let cur = null;
+let activeTab = "attendance";
+let sts = {};
+let store = {};
+let mState = {};
+let remLoaded = {};
+
+/* ══════════════════════════════════════════════════════════
+   UTILITIES
+══════════════════════════════════════════════════════════ */
+if (!window.CSS) window.CSS = {};
+if (!CSS.escape) {
+  CSS.escape = function(value) {
+    return String(value).replace(/[^a-zA-Z0-9_\-]/g, "\\$&");
+  };
+}
+
+function isMobileView() {
+  return window.innerWidth <= 640;
+}
+
+const p = n => String(n).padStart(2,"0");
+const iso = d => { const dt = new Date(d); return `${dt.getFullYear()}-${p(dt.getMonth()+1)}-${p(dt.getDate())}`; };
+
+function nextMonthStr(ms) {
+  const [y,m] = ms.split("-").map(Number);
+  const d = new Date(y,m,1);
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}`;
+}
+
+function weekdaysOfMonth(ms, startDay=1) {
+  const [year,month] = ms.split("-").map(Number);
+  const days = new Date(year,month,0).getDate();
+  const res = [];
+  for (let day=startDay; day<=days; day++) {
+    const d = new Date(year,month-1,day);
+    const dow = d.getDay();
+    const code = iso(d);
+    if (dow!==0 && dow!==6 && !HOLIDAYS.has(code)) res.push(code);
+  }
+  return res;
+}
+
+function groupByMonth(dates) {
+  const groups = [];
+  dates.forEach((ds,i) => {
+    const d = new Date(ds+"T00:00:00");
+    const label = `${MONTHS_ES[d.getMonth()]} ${d.getFullYear()}`;
+    const last = groups[groups.length-1];
+    if (!last || last.label!==label) groups.push({label,count:1,startIndex:i});
+    else last.count++;
+  });
+  return groups;
+}
+
+function fmtDay(ds) {
+  const d = new Date(ds+"T00:00:00");
+  return `${p(d.getDate())}/${p(d.getMonth()+1)}`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   COURSE INIT
+══════════════════════════════════════════════════════════ */
+function initCourse(id) {
+  if (!sts[id]) sts[id] = JSON.parse(JSON.stringify(STUDENTS[id] || []));
+  if (!store[id]) store[id] = {};
+  if (!mState[id]) {
+    mState[id] = {
+      months: [START_DATE],
+      dates: weekdaysOfMonth(START_DATE, START_DAY)
+    };
+  }
+}
+function getDates(id) { initCourse(id); return mState[id].dates; }
+function getRec(id, nameKey, ds) {
+  if (!store[id]) store[id] = {};
+  if (!store[id][nameKey]) store[id][nameKey] = {};
+  if (!store[id][nameKey][ds]) store[id][nameKey][ds] = {a:"",u:""};
+  return store[id][nameKey][ds];
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATS
+══════════════════════════════════════════════════════════ */
+function calcStudentStats(cid, snum) {
+  const dates = getDates(cid);
+  const s = (sts[cid]||[]).find(x => x.num === snum);
+  const nameKey = s ? s.name : String(snum);
+  let a=0,n=0,t=0,e=0,u=0;
+  dates.forEach(ds => {
+    const r = store[cid]?.[nameKey]?.[ds] || {};
+    if (r.a==="asiste") a++;
+    else if (r.a==="no-asiste") n++;
+    else if (r.a==="tarde") t++;
+    else if (r.a==="excusa") e++;
+    if (r.u) u++;
+  });
+  const total = dates.length;
+  const pct = total>0 ? Math.round(a/total*100) : 0;
+  return {a,n,t,e,u,total,pct};
+}
+
+function calcCourseStats(cid) {
+  initCourse(cid);
+  const students = sts[cid]||[];
+  const total = {a:0,n:0,t:0,e:0,u:0,days:0};
+  students.forEach(s => {
+    const st = calcStudentStats(cid,s.num);
+    total.a+=st.a; total.n+=st.n; total.t+=st.t; total.e+=st.e; total.u+=st.u;
+    total.days = st.total;
+  });
+  const allMarked = total.a+total.n+total.t+total.e;
+  const pct = allMarked>0 ? Math.round(total.a/allMarked*100) : 0;
+  return {...total, students:students.length, pct};
+}
+
+/* ══════════════════════════════════════════════════════════
+   API
+══════════════════════════════════════════════════════════ */
+function apiPost(obj) {
+  return fetch(API_URL, {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body:"payload="+encodeURIComponent(JSON.stringify(obj)),
+    cache:"no-store"
+  }).then(r=>r.json());
+}
+function apiGet(params) {
+  return fetch(`${API_URL}?${new URLSearchParams({...params,_:Date.now()})}&cache=no-store`)
+    .then(r=>r.json());
+}
+
+async function syncStudents(id) {
+  return apiPost({action:"syncStudents",curso:id,students:sts[id].map(s=>({num:s.num,name:s.name}))});
+}
+
+function showSync() {
+  const chip = document.getElementById("syncChip");
+  chip.style.display = "";
+  clearTimeout(showSync._t);
+  showSync._t = setTimeout(() => chip.style.display="none", 2500);
+}
+
+function applyRemote(id, data) {
+  if (!data?.headers || !data?.rows) return;
+  const numIdx  = data.headers.indexOf("N°");
+  const nameIdx = data.headers.indexOf("ESTUDIANTE");
+  if (numIdx<0 || nameIdx<0) return;
+
+  // Reconstruct student list from server (persists deletions/transfers)
+  if (data.rows.length > 0) {
+    const remote = data.rows
+      .map(row => ({num:Number(row[numIdx]||0), name:String(row[nameIdx]||"").trim().toUpperCase()}))
+      .filter(s => s.name);
+    if (remote.length > 0) sts[id] = remote;
+  }
+
+  // Restore attendance data
+  data.rows.forEach(row => {
+    const name = String(row[nameIdx]||"").trim().toUpperCase();
+    const s = sts[id].find(x => x.name.trim().toUpperCase()===name);
+    if (!s) return;
+    const nk = s.name;
+    if (!store[id][nk]) store[id][nk] = {};
+    data.headers.forEach((h,i) => {
+      if (i<2) return;
+      const v = String(row[i]||"").trim();
+      if (!v) return;
+      if (h.endsWith("_ASIST")) {
+        const ds = h.replace("_ASIST","");
+        if (!store[id][nk][ds]) store[id][nk][ds]={a:"",u:""};
+        store[id][nk][ds].a = v;
+      }
+      if (h.endsWith("_UNIF")) {
+        const ds = h.replace("_UNIF","");
+        if (!store[id][nk][ds]) store[id][nk][ds]={a:"",u:""};
+        store[id][nk][ds].u = v;
+      }
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════════════ */
+function renderSidebar() {
+  const q = (document.getElementById("courseSearch").value||"").toLowerCase();
+  const list = document.getElementById("coursesList");
+  list.innerHTML = "";
+
+  const GRADE_LABELS = {
+    "Jardín":"Preescolar","TR 1":"Preescolar","TR 2":"Preescolar",
+    "101":"Primero","102":"Primero",
+    "201":"Segundo","202":"Segundo",
+  };
+  const GRADE_ORDER = ["Jardín","TR 1","TR 2","101","102","201","202"];
+  const byGrade = {};
+  GRADE_ORDER.filter(c => c.toLowerCase().includes(q) || `curso ${c}`.toLowerCase().includes(q)).forEach(c => {
+    const g = GRADE_LABELS[c] || c.replace(/\d+$/,"");
+    if (!byGrade[g]) byGrade[g] = [];
+    byGrade[g].push(c);
+  });
+
+  Object.keys(byGrade).forEach(g => {
+    const lbl = document.createElement("div");
+    lbl.className = "grade-label";
+    lbl.textContent = g;
+    list.appendChild(lbl);
+    byGrade[g].forEach(c => {
+      const btn = document.createElement("button");
+      btn.className = "course-btn" + (cur===c?" active":"");
+      const icon = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;flex-shrink:0"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>`;
+      btn.innerHTML = `${icon}<span>${c === "Jardín" || c.startsWith("TR") ? c : "Grado "+c}</span><span class="c-pill">${(sts[c]||STUDENTS[c]||[]).length}</span>`;
+      btn.onclick = () => selectCourse(c);
+      list.appendChild(btn);
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════
+   SELECT COURSE
+══════════════════════════════════════════════════════════ */
+async function selectCourse(id) {
+  cur = id; initCourse(id);
+  const label = id==="Jardín"||id.startsWith("TR") ? id : `Grado ${id}`;
+  document.getElementById("courseHeader").textContent = label;
+  document.getElementById("studentChip").textContent = `${sts[id].length} estudiantes`;
+  document.getElementById("studentChip").style.display = "";
+  document.getElementById("actionBar").style.display = "";
+  renderSidebar();
+  renderTab();
+  if (window.innerWidth<=1024) closeSidebar();
+  if (!remLoaded[id]) {
+    try {
+      const data = await apiGet({action:"getCourse",curso:id});
+      if (data?.ok) {
+        applyRemote(id, data);
+        document.getElementById("studentChip").textContent = `${sts[id].length} estudiantes`;
+        renderTab();
+      }
+      await syncStudents(id);
+    } catch(err) { console.warn("Sin conexión al servidor:", err); }
+    remLoaded[id] = true;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   TABS
+══════════════════════════════════════════════════════════ */
+function switchTab(tab) {
+  activeTab = tab;
+  document.getElementById("tabAtt").classList.toggle("active", tab==="attendance");
+  document.getElementById("tabStats").classList.toggle("active", tab==="stats");
+  document.getElementById("legendWrap").style.display = tab==="attendance" ? "" : "none";
+  document.getElementById("attActions").style.display = tab==="attendance" ? "" : "none";
+  renderTab();
+}
+function renderTab() {
+  if (activeTab==="attendance") renderAttendance();
+  else renderStats();
+}
+
+/* ══════════════════════════════════════════════════════════
+   ATTENDANCE TAB
+══════════════════════════════════════════════════════════ */
+function renderAttendance() {
+  const area = document.getElementById("contentArea");
+  if (!cur) {
+    area.innerHTML = `<div class="empty-card"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div><h3>Selecciona un curso</h3><p>Elige un curso del panel izquierdo.</p></div>`;
+    return;
+  }
+  area.innerHTML = "";
+  area.appendChild(isMobileView() ? buildMobileAttendance(cur) : buildAttTable(cur));
+}
+
+function buildMobileAttendance(cid) {
+  const dates = getDates(cid);
+  if (!dates.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-card";
+    empty.innerHTML = `<h3>Sin fechas</h3><p>Agrega un mes para iniciar el registro.</p>`;
+    return empty;
+  }
+
+  if (!window._mobileDateByCourse) window._mobileDateByCourse = {};
+  if (!window._mobileDateByCourse[cid] || !dates.includes(window._mobileDateByCourse[cid])) {
+    window._mobileDateByCourse[cid] = dates[0];
+  }
+  const selectedDate = window._mobileDateByCourse[cid];
+
+  const wrap = document.createElement("div");
+  wrap.style.display = "flex";
+  wrap.style.flexDirection = "column";
+  wrap.style.gap = "10px";
+
+  const selector = document.createElement("div");
+  selector.className = "mobile-day-card";
+  selector.innerHTML = `
+    <label style="font-size:12px;font-weight:800;color:var(--text-2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Día de asistencia</label>
+    <select class="form-input form-select" id="mobileDateSelect">
+      ${dates.map(d => `<option value="${d}" ${d === selectedDate ? "selected" : ""}>${fmtDay(d)} · ${d}</option>`).join("")}
+    </select>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.45">Vista optimizada para celular. En computador se mantiene la tabla completa.</p>
+  `;
+  selector.querySelector("#mobileDateSelect").onchange = e => {
+    window._mobileDateByCourse[cid] = e.target.value;
+    renderAttendance();
+  };
+  wrap.appendChild(selector);
+
+  sts[cid].forEach(s => {
+    const rec = getRec(cid, s.name, selectedDate);
+    const card = document.createElement("div");
+    card.className = "mobile-student-card";
+    card.innerHTML = `
+      <div class="mobile-student-head">
+        <div class="mobile-student-name">${s.name}</div>
+        <div class="mobile-student-num">#${s.num}</div>
+      </div>
+      <div class="mobile-fields">
+        <div class="mobile-field">
+          <label>Asistencia</label>
+          <select class="cell-sel mobile-att" style="width:100%;margin:0;min-height:42px">
+            <option value="">—</option>
+            <option value="asiste">Asiste</option>
+            <option value="no-asiste">No asiste</option>
+            <option value="tarde">Tarde</option>
+            <option value="excusa">Excusa</option>
+          </select>
+        </div>
+        <div class="mobile-field">
+          <label>Uniforme</label>
+          <select class="cell-sel mobile-uni" style="width:100%;margin:0;min-height:42px">
+            <option value="">—</option>
+            <option value="inadecuado">Inadecuado</option>
+            <option value="permiso-coordinacion">Permiso coord.</option>
+          </select>
+        </div>
+      </div>
+      <div class="mobile-actions">
+        <button class="row-btn row-btn-edit" title="Editar nombre" style="color:var(--teal-800);background:#e6f9f9">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </button>
+        <button class="row-btn row-btn-move" title="Cambiar de curso">
+          <svg viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+        </button>
+        <button class="row-btn row-btn-del" title="Eliminar estudiante">
+          <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        </button>
+      </div>
+    `;
+
+    const asel = card.querySelector(".mobile-att");
+    const usel = card.querySelector(".mobile-uni");
+    asel.value = rec.a || "";
+    usel.value = rec.u || "";
+    applySelClass(asel, "a");
+    applySelClass(usel, "u");
+    asel.onchange = () => saveField(cid, s, selectedDate, "a", asel);
+    usel.onchange = () => saveField(cid, s, selectedDate, "u", usel);
+    card.querySelector(".row-btn-edit").onclick = e => { e.stopPropagation(); openEditModal(s.num, s.name); };
+    card.querySelector(".row-btn-move").onclick = e => { e.stopPropagation(); openTransferModal(s.num, s.name); };
+    card.querySelector(".row-btn-del").onclick = e => { e.stopPropagation(); openDeleteConfirm(s.num, s.name, e.currentTarget); };
+
+    wrap.appendChild(card);
+  });
+
+  return wrap;
+}
+
+function buildAttTable(cid) {
+  const dates = getDates(cid);
+  const monthGroups = groupByMonth(dates);
+  const wrap = document.createElement("div"); wrap.className="table-card";
+  const zone = document.createElement("div"); zone.className="table-zone";
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+
+  const r1 = document.createElement("tr");
+  r1.innerHTML = `<th class="col-num" rowspan="2">#</th><th class="col-name-wrap" rowspan="2">Estudiante</th>`;
+  monthGroups.forEach((g,gi) => {
+    const th = document.createElement("th");
+    th.colSpan = g.count*2;
+    th.textContent = g.label;
+    if (gi>0) th.classList.add("month-sep");
+    r1.appendChild(th);
+  });
+  const totTh = document.createElement("th");
+  totTh.rowSpan=2; totTh.className="col-tot";
+  totTh.style.cssText="text-align:center;font-size:11px;letter-spacing:.08em";
+  totTh.textContent="TOTALES";
+  r1.appendChild(totTh);
+  thead.appendChild(r1);
+
+  const r2 = document.createElement("tr");
+  dates.forEach((ds,idx) => {
+    const th = document.createElement("th");
+    th.className = "day-head"+(idx>0&&new Date(ds+"T00:00:00").getDate()===1?" month-sep":"");
+    th.colSpan=2;
+    th.innerHTML=`<div style="font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 0">${fmtDay(ds)}</div><div class="day-wrap"><div class="subhead">Asistencia</div><div class="subhead">Uniforme</div></div>`;
+    r2.appendChild(th);
+  });
+  thead.appendChild(r2);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  tbody.id = `tbody-${cid}`;
+  sts[cid].forEach(s => tbody.appendChild(buildStudentRow(cid,s,dates)));
+  table.appendChild(tbody);
+  zone.appendChild(table); wrap.appendChild(zone);
+
+  const foot = document.createElement("div"); foot.className="table-foot";
+  foot.textContent=`Mostrando ${dates.length} día(s) hábil(es) en ${mState[cid].months.length} mes(es). Usa "+ Mes" para ampliar el período.`;
+  wrap.appendChild(foot);
+  return wrap;
+}
+
+function buildStudentRow(cid, s, dates) {
+  const tr = document.createElement("tr");
+  tr.dataset.sname = s.name;
+
+  const numTd = document.createElement("td");
+  numTd.className="col-num"; numTd.textContent=s.num;
+
+  const nameTd = document.createElement("td");
+  nameTd.className="col-name-wrap";
+  nameTd.innerHTML=`<div class="name-inner">
+    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>
+    <div class="row-actions">
+      <button class="row-btn row-btn-edit" title="Editar nombre" style="color:var(--teal-800);background:#e6f9f9">
+        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+      </button>
+      <button class="row-btn row-btn-move" title="Cambiar de curso">
+        <svg viewBox="0 0 24 24"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"/></svg>
+      </button>
+      <button class="row-btn row-btn-del" title="Eliminar estudiante">
+        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      </button>
+    </div>
+  </div>`;
+
+  nameTd.querySelector(".row-btn-edit").addEventListener("click", e => { e.stopPropagation(); openEditModal(s.num, s.name); });
+  nameTd.querySelector(".row-btn-del").addEventListener("click", e => { e.stopPropagation(); openDeleteConfirm(s.num,s.name,e.currentTarget); });
+  nameTd.querySelector(".row-btn-move").addEventListener("click", e => { e.stopPropagation(); openTransferModal(s.num,s.name); });
+
+  tr.appendChild(numTd); tr.appendChild(nameTd);
+
+  dates.forEach(ds => {
+    const rec = getRec(cid,s.name,ds);
+    const att = document.createElement("td");
+    const uni = document.createElement("td");
+    const asel = document.createElement("select"); asel.className="cell-sel";
+    asel.innerHTML=`<option value="">—</option><option value="asiste">Asiste</option><option value="no-asiste">No asiste</option><option value="tarde">Tarde</option><option value="excusa">Excusa</option>`;
+    asel.value=rec.a||""; applySelClass(asel,"a");
+    asel.onchange = () => saveField(cid,s,ds,"a",asel);
+    const usel = document.createElement("select"); usel.className="cell-sel";
+    usel.innerHTML=`<option value="">—</option><option value="inadecuado">Inadecuado</option><option value="permiso-coordinacion">Permiso coord.</option>`;
+    usel.value=rec.u||""; applySelClass(usel,"u");
+    usel.onchange = () => saveField(cid,s,ds,"u",usel);
+    att.appendChild(asel); uni.appendChild(usel);
+    tr.appendChild(att); tr.appendChild(uni);
+  });
+
+  const totTd = document.createElement("td");
+  totTd.className="col-tot"; totTd.dataset.totname=s.name;
+  renderTotCell(totTd,cid,s.num);
+  tr.appendChild(totTd);
+  return tr;
+}
+
+function renderTotCell(td,cid,snum) {
+  const st = calcStudentStats(cid,snum);
+  const pctClass = st.pct>=90?"pct-hi":st.pct>=75?"pct-mid":"pct-lo";
+  td.innerHTML=`<div class="tot-grid">
+    ${st.a?`<span class="tot-badge tot-a"><span class="dot" style="background:#15803d"></span>${st.a}A</span>`:""}
+    ${st.n?`<span class="tot-badge tot-n"><span class="dot" style="background:#dc2626"></span>${st.n}F</span>`:""}
+    ${st.t?`<span class="tot-badge tot-t"><span class="dot" style="background:#c2410c"></span>${st.t}T</span>`:""}
+    ${st.e?`<span class="tot-badge tot-e"><span class="dot" style="background:#1d4ed8"></span>${st.e}E</span>`:""}
+    ${st.u?`<span class="tot-badge tot-u"><span class="dot" style="background:#7c3aed"></span>${st.u}U</span>`:""}
+    ${st.total>0?`<span class="att-pct ${pctClass}">${st.pct}%</span>`:""}
+  </div>`;
+}
+
+function applySelClass(sel,type) {
+  sel.className="cell-sel";
+  if (!sel.value) return;
+  if (type==="a") sel.classList.add(`a-${sel.value}`);
+  else sel.classList.add(`u-${sel.value}`);
+}
+
+async function saveField(cid,student,ds,field,sel) {
+  const rec = getRec(cid,student.name,ds);
+  rec[field] = sel.value;
+  applySelClass(sel,field);
+  const tbody = document.getElementById(`tbody-${cid}`);
+  if (tbody) {
+    const row = tbody.querySelector(`tr[data-sname="${CSS.escape(student.name)}"]`);
+    if (row) { const totTd = row.querySelector("td[data-totname]"); if (totTd) renderTotCell(totTd,cid,student.num); }
+  }
+  try {
+    const payload={action:"saveRecord",curso:cid,studentNum:student.num,studentName:student.name,fecha:ds};
+    if (field==="a") payload.asistencia=sel.value; else payload.uniforme=sel.value;
+    await apiPost(payload);
+    showSync();
+  } catch(err) { console.error(err); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATS TAB
+══════════════════════════════════════════════════════════ */
+function renderStats() {
+  const area = document.getElementById("contentArea");
+  area.innerHTML="";
+  let totalStudents=0,totalA=0,totalN=0,totalT=0,totalE=0,totalU=0,totalCourses=0;
+  Object.keys(STUDENTS).forEach(cid => {
+    initCourse(cid);totalCourses++;
+    totalStudents+=(sts[cid]||[]).length;
+    const st=calcCourseStats(cid);
+    totalA+=st.a;totalN+=st.n;totalT+=st.t;totalE+=st.e;totalU+=st.u;
+  });
+  const allMarked=totalA+totalN+totalT+totalE;
+  const globalPct=allMarked>0?Math.round(totalA/allMarked*100):0;
+
+  const gs=document.createElement("div");
+  gs.innerHTML=`<div class="section-title">Resumen general · Todos los cursos</div>`;
+  const gGrid=document.createElement("div");gGrid.className="stats-grid";
+  gGrid.innerHTML=`
+    <div class="stat-card"><div class="label">Cursos</div><div class="value val-teal">${totalCourses}</div><div class="sub">Jardín · TR · Primaria</div></div>
+    <div class="stat-card"><div class="label">Estudiantes</div><div class="value val-teal">${totalStudents}</div><div class="sub">en todos los cursos</div></div>
+    <div class="stat-card"><div class="label">% Asistencia</div><div class="value val-green">${globalPct}%</div><div class="sub">${totalA} asistencias</div></div>
+    <div class="stat-card"><div class="label">Inasistencias</div><div class="value val-red">${totalN}</div><div class="sub">Sin excusa</div></div>
+    <div class="stat-card"><div class="label">Tarde</div><div class="value val-amber">${totalT}</div><div class="sub">Total registrado</div></div>
+    <div class="stat-card"><div class="label">Con excusa</div><div class="value val-teal">${totalE}</div><div class="sub">Justificados</div></div>
+    <div class="stat-card"><div class="label">Uniforme</div><div class="value val-purple">${totalU}</div><div class="sub">Registros</div></div>
+  `;
+  gs.appendChild(gGrid);area.appendChild(gs);
+
+  const cs=document.createElement("div");
+  const ct=document.createElement("div");ct.className="section-title";ct.style.marginTop="8px";
+  ct.textContent=cur?`Detalle · ${cur==="Jardín"||cur.startsWith("TR")?cur:"Grado "+cur}`:"Estadísticas por curso";
+  cs.appendChild(ct);
+
+  const coursesToShow=cur?[cur]:Object.keys(STUDENTS);
+  coursesToShow.forEach(cid => {
+    initCourse(cid);
+    const st=calcCourseStats(cid);
+    const all=st.a+st.n+st.t+st.e;
+    const pctColor=st.pct>=90?"#15803d":st.pct>=75?"#a16207":"#b91c1c";
+    const label=cid==="Jardín"||cid.startsWith("TR")?cid:`Grado ${cid}`;
+    const card=document.createElement("div");card.className="course-stat-card";
+    card.innerHTML=`
+      <div class="csc-header"><div class="name">${label}</div><div class="meta">${st.students} estudiantes · ${st.days} días</div></div>
+      <div class="csc-bars">
+        <div class="bar-row"><div class="blabel">% Asistencia</div><div class="bar-track"><div class="bar-fill" style="width:${st.pct}%;background:${pctColor}"></div></div><div class="bval" style="color:${pctColor}">${st.pct}%</div></div>
+        <div class="bar-row"><div class="blabel">Asiste</div><div class="bar-track"><div class="bar-fill" style="width:${all?st.a/all*100:0}%;background:#15803d"></div></div><div class="bval" style="color:#15803d">${st.a}</div></div>
+        <div class="bar-row"><div class="blabel">No asiste</div><div class="bar-track"><div class="bar-fill" style="width:${all?st.n/all*100:0}%;background:#dc2626"></div></div><div class="bval" style="color:#dc2626">${st.n}</div></div>
+        <div class="bar-row"><div class="blabel">Tarde</div><div class="bar-track"><div class="bar-fill" style="width:${all?st.t/all*100:0}%;background:#c2410c"></div></div><div class="bval" style="color:#c2410c">${st.t}</div></div>
+        <div class="bar-row"><div class="blabel">Excusa</div><div class="bar-track"><div class="bar-fill" style="width:${all?st.e/all*100:0}%;background:#1d4ed8"></div></div><div class="bval" style="color:#1d4ed8">${st.e}</div></div>
+        <div class="bar-row"><div class="blabel">Uniforme</div><div class="bar-track"><div class="bar-fill" style="width:${all?st.u/all*100:0}%;background:#7c3aed"></div></div><div class="bval" style="color:#7c3aed">${st.u}</div></div>
+      </div>`;
+    if (cid===cur && sts[cid]) {
+      const stTable=document.createElement("div");
+      stTable.style.cssText="padding:0 18px 14px;overflow-x:auto";
+      let html=`<table style="width:100%;border-collapse:collapse;font-size:12.5px">
+        <thead><tr style="background:#e6f9f9">
+          <th style="padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">#</th>
+          <th style="padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Estudiante</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Asiste</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">No</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Tarde</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Excusa</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">Unif.</th>
+          <th style="padding:8px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--border)">%</th>
+        </tr></thead><tbody>`;
+      sts[cid].forEach((s,idx) => {
+        const ss=calcStudentStats(cid,s.num);
+        const pClass=ss.pct>=90?"pct-hi":ss.pct>=75?"pct-mid":"pct-lo";
+        const bg=idx%2===0?"#fff":"#f4fcfc";
+        html+=`<tr style="background:${bg};border-bottom:1px solid var(--border)">
+          <td style="padding:8px 10px;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px">${s.num}</td>
+          <td style="padding:8px 10px;font-weight:600;color:var(--text-2)">${s.name}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--success);font-family:'JetBrains Mono',monospace">${ss.a}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--danger);font-family:'JetBrains Mono',monospace">${ss.n}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--warning);font-family:'JetBrains Mono',monospace">${ss.t}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--info);font-family:'JetBrains Mono',monospace">${ss.e}</td>
+          <td style="padding:8px;text-align:center;font-weight:700;color:var(--purple);font-family:'JetBrains Mono',monospace">${ss.u}</td>
+          <td style="padding:8px;text-align:center"><span class="att-pct ${pClass}">${ss.pct}%</span></td>
+        </tr>`;
+      });
+      html+="</tbody></table>";
+      stTable.innerHTML=html;card.appendChild(stTable);
+    }
+    cs.appendChild(card);
+  });
+  area.appendChild(cs);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ADD STUDENT
+══════════════════════════════════════════════════════════ */
+function openAddStudentModal() {
+  document.getElementById("newStudentName").value="";
+  document.getElementById("modalAdd").classList.add("open");
+  setTimeout(()=>document.getElementById("newStudentName").focus(),80);
+}
+function confirmAddStudent() {
+  const name=document.getElementById("newStudentName").value.trim().toUpperCase();
+  if (!name||!cur) return;
+  const ss=sts[cur];
+  if (ss.find(s=>s.name.toUpperCase()===name)){alert("Este estudiante ya existe.");return;}
+  ss.push({num:ss.length+1,name});
+  ss.sort((a,b)=>a.name.localeCompare(b.name,"es"));
+  ss.forEach((s,i)=>s.num=i+1);
+  closeModal("modalAdd");
+  const tbody=document.getElementById(`tbody-${cur}`);
+  if (!tbody){renderTab();}else{
+    const newS=ss.find(s=>s.name===name);
+    const newIdx=ss.indexOf(newS);
+    const dates=getDates(cur);
+    const newRow=buildStudentRow(cur,newS,dates);
+    if (newIdx>=tbody.rows.length) tbody.appendChild(newRow);
+    else tbody.insertBefore(newRow,tbody.rows[newIdx]);
+    ss.forEach((s,i)=>{if(tbody.rows[i])tbody.rows[i].cells[0].textContent=s.num;});
+  }
+  document.getElementById("studentChip").textContent=`${ss.length} estudiantes`;
+  syncStudents(cur).then(showSync).catch(console.error);
+}
+
+/* ══════════════════════════════════════════════════════════
+   EDIT STUDENT
+══════════════════════════════════════════════════════════ */
+let _editPending = null;
+function openEditModal(snum, sname) {
+  _editPending = {cid:cur, num:snum, oldName:sname};
+  document.getElementById("editStudentName").value = sname;
+  document.getElementById("modalEdit").classList.add("open");
+  setTimeout(()=>document.getElementById("editStudentName").focus(),80);
+}
+function confirmEdit() {
+  if (!_editPending) return;
+  const {cid, num, oldName} = _editPending;
+  const newName = document.getElementById("editStudentName").value.trim().toUpperCase();
+  if (!newName) return;
+  closeModal("modalEdit");
+  _editPending = null;
+
+  // Rename in sts and transfer store data
+  const s = sts[cid].find(x=>x.num===num);
+  if (!s) return;
+  if (store[cid][oldName]) {
+    store[cid][newName] = store[cid][oldName];
+    delete store[cid][oldName];
+  }
+  s.name = newName;
+
+  // Update DOM
+  const tbody = document.getElementById(`tbody-${cid}`);
+  if (tbody) {
+    const row = tbody.querySelector(`tr[data-sname="${CSS.escape(oldName)}"]`);
+    if (row) {
+      row.dataset.sname = newName;
+      row.querySelector(".name-inner span").textContent = newName;
+      row.querySelector(".name-inner span").ondblclick = () => openEditModal(num, newName);
+    }
+  }
+  syncStudents(cid).then(showSync).catch(console.error);
+}
+
+/* ══════════════════════════════════════════════════════════
+   DELETE STUDENT
+══════════════════════════════════════════════════════════ */
+let _delPending = null;
+let _delTimeout = null;
+function openDeleteConfirm(snum,sname,btnEl) {
+  cancelDelete();
+  _delPending={cid:cur,num:snum,name:sname};
+  const pill=document.getElementById("delConfirm");
+  document.getElementById("delConfirmName").textContent=`¿Eliminar "${sname}"?`;
+  document.getElementById("delYesBtn").onclick=executeDelete;
+  if (window.innerWidth <= 640) {
+    // Center on mobile
+    pill.style.top="auto";
+    pill.style.bottom="20px";
+    pill.style.left="50%";
+    pill.style.transform="translateX(-50%)";
+    pill.style.width="calc(100% - 32px)";
+    pill.style.maxWidth="400px";
+  } else {
+    pill.style.bottom="";
+    pill.style.transform="";
+    pill.style.width="";
+    pill.style.maxWidth="";
+    const rect=btnEl.getBoundingClientRect();
+    pill.style.top=(rect.bottom+window.scrollY+6)+"px";
+    pill.style.left=Math.max(8,rect.left-120)+"px";
+  }
+  pill.classList.add("show");
+  _delTimeout=setTimeout(cancelDelete,6000);
+}
+function cancelDelete() {
+  _delPending=null;clearTimeout(_delTimeout);
+  document.getElementById("delConfirm").classList.remove("show");
+}
+function executeDelete() {
+  if (!_delPending) return;
+  const {cid,num,name}=_delPending;
+  cancelDelete();
+  const ss=sts[cid];
+  const idx=ss.findIndex(s=>s.num===num);
+  if (idx===-1) return;
+  ss.splice(idx,1);
+  ss.forEach((s,i)=>s.num=i+1);
+  const tbody=document.getElementById(`tbody-${cid}`);
+  if (!tbody){renderTab();}else{
+    const row=tbody.querySelector(`tr[data-sname="${CSS.escape(name)}"]`);
+    if (row){
+      row.style.transition="opacity .18s,background .18s";
+      row.style.background="#fee2e2";row.style.opacity="0.3";
+      setTimeout(()=>{row.remove();ss.forEach((s,i)=>{if(tbody.rows[i])tbody.rows[i].cells[0].textContent=s.num;});},200);
+    }
+  }
+  document.getElementById("studentChip").textContent=`${ss.length} estudiantes`;
+  syncStudents(cid).then(showSync).catch(console.error);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TRANSFER STUDENT
+══════════════════════════════════════════════════════════ */
+let _transferPending = null;
+function openTransferModal(snum,sname) {
+  _transferPending={cid:cur,num:snum,name:sname};
+  document.getElementById("transferStudentName").textContent=sname;
+  const sel=document.getElementById("transferDestCourse");
+  sel.innerHTML=`<option value="">— Selecciona un curso —</option>`;
+  Object.keys(STUDENTS).sort().forEach(c=>{
+    if (c===cur) return;
+    const opt=document.createElement("option");
+    opt.value=c;
+    const label=c==="Jardín"||c.startsWith("TR")?c:`Grado ${c}`;
+    opt.textContent=label;
+    sel.appendChild(opt);
+  });
+  document.getElementById("modalTransfer").classList.add("open");
+}
+function confirmTransfer() {
+  if (!_transferPending) return;
+  const destCid=document.getElementById("transferDestCourse").value;
+  if (!destCid){alert("Selecciona un curso destino.");return;}
+  const {cid:srcCid,num,name}=_transferPending;
+  const srcList=sts[srcCid];
+  const srcIdx=srcList.findIndex(s=>s.num===num);
+  if (srcIdx===-1){closeModal("modalTransfer");return;}
+  srcList.splice(srcIdx,1);srcList.forEach((s,i)=>s.num=i+1);
+  initCourse(destCid);
+  const destList=sts[destCid];
+  if (!destList.find(s=>s.name.toUpperCase()===name.toUpperCase())){
+    destList.push({num:destList.length+1,name});
+    destList.sort((a,b)=>a.name.localeCompare(b.name,"es"));
+    destList.forEach((s,i)=>s.num=i+1);
+  }
+  closeModal("modalTransfer");_transferPending=null;
+  const tbody=document.getElementById(`tbody-${srcCid}`);
+  if (!tbody){renderTab();}else{
+    const row=tbody.querySelector(`tr[data-sname="${CSS.escape(name)}"]`);
+    if (row){
+      row.style.transition="opacity .18s,background .18s";
+      row.style.background="#e6f9f9";row.style.opacity="0.3";
+      setTimeout(()=>{row.remove();srcList.forEach((s,i)=>{if(tbody.rows[i])tbody.rows[i].cells[0].textContent=s.num;});},200);
+    }
+  }
+  document.getElementById("studentChip").textContent=`${srcList.length} estudiantes`;
+  syncStudents(srcCid).then(showSync).catch(console.error);
+  syncStudents(destCid).then(showSync).catch(console.error);
+}
+
+/* ══════════════════════════════════════════════════════════
+   ACTIONS
+══════════════════════════════════════════════════════════ */
+function addMonth() {
+  if (!cur) return;
+  const ms=mState[cur];
+  const last=ms.months[ms.months.length-1];
+  const next=nextMonthStr(last);
+  ms.months.push(next);
+  ms.dates=ms.dates.concat(weekdaysOfMonth(next));
+  renderTab();
+}
+function exportCSV() {
+  if (!cur) return;
+  const dates=getDates(cur);
+  let csv="\uFEFF";
+  const label=cur==="Jardín"||cur.startsWith("TR")?cur:`Grado ${cur}`;
+  csv+=`${label}\n`;
+  csv+=`N°,Estudiante`;
+  dates.forEach(d=>{csv+=`,${d} Asistencia,${d} Uniforme`;});
+  csv+=`,Total Asiste,Total NoAsiste,Total Tarde,Total Excusa,Total Uniforme,% Asistencia\n`;
+  sts[cur].forEach(s=>{
+    const st=calcStudentStats(cur,s.num);
+    csv+=`${s.num},"${s.name}"`;
+    dates.forEach(d=>{const r=getRec(cur,s.name,d);csv+=`,${r.a||""},${r.u||""}`;});
+    csv+=`,${st.a},${st.n},${st.t},${st.e},${st.u},${st.pct}%\n`;
+  });
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download=`asistencia_${cur}.csv`;a.click();
+}
+
+/* ══════════════════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════════════════ */
+function openModal(id){document.getElementById(id).classList.add("open")}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebarOverlay").classList.remove("open");
+}
+
+/* ══════════════════════════════════════════════════════════
+   EVENTS
+══════════════════════════════════════════════════════════ */
+document.getElementById("courseSearch").addEventListener("input",renderSidebar);
+document.getElementById("menuBtn").addEventListener("click",()=>{
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sidebarOverlay").classList.toggle("open");
+});
+document.getElementById("modalAdd").addEventListener("click",function(e){if(e.target===this)closeModal("modalAdd");});
+document.getElementById("modalTransfer").addEventListener("click",function(e){if(e.target===this){closeModal("modalTransfer");_transferPending=null;}});
+document.getElementById("modalEdit").addEventListener("click",function(e){if(e.target===this)closeModal("modalEdit");});
+document.addEventListener("click",e=>{
+  const pill=document.getElementById("delConfirm");
+  if(pill.classList.contains("show")&&!pill.contains(e.target)&&!e.target.closest(".row-btn-del")) cancelDelete();
+});
+
+window.addEventListener("resize", () => {
+  clearTimeout(window._resizeRenderTimer);
+  window._resizeRenderTimer = setTimeout(() => {
+    if (cur && activeTab === "attendance") renderAttendance();
+  }, 150);
+});
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+renderSidebar();
+</script>
+</body>
+</html>
